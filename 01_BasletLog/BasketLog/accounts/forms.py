@@ -16,9 +16,10 @@ class RegistForm(forms.ModelForm):
             'password': 'パスワード',
         }
 
-    def save(self, commit=False):
+    def save(self, commit=True):
         user = super().save(commit=False)
         validate_password(self.cleaned_data['password'], user)
         user.set_password(self.cleaned_data['password'])
-        user.save()
+        if commit:
+            user.save()
         return user
