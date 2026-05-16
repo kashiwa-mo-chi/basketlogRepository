@@ -93,11 +93,29 @@ class Diary(models.Model):
     )        
 
     watch_date = models.DateField(verbose_name="観戦日")
-    home_team_score = models.IntegerField
-    away_team_score = models.IntegerField
+    home_team_score = models.IntegerField(verbose_name="ホームチーム得点")
+    away_team_score = models.IntegerField(verbose_name="アウェイチーム得点")
     memory = models.TextField(verbose_name="感想")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="作成日時"),
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="公開日時")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="作成日時")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="更新日時")
     
     def __str__(self):
         return f"{self.watch_date} : {self.arena_name}"
+    
+class DiaryPicture(models.Model):
+    diary = models.ForeignKey(
+        Diary,
+        on_delete=models.CASCADE,
+        related_name='pictures',
+        verbose_name='観戦記録'
+    )
+    image = models.ImageField(
+        upload_to='diary_photos/',
+        verbose_name='写真'
+    )
+    created_at=models.DateTimeField(auto_now_add=True, verbose_name="作成日時")
+    updated_at=models.DateTimeField(auto_now=True, verbose_name="更新日時")
+
+    def __str__(self):
+        return f"{self.diary.watch_date}の写真"
+    

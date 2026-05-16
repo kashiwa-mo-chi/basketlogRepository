@@ -18,7 +18,17 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save()
         return user
-    
+    def create_superuser(self, username, email, password=None):
+        user = self.create_user(
+            username=username,
+            email=email,
+            password=password,
+        )
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
+        return user
+
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=30)
     email = models.EmailField(max_length=255, unique=True)

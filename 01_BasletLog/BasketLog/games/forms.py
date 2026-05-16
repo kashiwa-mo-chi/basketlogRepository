@@ -1,7 +1,7 @@
 from django import forms
-from .models import Diary
+from .models import Diary, DiaryPicture
 
-class DiaryForm(forms.Modelform):
+class DiaryForm(forms.ModelForm):
     class Meta:
         model = Diary
         fields = [
@@ -34,3 +34,17 @@ class DiaryForm(forms.Modelform):
             raise forms.ValidationError("ホームチームとアウェイチームは異なるチームを選んでください")
         
         return cleaned_data
+    
+class DiaryPictureForm(forms.ModelForm):
+    class Meta:
+        model = DiaryPicture
+        fields = ['image']
+
+DiaryPictureFormSet = forms.inlineformset_factory(
+    parent_model=Diary,
+    model=DiaryPicture,
+    form=DiaryPictureForm,
+    extra=5,
+    max_num=5,
+    can_delete=True
+)

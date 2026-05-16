@@ -6,8 +6,25 @@
     <title>ログイン画面</title>
 </head>
 <body>
-    <h1>バスケログ</h1>
+    <h2>バスケログ</h2>
 
+    <form method="post">
+        <!-- セキュリティのために必須のタグ -->
+        {% csrf_token %}
+
+        <!-- forms.py で作った項目が <p> タグ形式で表示されます -->
+        {{ form.as_p }}
+
+        <button type="submit">ログイン</button>
+    </form>
+
+    <hr>
+    <a href="./index.html">アカウント登録しないで利用する</a>
+ </body>
+</html>   
+
+
+</body>
     <div class="login">
 
   <form>
@@ -20,6 +37,8 @@
       <input type="password" id="password" class="form-control" placeholder="パスワードを入力" required>
     </div>
     
+
+
     <button type="submit" class="btn-login">ログイン</button>
     <div class="アカウント登録">
       <a href="#">アカウント登録</a>
