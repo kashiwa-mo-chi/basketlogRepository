@@ -13,7 +13,7 @@ class RegistUserView(CreateView):
     success_url = reverse_lazy('accounts:user_login')
 
 class UserLoginView(LoginView):
-    template_name = 'accounts/user-login.html'
+    template_name = 'accounts/login.html'
 
 class UserLogoutView(LogoutView):
     next_page = reverse_lazy('accounts:user_login')
