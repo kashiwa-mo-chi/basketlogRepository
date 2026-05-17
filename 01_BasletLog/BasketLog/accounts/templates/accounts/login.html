@@ -14,11 +14,18 @@
   <h2>バスケログ</h2>
   <form method='POST' action="{% url 'accounts:user_login' %}">
     {% csrf_token %} 
+     {% if form.non_field_errors %}
+      <div style="color: #ef4444; font-size: 0.9rem; margin-bottom: 15px; font-weight: bold; background-color: #fee2e2; padding: 10px; border-radius: 6px;">
+        {% for error in form.non_field_errors %}
+          ⚠️ {{ error }}
+        {% endfor %}
+      </div>
+    {% endif %}
 
   
     <div class="form-group">
-      <label for="email" class="form-label">メールアドレス</label>
-      <input type="email" id="email" name="user_name" class="form-control" placeholder="your@email.com" required>
+      <label for="user_name" class="form-label">ユーザ名</label>
+      <input type="text" id="user_name" name="user_name" class="form-control" placeholder="ユーザ名を入力" required>
     </div>
 
     <div class="form-group">
@@ -30,11 +37,11 @@
 
     <button type="submit" class="btn-login">ログイン</button>
     <div class="regist-link">
-      <a href="#">アカウント登録</a>
+      <a href="{% url 'accounts:regist' %}">アカウント登録</a>
     </div>
 
     <div class="guest-login">
-      <a href="./index.html">アカウント登録しないで利用する</a>
+      <a href="{% url 'accounts:home' %}">アカウント登録しないで利用する</a>
     </div>
   </form>
 </div>
