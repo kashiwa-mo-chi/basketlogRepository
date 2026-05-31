@@ -38,7 +38,7 @@ class DiaryForm(forms.ModelForm):
 class DiaryPictureForm(forms.ModelForm):
     class Meta:
         model = DiaryPicture
-        fields = ['image']
+        fields = ['picture_url']
 
 DiaryPictureFormSet = forms.inlineformset_factory(
     parent_model=Diary,

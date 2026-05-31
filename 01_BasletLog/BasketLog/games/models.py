@@ -109,7 +109,7 @@ class DiaryPicture(models.Model):
         related_name='pictures',
         verbose_name='観戦記録'
     )
-    image = models.ImageField(
+    picture_url = models.ImageField(
         upload_to='diary_photos/',
         verbose_name='写真'
     )
