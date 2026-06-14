@@ -119,3 +119,4 @@ class DiaryPicture(models.Model):
     def __str__(self):
         return f"{self.diary.watch_date}の写真"
     
+    

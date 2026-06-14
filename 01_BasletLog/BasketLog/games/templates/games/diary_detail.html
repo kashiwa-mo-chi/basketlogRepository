@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>観戦記録詳細</title>
+</head>
+<body>
+
+    <h1>🏀 観戦記録の投稿が完了しました！</h1>
+
+    <ul>
+        <li>📅 観戦日: {{ diary.watch_date }}</li>
+        <li>📍 会場: {{ diary.get_arena_name_display }}</li>
+        <li>🏠 ホーム: {{ diary.get_home_team_name_display }} ({{ diary.home_team_score }}点)</li>
+           <li>✈️ アウェイ: {{ diary.get_away_team_name_display }} ({{ diary.away_team_score }}点)</li>
+    </ul>
+
+    <h2>感想</h2>
+    <p style="white-space: pre-wrap;">{{ diary.memory }}</p>
+
+    <!-- 写真のループ表示 -->
+    {% if diary.pictures.all %}
+        <h2>📸 観戦フォト</h2>
+        {% for pic in diary.pictures.all %}
+            {% if pic.picture_url %}
+                <img src="{{ pic.picture_url.url }}" alt="観戦写真" style="max-width: 300px; height: auto; margin: 5px;">
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <hr>
+    <!-- エラーを防ぐため、単純な文字リンクにしています -->
+    <p><a href="/games/diary/create/">新しい記録を書く</a></p>
+
+</body>
+</html>
+

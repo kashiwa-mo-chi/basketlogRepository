@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import DiaryForm, DiaryPictureFormSet
 from django.contrib.auth import get_user_model
-
+from .models import Diary
 
 @login_required
 def diary_create(request):
@@ -18,7 +18,7 @@ def diary_create(request):
             picture_formset.instance = diary
             picture_formset.save()
 
-            return redirect('games:diary_list') #投稿が完了したら飛ぶベージ、観戦記録詳細画面へ遷移
+            return redirect('games:diary_detail', diary_id=diary.id) #投稿が完了したら飛ぶベージ、観戦記録詳細画面へ遷移
                
     else:
         diary_form = DiaryForm()
@@ -29,3 +29,11 @@ def diary_create(request):
         'picture_formset': picture_formset,
     }
     return render(request, 'games/diary_form.html', context)
+
+def diary_detail(request, diary_id):
+    diary = get_object_or_404(Diary, id=diary_id)
+
+    context = {
+        'diary':diary,        
+    }
+    return render(request, 'games/diary_detail.html', context)

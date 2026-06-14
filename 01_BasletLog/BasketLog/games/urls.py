@@ -9,4 +9,6 @@ urlpatterns = [
     
     # 観戦記録の投稿画面 (URLは /games/create/ になります)
     path('create/', views.diary_create, name='diary_create'),
+
+    path('diary/<int:diary_id>/', views.diary_detail, name='diary_detail'),
 ]
