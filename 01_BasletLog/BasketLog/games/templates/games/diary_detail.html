@@ -1,37 +1,86 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>観戦記録詳細</title>
+    <title>観戦記録詳細画面</title>
 </head>
 <body>
 
-    <h1>🏀 観戦記録の投稿が完了しました！</h1>
 
-    <ul>
-        <li>📅 観戦日: {{ diary.watch_date }}</li>
-        <li>📍 会場: {{ diary.get_arena_name_display }}</li>
-        <li>🏠 ホーム: {{ diary.get_home_team_name_display }} ({{ diary.home_team_score }}点)</li>
-           <li>✈️ アウェイ: {{ diary.get_away_team_name_display }} ({{ diary.away_team_score }}点)</li>
-    </ul>
+    <!-- 👑 追加：一番上のユーザー名表示 -->
+    <h1 class="user-title">
+        {{ diary.user.username }}の観戦記録 <!-- 👈 環境に合わせて diary.author や user.username 等に変更してください -->
+    </h1>
 
-    <h2>感想</h2>
-    <p style="white-space: pre-wrap;">{{ diary.memory }}</p>
+    <!-- 1. 日付と会場 -->
+    <div class="match-meta">
+         {{ diary.watch_date|date:"Y年m月d日" }} 
+        <br> 
+         {{ diary.get_arena_name_display }}
+    </div>
+    
+    <!-- 2. スコアボード -->
+    <div class="score-board">
+        <!-- チーム名とVSの横並び -->
+        <div class="match-teams">
+            <span class="team">{{ diary.get_home_team_name_display }}</span>
+            <span class="vs">VS</span>
+            <span class="team">{{ diary.get_away_team_name_display }}</span>
+        </div>
+        
+        <!-- 点数（スコア）の表示エリア：勝敗で○/●の位置を自動判定 -->
+        <div class="score-area">
+            {% if diary.home_team_score > diary.away_team_score %}
+            <!-- ホーム勝ちの場合：ホームの左に〇、アウェイの右に● -->
+                <span class="score-win">〇 {{ diary.home_team_score }}</span>
+                <span class="score-divider">-</span>
+                <span class="score-lose">{{ diary.away_team_score }} ●</span>
+            {% elif diary.home_team_score < diary.away_team_score %}
+                <!-- アウェイ勝ちの場合：ホームの左に●、アウェイの右に〇 -->
+                <span class="score-lose">● {{ diary.home_team_score }}</span>
+                <span class="score-divider">-</span>
+                <span class="score-win">〇 {{ diary.away_team_score }}</span>
+            {% else %}
+                <!-- 引き分け（同点）の場合：記号なし -->
+                <span>{{ diary.home_team_score }}</span>
+                <span class="score-divider">-</span>
+                <span>{{ diary.away_team_score }}</span>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- 3. 感想 -->
+    
+    <div class="memo-box">{{ diary.memory }}</div>
 
-    <!-- 写真のループ表示 -->
+    <!-- 4. 写真のループ表示 -->
     {% if diary.pictures.all %}
         <h2>📸 観戦フォト</h2>
-        {% for pic in diary.pictures.all %}
-            {% if pic.picture_url %}
-                <img src="{{ pic.picture_url.url }}" alt="観戦写真" style="max-width: 300px; height: auto; margin: 5px;">
-            {% endif %}
-        {% endfor %}
+        <div class="photo-gallery">
+            {% for pic in diary.pictures.all %}
+                {% if pic.picture_url %}
+                    <div class="photo-wrapper">
+                        <img src="{{ pic.picture_url.url }}" alt="観戦写真">
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
     {% endif %}
 
-    <hr>
-    <!-- エラーを防ぐため、単純な文字リンクにしています -->
-    <p><a href="/games/diary/create/">新しい記録を書く</a></p>
-
-</body>
-</html>
-
+    <!-- 5. 下部ボタンエリア -->
+     <div class="btn-group">
+            <!-- 一覧画面への遷移ボタン -->
+            <a href="/games/diary/list/" class="btn back-btn">戻る</a>
+        </div>
+    <div class="action-box">
+        <div class="btn-group">
+            <!-- 編集画面への遷移ボタン -->
+            <a href="/games/diary/{{ diary.id }}/edit/" class="btn edit-btn">編集</a>
+            <!-- 削除確認・処理画面への遷移ボタン -->
+            <a href="/games/diary/{{ diary.id }}/delete/" class="btn delete-btn" onclick="return confirm('本当に削除してよろしいですか？');">削除</a>
+        </div>
+        
+        
+        
+    </div>
