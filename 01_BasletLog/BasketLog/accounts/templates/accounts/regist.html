@@ -11,24 +11,28 @@
 <body>
 
 <div class="login">
-  <h2>バスケログ</h2>
-  <form method='POST' action="{% url 'accounts:user_login' %}">
+  <h2>バスケログ - アカウント登録</h2>
+  
+    <form method='POST' action="">
     {% csrf_token %} 
+
+    {% if form.non_field_errors %}
+      <div style="color: #ef4444; font-size: 0.9rem; margin-bottom: 15px; font-weight: bold;">
+        {{ form.non_field_errors.0 }}
+      </div>
+    {% endif %}
 
     {% for field in form %}
       <div class="form-group">
         <label for="{{ field.id_for_label }}" class="form-label">
             {{ field.label }}
         </label>
-        <!-- 💡 入力欄に、ログイン画面と同じスマホ用の「form-control」クラスを適用します -->
-        <input type="{{ field.field.widget.input_type }}" 
-               id="{{ field.id_for_label }}" 
-               name="{{ field.html_name }}" 
-               class="form-control" 
-              placeholder="{{ field.label }}を入力" 
-               {% if field.field.required %}required{% endif %}>
         
-        <!-- エラーメッセージがある場合は表示 -->
+        <!-- ⭕ 修正ポイント2：通常のinputタグではなく、Django標準のウィジェット（HTML構造）を自動で出力させます -->
+        <!-- これにより、パスワード入力時に文字が「●●●」と伏せ字になり、安全性とスマホ用のクラスが両立します -->
+        {{ field }}
+        
+        <!-- 各入力欄ごとの個別エラーメッセージを表示 -->
         {% if field.errors %}
           <div style="color: #ef4444; font-size: 0.8rem; margin-top: 4px;">
             {{ field.errors.0 }}
