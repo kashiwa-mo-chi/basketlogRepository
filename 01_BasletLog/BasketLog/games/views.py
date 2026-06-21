@@ -6,9 +6,9 @@ from .forms import DiaryForm, DiaryPictureFormSet
 from django.contrib.auth import get_user_model
 from .models import Diary
 
-#一覧画面
+#MY観戦記録一覧画面
 def diary_list(request):
-    diaries = Diary.objects.all().order_by('-watch_date')
+    diaries = Diary.objects.filter(user=request.user).order_by('-watch_date')
 
     #検索機能
     query = request.GET.get('q')
@@ -97,4 +97,4 @@ def public_diary_list(request):
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'games/diary_list.html', {'page_obj': page_obj})
+    return render(request, 'games/public_diary_list.html', {'page_obj': page_obj})
