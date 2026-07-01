@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Arena_Category, Arena_Facility, Spot_Category, Arena_Nearby_Spot
+from .models import Arena_Category, ArenaFacility, Spot_Category, ArenaNearbySpot
 
 @admin.register(Arena_Category)
 class Arena_Categoryadmin(admin.ModelAdmin):
@@ -10,8 +10,8 @@ class Arena_Categoryadmin(admin.ModelAdmin):
         'updated_at'
     )
 
-@admin.register(Arena_Facility)
-class Arena_FacilityAdmin(admin.ModelAdmin):
+@admin.register(ArenaFacility)
+class ArenaFacilityAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'arena_name',
@@ -33,8 +33,8 @@ class Spot_CategoryAdmin(admin.ModelAdmin):
         'updated_at'
     )
 
-@admin.register(Arena_Nearby_Spot)
-class Arena_Nearby_SpotAdmin(admin.ModelAdmin):
+@admin.register(ArenaNearbySpot)
+class ArenaNearbySpotAdmin(admin.ModelAdmin):
     list_display = (
     'id',
     'arena_name',

@@ -22,7 +22,7 @@ class Arena_Category(models.Model):
     def __str__(self):
         return self.arena_category
 
-class Arena_Facility(models.Model):
+class ArenaFacility(models.Model):
 
     FACILITY_CHOICES = [
         (1, '有'),
@@ -99,7 +99,7 @@ class Spot_Category(models.Model):
         return self.spot_category
     
 
-class Arena_Nearby_Spot(models.Model):
+class ArenaNearbySpot(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE, 

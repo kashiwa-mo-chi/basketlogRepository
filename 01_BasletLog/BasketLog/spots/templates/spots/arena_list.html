@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>アリーナ情報一覧</h1>
+
+<form method="get">
+    <input type="text" name="q" placeholder="アリーナを検索" value="{{ query }}">
+    <button type="submit">検索</button>
+</form>
+
+<hr>
+
+<ul>
+    {% for arena_id, arena_name in arenas %}
+        <li>
+            <a href="{% url 'spots:spot_top' arena_id %}">
+                {{ arena_name }}
+            </a>
+        </li>
+    {% empty %}
+        <li>該当するアリーナがありません</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
