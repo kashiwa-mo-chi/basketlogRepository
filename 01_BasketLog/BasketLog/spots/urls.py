@@ -5,7 +5,9 @@ app_name = 'spots'
 
 urlpatterns = [
     path('', views.arena_list, name='arena_list'),
-    path('<int:arena_id>/', views.spot_top, name='spot_top'),
+
+    path('<int:arena_id>/', views.arena_top, name='arena_top'),
+
     path('<int:arena_id>/facility/new/', views.facility_post_create, name='facility_post_create'),
     path('<int:arena_id>/nearby/new/', views.nearby_post_create, name='nearby_post_create'),
 ]

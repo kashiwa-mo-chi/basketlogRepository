@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>{{ arena_name }}</h2>
+
+<p>新しい口コミを投稿する</p>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <hr>
+
+    <h3>設備</h3>
+
+    <p>
+        {{ form.kids_space.label }}<br>
+        {{ form.kids_space }}
+        {{ form.kids_space.errors }}
+    </p>
+
+    <p>
+        {{ form.diaper_table.label }}<br>
+        {{ form.diaper_table }}
+        {{ form.diaper_table.errors }}
+    </p>
+
+    <p>
+        {{ form.nursing_room.label }}<br>
+        {{ form.nursing_room }}
+        {{ form.nursing_room.errors }}
+    </p>
+
+    <hr>
+
+    <h3>カテゴリ</h3>
+
+    <p>
+        {{ form.category }}
+        {{ form.category.errors }}
+    </p>
+
+    <hr>
+
+    <h3>口コミ</h3>
+
+    <p>
+        {{ form.review }}
+        {{ form.review.errors }}
+    </p>
+
+    <hr>
+
+    <h3>写真（最大5枚）</h3>
+
+    <p>
+
+        <input
+            type="file"
+            name="images"
+            multiple
+            accept="image/*">
+
+    </p>
+
+    <hr>
+
+    <button type="submit">
+        投稿する
+    </button>
+</form>      
+    
+
+{% endblock %}

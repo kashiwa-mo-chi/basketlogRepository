@@ -87,7 +87,9 @@ class ArenaFacilityImage(models.Model):
         related_name="images"
     )
 
-    image = models.ImageField(upload_to="arena_reviews/")
+    image = models.ImageField(upload_to="arena_facility_images/")
+    created_at=models.DateTimeField(auto_now_add=True, verbose_name="作成日時")
+    updated_at=models.DateTimeField(auto_now=True, verbose_name="更新日時")
 
     
 class Spot_Category(models.Model):

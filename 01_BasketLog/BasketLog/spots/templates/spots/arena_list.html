@@ -14,7 +14,7 @@
 <ul>
     {% for arena_id, arena_name in arenas %}
         <li>
-            <a href="{% url 'spots:spot_top' arena_id %}">
+            <a href="{% url 'spots:arena_top' arena_id %}">
                 {{ arena_name }}
             </a>
         </li>
