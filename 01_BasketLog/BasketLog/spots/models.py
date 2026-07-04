@@ -47,7 +47,7 @@ class ArenaFacility(models.Model):
         verbose_name="アリーナ名",
     )
 
-    kids_space = models.ImageField(
+    kids_space = models.IntegerField(
         choices=FACILITY_CHOICES,
         default=2,
         verbose_name="キッズスペース"
@@ -65,9 +65,8 @@ class ArenaFacility(models.Model):
         verbose_name="授乳室"
     )
 
-    review=models.CharField(
-        max_length=1000,
-        verbose_name="コメント"
+    review=models.TextField(
+        verbose_name="口コミ"
     )
 
     created_at=models.DateTimeField(auto_now_add=True, verbose_name="作成日時")
@@ -80,6 +79,16 @@ class ArenaFacility(models.Model):
 
     def __str__(self):
         return f"{self.get_arena_name_display()} [{self.category.arena_category}] ({self.user.username})"
+    
+class ArenaFacilityImage(models.Model):
+    arena_facility = models.ForeignKey(
+        ArenaFacility,
+        on_delete=models.CASCADE,
+        related_name="images"
+    )
+
+    image = models.ImageField(upload_to="arena_reviews/")
+
     
 class Spot_Category(models.Model):
     spot_category = models.CharField(

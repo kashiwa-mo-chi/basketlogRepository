@@ -119,4 +119,5 @@ class DiaryPicture(models.Model):
     def __str__(self):
         return f"{self.diary.watch_date}の写真"
     
-    
+    created_at=models.DateTimeField(auto_now_add=True, verbose_name="作成日時")
+    updated_at=models.DateTimeField(auto_now=True, verbose_name="更新日時")

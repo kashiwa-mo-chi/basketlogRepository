@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'BasketApp',
     'accounts',
     'games',
+    'spots',
 ]
 
 MIDDLEWARE = [
