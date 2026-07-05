@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ post.get_arena_name_display }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>{{ post.get_arena_name_display }}</h2>
+
+    <p class="text-muted">
+        投稿日：{{ post.created_at|date:"Y年m月d日 H:i" }} ユーザ名：{{ post.user.username }}<br>
+    </p>
+
+    <hr>
+
+    <h4>カテゴリ</h4>
+    <p>{{ post.category }}</p>
+
+    <hr>
+
+    <h4>設備</h4>
+
+    <p>キッズスペース：{{ post.get_kids_space_display }}</p>
+
+    <p>おむつ交換台：{{ post.get_diaper_table_display }}</p>
+
+    <p>授乳室：{{ post.get_nursing_room_display }}</p>
+
+    <hr>
+
+    <h4>口コミ</h4>
+
+    <p style="white-space: pre-wrap;">
+        {{ post.review }}
+    </p>
+
+    <hr>
+
+    <h4>写真</h4>
+
+    <div class="row">
+
+        {% for image in post.images.all %}
+            <div class="col-md-4 mb-3">
+                <img src="{{ image.image.url }}"
+                     class="img-fluid rounded">
+            </div>
+        {% empty %}
+            <p>写真はありません。</p>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<div class="mt-4">
+
+    <a href="{% url 'spots:arena_top' post.arena_name %}"
+       class="btn btn-outline-secondary">
+        ← アリーナ情報へ戻る
+    </a>
+
+</div>
+
+{% if request.user == post.user %}
+
+<hr>
+
+<div class="d-flex gap-2">
+
+    <a href="{% url 'spots:facility_post_update' post.pk %}"
+       class="btn btn-outline-primary">
+        編集
+    </a>
+
+    <button
+        type="button"
+        class="btn btn-outline-danger"
+        data-bs-toggle="modal"
+        data-bs-target="#deleteModal">
+
+        削除
+
+    </button>
+
+</div>
+
+{% endif %}
+
+<!-- 削除確認モーダル -->
+<div class="modal fade"
+     id="deleteModal"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    投稿を削除しますか？
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                本当に削除してよろしいですか
+
+            </div>
+
+<div class="modal-footer d-block">
+
+    <form method="post"
+          action="{% url 'spots:facility_post_delete' post.pk %}">
+
+        {% csrf_token %}
+
+        <button
+            type="submit"
+            class="btn btn-danger w-100 mb-2">
+
+            削除する
+
+        </button>
+
+    </form>
+
+    <button
+        type="button"
+        class="btn btn-outline-secondary w-100"
+        data-bs-dismiss="modal">
+
+        戻る
+
+    </button>
+
+</div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

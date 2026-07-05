@@ -62,15 +62,23 @@
     <h4 class="mb-3">最新口コミ</h4>
 
     {% for post in recent_posts %}
+    <a href="{% url 'spots:facility_detail' post.pk %}"
+       class="text-decoration-none text-dark">
+
         <div class="card mb-2">
             <div class="card-body">
+                            </div>
+        </div>
+
+    </a>
+
 
                 <small class="text-muted">
                     {{ post.category }}
                 </small>
 
                 <p class="mb-1">
-                    {{ post.review|truncatechars:80 }}
+                    {{ post.review|truncatechars:30 }}
                 </p>
 
                 {% if post.images.all %}

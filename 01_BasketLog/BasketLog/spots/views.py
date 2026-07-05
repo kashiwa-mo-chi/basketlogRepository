@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import ArenaFacility, ArenaNearbySpot, ArenaFacilityImage
 from .forms import ArenaFacilityForm, ArenaNearbySpotForm
@@ -111,6 +111,68 @@ def facility_post_create(request, arena_id):
         'arena_name': arena_name,
     })
 
+def facility_detail(request, pk):
+    post = get_object_or_404(
+        ArenaFacility,
+        pk=pk
+    )
+
+    context = {
+        "post":post,        
+    }
+
+    return render(
+        request,
+        "spots/facility_detail.html",
+        context
+    )
+
+@login_required
+def facility_post_update(request, pk):
+    """アリーナ内情報の編集"""
+
+    post = get_object_or_404(ArenaFacility, pk=pk)
+
+    # 投稿者以外は編集できない
+    if post.user != request.user:
+        return redirect("spots:facility_detail", pk=pk)
+
+    if request.method == "POST":
+        form = ArenaFacilityForm(request.POST, instance=post)
+
+        if form.is_valid():
+            form.save()
+            return redirect("spots:facility_detail", pk=post.pk)
+
+    else:
+        form = ArenaFacilityForm(instance=post)
+
+    arena_name = dict(Diary.ARENA_CHOICES).get(post.arena_name)
+
+    return render(request, "spots/arena_form.html", {
+        "form": form,
+        "title": "アリーナ内情報の編集",
+        "arena_id": post.arena_name,
+        "arena_name": arena_name,
+    })
+
+@login_required
+def facility_post_delete(request, pk):
+    """アリーナ情報投稿の削除"""
+
+    post = get_object_or_404(ArenaFacility, pk=pk)
+
+    # 投稿者のみ削除可能
+    if post.user != request.user:
+        return redirect("spots:facility_detail", pk=pk)
+
+    if request.method == "POST":
+        arena_id = post.arena_name
+        post.delete()
+        return redirect("spots:arena_top", arena_id=arena_id)
+
+    return redirect("spots:facility_detail", pk=pk)
+
 @login_required
 def nearby_post_create(request, arena_id):
     """アリーナ周辺情報の新規投稿"""
@@ -133,3 +195,4 @@ def nearby_post_create(request, arena_id):
         'arena_id': arena_id,
         'arena_name': arena_name,
     })
+
