@@ -28,4 +28,4 @@ class ArenaFacilityImageForm(forms.ModelForm):
 class ArenaNearbySpotForm(forms.ModelForm):
     class Meta:
         model = ArenaNearbySpot
-        fields = ['arena_name', 'category', 'spot_name', 'review']
+        fields = ['category', 'spot_name', 'review']

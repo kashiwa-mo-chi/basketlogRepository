@@ -14,4 +14,7 @@ urlpatterns = [
     path('facility/<int:pk>/', views.facility_detail, name='facility_detail'),
     path('facility/<int:pk>/edit/', views.facility_post_update, name='facility_post_update'),
     path('facility/<int:pk>/delete/', views.facility_post_delete, name='facility_post_delete'),
+    path('facility/image/<int:image_pk>/delete/', views.facility_image_delete, name='facility_image_delete'),
+    
+    path('<int:arena_id>/nearby/', views.nearby_list, name='nearby_list'),
 ]

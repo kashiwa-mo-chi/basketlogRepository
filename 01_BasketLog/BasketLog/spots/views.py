@@ -149,12 +149,30 @@ def facility_post_update(request, pk):
 
     arena_name = dict(Diary.ARENA_CHOICES).get(post.arena_name)
 
+    images = post.images.all()
+
     return render(request, "spots/arena_form.html", {
         "form": form,
         "title": "アリーナ内情報の編集",
         "arena_id": post.arena_name,
         "arena_name": arena_name,
+        "images": images,
     })
+
+@login_required
+def facility_image_delete(request, image_pk):
+    image = get_object_or_404(ArenaFacilityImage, pk=image_pk)
+
+    # 投稿者本人のみ削除可能
+    if image.arena_facility.user != request.user:
+        return redirect("spots:facility_detail", pk=image.arena_facility.pk)
+
+    facility_pk = image.arena_facility.pk
+
+    if request.method == "POST":
+        image.delete()
+
+    return redirect("spots:facility_post_update", pk=facility_pk)
 
 @login_required
 def facility_post_delete(request, pk):
@@ -174,6 +192,46 @@ def facility_post_delete(request, pk):
     return redirect("spots:facility_detail", pk=pk)
 
 @login_required
+def facility_image_delete(request, image_pk):
+    """アリーナ内情報の写真削除"""
+
+    image = get_object_or_404(ArenaFacilityImage, pk=image_pk)
+
+    # 投稿者本人以外は削除不可
+    if image.arena_facility.user != request.user:
+        return redirect(
+            "spots:facility_detail",
+            pk=image.arena_facility.pk
+        )
+
+    facility_pk = image.arena_facility.pk
+
+    if request.method == "POST":
+        image.delete()
+
+    return redirect("spots:facility_post_update", pk=facility_pk)
+
+def nearby_list(request, arena_id):
+    nearby_spots = ArenaNearbySpot.objects.filter(
+        arena_name=arena_id
+    ).select_related(
+        "category",
+        "user"
+    ).order_by("-created_at")
+
+    arena_name =dict(Diary.ARENA_CHOICES).get(arena_id)
+
+    return render(
+        request,
+        "spots/nearby_list.html",
+        {
+            "arena_id":arena_id,
+            "arena_name":arena_name,
+            "nearby_spots":nearby_spots,
+        },
+    )
+
+@login_required
 def nearby_post_create(request, arena_id):
     """アリーナ周辺情報の新規投稿"""
     arena_name = dict(Diary.ARENA_CHOICES).get(arena_id)
@@ -189,10 +247,11 @@ def nearby_post_create(request, arena_id):
     else:
         form = ArenaNearbySpotForm()
         
-    return render(request, 'spots/post_form.html', {
+    return render(request, 'spots/nearby_form.html', {
         'form': form,
         'title': 'アリーナ周辺情報の投稿',
         'arena_id': arena_id,
         'arena_name': arena_name,
     })
+
 

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>{{ arena_name }}</h2>
+
+<h3>{{ title }}</h3>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <h3>カテゴリ</h3>
+
+    <p>
+        {{ form.category }}
+        {{ form.category.errors }}
+    </p>
+
+    <h3>スポット名</h3>
+
+    <p>
+        {{ form.spot_name }}
+        {{ form.spot_name.errors }}
+    </p>
+
+    <hr>
+
+    <h3>口コミ</h3>
+
+    <p>
+        {{ form.review }}
+        {{ form.review.errors }}
+    </p>
+
+
+    
+    <button type="submit" class="btn btn-primary">
+        投稿する
+    </button>
+    </form>
+
+
+    
+
+{% endblock %}

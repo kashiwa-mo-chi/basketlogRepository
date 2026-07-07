@@ -4,7 +4,7 @@
 
 <h2>{{ arena_name }}</h2>
 
-<p>新しい口コミを投稿する</p>
+<h3>{{ title }}</h3>
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -65,10 +65,34 @@
 
     <hr>
 
+    
     <button type="submit">
         投稿する
     </button>
-</form>      
+    </form>
+
+{% if images %}
+<hr>
+<h5>現在の写真</h5>
+
+<div class="row">
+    {% for image in images %}
+        <div class="col-md-4 mb-3 text-center">
+            <img src="{{ image.image.url }}"
+                class="img-fluid rounded mb-2">
+
+           <form method="post"
+                  action="{% url 'spots:facility_image_delete' image.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">
+                    写真を削除
+                </button>
+            </form>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+      
     
 
 {% endblock %}

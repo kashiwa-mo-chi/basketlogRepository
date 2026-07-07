@@ -149,3 +149,4 @@ class ArenaNearbySpot(models.Model):
 
     def __str__(self):
         return f"{self.get_arena_name_display()} [{self.category.spot_category}] {self.spot_name} ({self.user.username})"
+    
