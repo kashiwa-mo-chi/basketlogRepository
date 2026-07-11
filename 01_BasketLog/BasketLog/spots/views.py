@@ -297,3 +297,17 @@ def nearby_update(request, pk):
         "arena_id": post.arena_name,
         "arena_name": arena_name,
     })
+
+@login_required
+def nearby_delete(request, pk):
+    post = get_object_or_404(ArenaNearbySpot, pk=pk)
+
+    if post.user != request.user:
+        return redirect("spots:nearby_detail", pk=pk)
+    
+    if request.method == "POST":
+        arena_id = post.arena_name
+        post.delete()
+        return redirect("spots:nearby_list", arena_id=arena_id)
+    
+    return redirect("spots:nearby_detail", pk=pk)
