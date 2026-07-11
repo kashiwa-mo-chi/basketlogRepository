@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>{{ arena_name }} 周辺施設情報</h2>
+
+<hr>
+
+<p>
+    <a href="{% url 'spots:nearby_create' arena_id %}"
+       class="btn btn-primary">
+        新規投稿
+    </a>
+</p>
+
+<hr>
+
+{% if nearby_spots %}
+    {% for spot in nearby_spots %}
+
+        <div class="card mb-3">
+            <div class="card-body">
+
+                <h5>{{ spot.spot_name }}</h5>
+
+                <p>
+                    <strong>カテゴリ：</strong>
+                    {{ spot.category }}
+                </p>
+
+                <p>
+                    {{ spot.review|truncatechars:100 }}
+                </p>
+
+                <p class="text-muted">
+                    投稿者：{{ spot.user.username }}
+                    ／
+                    {{ spot.created_at|date:"Y/m/d" }}
+                </p>
+
+                <a href="{% url 'spots:nearby_detail' spot.pk %}"
+                   class="btn btn-outline-primary btn-sm">
+                    詳細を見る
+                </a>
+
+                
+
+            </div>
+        </div>
+
+    {% endfor %}
+{% else %}
+
+<p>まだ周辺施設情報は投稿されていません。</p>
+
+{% endif %}
+
+<p>
+    <a href="{% url 'spots:arena_top' arena_id %}"
+       class="btn btn-secondary">
+        アリーナへ戻る
+    </a>
+</p>
+
+{% endblock %}

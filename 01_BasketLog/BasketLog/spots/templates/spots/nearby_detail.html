@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ nearby.spot_name }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>{{ nearby.spot_name }}</h2>
+
+    <p class="text-muted">
+        投稿日：{{ nearby.created_at|date:"Y年m月d日 H:i" }} ユーザ名：{{ nearby.user.username }}<br>
+    </p>
+
+    <hr>
+
+    <h4>カテゴリ</h4>
+    <p>{{ nearby.category }}</p>
+    
+
+    <h4>口コミ</h4>
+
+    <p style="white-space: pre-wrap;">
+        {{ nearby.review }}
+    </p>
+
+    <hr>
+
+    <h4>写真</h4>
+
+    <h4>写真</h4>
+
+    <p class="text-muted">
+        写真はまだ投稿されていません。
+    </p>
+
+    </div>
+
+<div class="mt-4">
+
+    <a href="{% url 'spots:nearby_list' nearby.arena_name %}"
+       class="btn btn-outline-secondary">
+        ← 周辺施設一覧へ戻る
+    </a>
+
+</div>
+
+{% if request.user == nearby.user %}
+
+<hr>
+
+<div class="d-flex gap-2">
+    
+    <a href="{% url 'spots:nearby_update' nearby.pk %}"
+       class="btn btn-outline-primary">
+        編集
+    </a>
+    
+
+    {% comment %}
+    <button
+        type="button"
+        class="btn btn-outline-danger"
+        data-bs-toggle="modal"
+        data-bs-target="#deleteModal">
+
+        削除
+
+    </button>
+    {% endcomment %}
+
+</div>
+
+{% endif %}
+
+{% comment %}
+<!-- 削除確認モーダル -->
+<div class="modal fade"
+     id="deleteModal"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    投稿を削除しますか？
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                本当に削除してよろしいですか
+
+            </div>
+
+<div class="modal-footer d-block">
+
+    <form method="post"
+          action="{% url 'spots:nearby_delete' nearby.pk %}">
+
+        {% csrf_token %}
+
+        <button
+            type="submit"
+            class="btn btn-danger w-100 mb-2">
+
+            削除する
+
+        </button>
+
+    </form>
+    {% endcomment %}
+
+    <button
+        type="button"
+        class="btn btn-outline-secondary w-100"
+        data-bs-dismiss="modal">
+
+        戻る
+
+    </button>
+
+</div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

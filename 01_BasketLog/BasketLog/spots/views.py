@@ -232,7 +232,7 @@ def nearby_list(request, arena_id):
     )
 
 @login_required
-def nearby_post_create(request, arena_id):
+def nearby_create(request, arena_id):
     """アリーナ周辺情報の新規投稿"""
     arena_name = dict(Diary.ARENA_CHOICES).get(arena_id)
     
@@ -243,7 +243,7 @@ def nearby_post_create(request, arena_id):
             post.user = request.user
             post.arena_name = arena_id # URLから届いたアリーナIDを自動固定
             post.save()
-            return redirect('spots:arena_top', arena_id=arena_id)
+            return redirect('spots:nearby_list', arena_id=arena_id)
     else:
         form = ArenaNearbySpotForm()
         
@@ -254,4 +254,46 @@ def nearby_post_create(request, arena_id):
         'arena_name': arena_name,
     })
 
+@login_required
+def nearby_detail(request, pk):
+    nearby = get_object_or_404(
+        ArenaNearbySpot,
+        pk=pk
+    )
 
+    return render(
+        request,
+        "spots/nearby_detail.html",
+        {
+            "nearby": nearby,
+        },
+    )
+
+@login_required
+def nearby_update(request, pk):
+    """アリーナ周辺情報の編集"""
+
+    post = get_object_or_404(ArenaNearbySpot, pk=pk)
+
+    # 投稿者以外は編集できない
+    if post.user != request.user:
+        return redirect("spots:nearby_detail", pk=pk)
+
+    if request.method == "POST":
+        form = ArenaNearbySpotForm(request.POST, instance=post)
+
+        if form.is_valid():
+            form.save()
+            return redirect("spots:nearby_detail", pk=post.pk)
+
+    else:
+        form = ArenaNearbySpotForm(instance=post)
+
+    arena_name = dict(Diary.ARENA_CHOICES).get(post.arena_name)
+
+    return render(request, "spots/nearby_form.html", {
+        "form": form,
+        "title": "アリーナ周辺情報の編集",
+        "arena_id": post.arena_name,
+        "arena_name": arena_name,
+    })
