@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import ArenaFacility, ArenaNearbySpot, ArenaFacilityImage
 from .forms import ArenaFacilityForm, ArenaNearbySpotForm
 from games.models import Diary
+from django.contrib import messages
 
 def arena_list(request):
     arenas = Diary.ARENA_CHOICES
@@ -139,11 +140,24 @@ def facility_post_update(request, pk):
 
     if request.method == "POST":
         form = ArenaFacilityForm(request.POST, instance=post)
+                 
+        files = request.FILES.getlist("images")
 
-        if form.is_valid():
-            form.save()
+        current_count = post.images.count()
+
+        if current_count + len(files) > 5:
+            form.add_error(None, "画像は５枚まで投稿できます")
+        
+        elif form.is_valid():
+            post = form.save()
+
+            for file in files:
+                ArenaFacilityImage.objects.create(
+                    arena_facility=post,
+                    image=file
+                )
             return redirect("spots:facility_detail", pk=post.pk)
-
+            
     else:
         form = ArenaFacilityForm(instance=post)
 
@@ -159,20 +173,7 @@ def facility_post_update(request, pk):
         "images": images,
     })
 
-@login_required
-def facility_image_delete(request, image_pk):
-    image = get_object_or_404(ArenaFacilityImage, pk=image_pk)
 
-    # 投稿者本人のみ削除可能
-    if image.arena_facility.user != request.user:
-        return redirect("spots:facility_detail", pk=image.arena_facility.pk)
-
-    facility_pk = image.arena_facility.pk
-
-    if request.method == "POST":
-        image.delete()
-
-    return redirect("spots:facility_post_update", pk=facility_pk)
 
 @login_required
 def facility_post_delete(request, pk):

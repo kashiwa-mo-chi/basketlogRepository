@@ -150,3 +150,13 @@ class ArenaNearbySpot(models.Model):
     def __str__(self):
         return f"{self.get_arena_name_display()} [{self.category.spot_category}] {self.spot_name} ({self.user.username})"
     
+class ArenaNearbyImage(models.Model):
+    arena_nearby = models.ForeignKey(
+        ArenaNearbySpot,
+        on_delete=models.CASCADE,
+        related_name="images"
+    )
+
+    image = models.ImageField(upload_to="arena_nearby_images/")
+    created_at=models.DateTimeField(auto_now_add=True, verbose_name="作成日時")
+    updated_at=models.DateTimeField(auto_now=True, verbose_name="更新日時")

@@ -19,13 +19,18 @@ class ArenaFacilityForm(forms.ModelForm):
             "nursing_room": forms.RadioSelect,
         }
 
-class ArenaFacilityImageForm(forms.ModelForm):
-    class Meta:
-        model = ArenaFacilityImage
-        fields = [ "image"]
+#class ArenaFacilityImageForm(forms.ModelForm):
+    #class Meta:
+        #model = ArenaFacilityImage
+        #fields = [ "image"]
 
 
 class ArenaNearbySpotForm(forms.ModelForm):
     class Meta:
         model = ArenaNearbySpot
         fields = ['category', 'spot_name', 'review']
+
+#class ArenaNearbyImageForm(forms.ModelForm):
+    #class Meta:
+        #model = ArenaNearbyImage
+        #fields = ["image"]
