@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">投稿履歴</h2>
+
+    <div class="d-flex gap-2 mb-4">
+        <a href="{% url 'accounts:history' %}?tab=facility"
+           class="btn {% if tab == 'facility' %}btn-primary{% else %}btn-outline-primary{% endif %} flex-fill">
+            アリーナ情報
+        </a>
+
+        <a href="{% url 'accounts:history' %}?tab=nearby"
+           class="btn {% if tab == 'nearby' %}btn-primary{% else %}btn-outline-primary{% endif %} flex-fill">
+            周辺情報
+        </a>
+
+    </div>
+
+{% if tab == "facility" %}
+
+    {% if facility_posts %}
+
+        {% for post in facility_posts %}
+
+            <a href="{% url 'spots:facility_detail' post.pk %}"
+               class="text-decoration-none text-dark">
+
+                <div class="card mb-3">
+                    <div class="card-body">
+
+                        <h5 class="mb-2">
+                            {{ post.get_arena_name_display }}
+                        </h5>
+
+                        <p class="mb-2">
+                            {{ post.review|truncatechars:13 }}
+                        </p>
+
+                        <small class="text-muted">
+                            投稿日：{{ post.created_at|date:"Y/m/d" }}
+                        </small>
+
+                    </div>
+                </div>
+
+            </a>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="alert alert-secondary">
+            投稿はまだありません。
+        </div>
+
+    {% endif %}
+
+{% endif %}
+
+{% if tab == "nearby" %}
+
+    {% if nearby_posts %}
+
+        {% for post in nearby_posts %}
+
+            <a href="{% url 'spots:nearby_detail' post.pk %}"
+               class="text-decoration-none text-dark">
+
+                <div class="card mb-3">
+                    <div class="card-body">
+
+                        <h5 class="mb-2">
+                            {{ post.get_arena_name_display }}
+                        </h5>
+
+                        <p class="mb-2">
+                            {{ post.review|truncatechars:13 }}
+                        </p>
+
+                        <small class="text-muted">
+                            投稿日：{{ post.created_at|date:"Y/m/d" }}
+                        </small>
+
+                    </div>
+                </div>
+
+            </a>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="alert alert-secondary">
+            周辺情報の投稿はまだありません。
+        </div>
+
+    {% endif %}
+
+{% endif %}
+
+</div>
+
+{% endblock %}
