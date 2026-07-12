@@ -19,6 +19,14 @@
     {% for spot in nearby_spots %}
 
         <div class="card mb-3">
+
+            {% if spot.images.first %}
+                <img src="{{ spot.images.first.image.url }}"
+                     class="card-img-top"
+                     style="height: 220px; object-fit: cover;"
+                     alt="投稿写真">
+            {% endif %}
+
             <div class="card-body">
 
                 <h5>{{ spot.spot_name }}</h5>

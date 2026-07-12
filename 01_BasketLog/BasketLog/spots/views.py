@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import ArenaFacility, ArenaNearbySpot, ArenaFacilityImage
+from .models import ArenaFacility, ArenaNearbySpot, ArenaFacilityImage, ArenaNearbyImage
 from .forms import ArenaFacilityForm, ArenaNearbySpotForm
 from games.models import Diary
 from django.contrib import messages
@@ -238,13 +238,26 @@ def nearby_create(request, arena_id):
     arena_name = dict(Diary.ARENA_CHOICES).get(arena_id)
     
     if request.method == 'POST':
-        form = ArenaNearbySpotForm(request.POST)
-        if form.is_valid():
+        form = ArenaNearbySpotForm(request.POST, request.FILES)
+
+        images =  request.FILES.getlist("images")
+
+        if len(images) > 5:
+            form.add_error(None, "画像は５枚まで投稿できます")
+        
+        elif form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
             post.arena_name = arena_id # URLから届いたアリーナIDを自動固定
             post.save()
-            return redirect('spots:nearby_list', arena_id=arena_id)
+
+            for image in images:
+                ArenaNearbyImage.objects.create(
+                    arena_nearby=post,
+                    image=image
+                )
+
+            return redirect('spots:nearby_detail', post.pk)
     else:
         form = ArenaNearbySpotForm()
         
@@ -281,19 +294,40 @@ def nearby_update(request, pk):
         return redirect("spots:nearby_detail", pk=pk)
 
     if request.method == "POST":
-        form = ArenaNearbySpotForm(request.POST, instance=post)
+        form = ArenaNearbySpotForm(
+            request.POST, 
+            request.FILES,
+            instance=post
+        )
 
-        if form.is_valid():
+        images = request.FILES.getlist("images")
+
+        existing_count = post.images.count()
+
+        if existing_count + len(images) >5:
+            form.add_error(None, "画像は５枚まで投稿できます")
+
+        elif form.is_valid():
             form.save()
+
+            for image in images:
+                ArenaNearbyImage.objects.create(
+                    arena_nearby=post,
+                    image=image,
+                )
+
             return redirect("spots:nearby_detail", pk=post.pk)
 
     else:
         form = ArenaNearbySpotForm(instance=post)
 
+    images = post.images.all()
+
     arena_name = dict(Diary.ARENA_CHOICES).get(post.arena_name)
 
     return render(request, "spots/nearby_form.html", {
         "form": form,
+        "images":images,
         "title": "アリーナ周辺情報の編集",
         "arena_id": post.arena_name,
         "arena_name": arena_name,
@@ -312,3 +346,21 @@ def nearby_delete(request, pk):
         return redirect("spots:nearby_list", arena_id=arena_id)
     
     return redirect("spots:nearby_detail", pk=pk)
+
+@login_required
+def nearby_image_delete(request, image_pk):
+    image = get_object_or_404(ArenaNearbyImage, pk=image_pk)
+
+    if image.arena_nearby.user != request.user:
+        return redirect(
+            "spots:nearby_detail",
+            pk=image.arena_nearby.pk
+        )
+    
+    nearby_pk = image.arena_nearby.pk
+
+    if request.method == "POST":
+        image.delete()
+
+    return redirect("spots:nearby_update", pk=nearby_pk)
+    

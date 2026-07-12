@@ -32,13 +32,50 @@
         {{ form.review.errors }}
     </p>
 
+    <h3>写真（最大5枚）</h3>
 
+    <p>
+        <input
+            type="file"
+            name="images"
+            class="form-control"
+            multiple
+            accept="image/*">
+    </p>
+
+
+
+    {{ form.non_field_errors }}
     
     <button type="submit" class="btn btn-primary">
         投稿する
     </button>
+
     </form>
 
+{% if images %}
+<hr>
+
+<h5>現在の写真</h5>
+
+<div class="row">
+    {% for image in images %}
+        <div class="col-md-4 mb-3 text-center">
+            <img src="{{ image.image.url }}"
+                 class="img-fluid rounded mb-2">
+
+            <form method="post"
+                  action="{% url 'spots:nearby_image_delete' image.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">
+                    写真を削除
+                </button>
+            </form>
+
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
 
     
 

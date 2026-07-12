@@ -20,4 +20,5 @@ urlpatterns = [
     path('nearby/<int:pk>/', views.nearby_detail, name='nearby_detail'),
     path('nearby/<int:pk>/update/', views.nearby_update, name='nearby_update'),
     path('nearby/<int:pk>/delete/', views.nearby_delete, name='nearby_delete'),
+    path('nearby/image/<int:image_pk>/delete/', views.nearby_image_delete, name='nearby_image_delete'),
 ]

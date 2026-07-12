@@ -30,13 +30,25 @@
 
     <h4>写真</h4>
 
-    <h4>写真</h4>
+    {% if nearby.images.count %}
 
-    <p class="text-muted">
-        写真はまだ投稿されていません。
-    </p>
+        <div class="row">
+            {% for image in nearby.images.all %}
+                <div class="col-md-4 mb-3">
+                    <img src="{{ image.image.url }}"
+                         class="img-fluid rounded"
+                         alt="投稿写真">
+                </div>
+            {% endfor %}
+        </div>
 
-    </div>
+    {% else %}
+
+        <p class="text-muted">
+            写真はまだ投稿されていません。
+        </p>
+
+    {% endif %}
 
 <div class="mt-4">
 
