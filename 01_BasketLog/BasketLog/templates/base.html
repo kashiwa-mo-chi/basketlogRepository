@@ -10,11 +10,60 @@
     {% load static %}
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 </head>
 <body>
+
+<nav class="navbar bg-light shadow-sm">
+    <div class="container">
+
+        <div class="row w-100 align-items-center">
+
+            <!-- 左 -->
+            <div class="col-2">
+                <a href="{% url 'accounts:home' %}" class="text-dark">
+                    <i class="bi bi-house-door-fill fs-3"></i>
+                </a>
+            </div>
+
+            <!-- 中央 -->
+            <div class="col-8 text-center">
+                <a href="{% url 'accounts:home' %}"
+                   class="text-decoration-none text-dark fw-bold fs-3">
+                    🏀 バスケログ
+                </a>
+            </div>
+
+            <!-- 右 -->
+            <div class="col-2 text-end">
+
+                {% if user.is_authenticated %}
+
+                    <a href="#"
+                       class="text-dark me-2"
+                       title="マイページ">
+                        <i class="bi bi-person-circle fs-3"></i>
+                    </a>
+
+                    <a href="{% url 'accounts:user_logout' %}"
+                       class="text-dark"
+                       title="ログアウト">
+                        <i class="bi bi-box-arrow-right fs-3"></i>
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+</nav>
+
 
 <div class="container mt-3">
     {% if messages %}
@@ -29,11 +78,47 @@
     {% endif %}
 </div>
 
+<main class="container mt-4">
 
-{% block content %}
-{% endblock %}
+    {% block content %}
+    {% endblock %}
+
+</main>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+<footer class="navbar fixed-bottom bg-light border-top">
+
+    <div class="container d-flex justify-content-around text-center">
+
+        <a href="{% url 'games:diary_create' %}"
+           class="text-decoration-none text-dark">
+
+            <i class="bi bi-pencil-square fs-4"></i><br>
+            <small>観戦記録</small>
+
+        </a>
+
+        <a href="{% url 'games:diary_list' %}"
+           class="text-decoration-none text-dark">
+
+            <i class="bi bi-journal-text fs-4"></i><br>
+            <small>MY記録</small>
+
+        </a>
+
+        <a href="{% url 'spots:arena_list' %}"
+           class="text-decoration-none text-dark">
+
+            <i class="bi bi-building fs-4"></i><br>
+            <small>アリーナ</small>
+
+        </a>
+
+    </div>
+
+</footer>
 
 </body>
 </html>
