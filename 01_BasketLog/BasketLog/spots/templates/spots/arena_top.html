@@ -12,19 +12,24 @@
     </h1>
 
     <!-- カテゴリタブ -->
-    <ul class="nav nav-tabs justify-content-center mb-4">
+    <ul class="nav nav-tabs mb-4 flex-nowrap overflow-auto">
+
         <li class="nav-item">
-            <a class="nav-link active" href="#">子ども</a>
+            <a class="nav-link {% if not selected_category %}active{% endif %}"
+               href="?">
+                すべて
+            </a>
         </li>
+
+        {% for category in categories %}
         <li class="nav-item">
-            <a class="nav-link" href="#">グルメ</a>
+            <a class="nav-link {% if selected_category == category.id|stringformat:'s' %}active{% endif %}"
+               href="?category={{ category.id }}">
+                {{ category.arena_category }}
+            </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">チア</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">マスコット</a>
-        </li>
+        {% endfor %}
+
     </ul>
 
     <!-- 設備アンケート -->

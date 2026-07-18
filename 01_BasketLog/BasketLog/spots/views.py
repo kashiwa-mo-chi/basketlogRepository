@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import ArenaFacility, ArenaNearbySpot, ArenaFacilityImage, ArenaNearbyImage
+from .models import ArenaFacility, ArenaNearbySpot, ArenaFacilityImage, ArenaNearbyImage, Arena_Category, Spot_Category
 from .forms import ArenaFacilityForm, ArenaNearbySpotForm
 from games.models import Diary
 from django.contrib import messages
@@ -29,7 +29,15 @@ def arena_top(request, arena_id):
     # アリーナ内情報
     facilities = ArenaFacility.objects.filter(
         arena_name=arena_id
-    ).order_by("-created_at")
+    )
+
+    #カテゴリ
+    selected_category = request.GET.get("category")
+
+    if selected_category:
+        facilities = facilities.filter(category_id=selected_category)
+
+    facilities = facilities.order_by("-created_at")
 
     # 周辺情報
     nearby_spots = ArenaNearbySpot.objects.filter(
@@ -60,6 +68,10 @@ def arena_top(request, arena_id):
         # 投稿
         "facilities": facilities,
         "nearby_spots": nearby_spots,
+
+        #カテゴリ
+        "selected_category":selected_category,
+        "categories":Arena_Category.objects.all(),
 
         # 集計
         "total": total,
@@ -218,7 +230,14 @@ def nearby_list(request, arena_id):
     ).select_related(
         "category",
         "user"
-    ).order_by("-created_at")
+    )
+
+    selected_category = request.GET.get("category")
+
+    if selected_category:
+        nearby_spots = nearby_spots.filter(category_id=selected_category)
+
+    nearby_spots = nearby_spots.order_by("-created_at")
 
     arena_name =dict(Diary.ARENA_CHOICES).get(arena_id)
 
@@ -229,6 +248,9 @@ def nearby_list(request, arena_id):
             "arena_id":arena_id,
             "arena_name":arena_name,
             "nearby_spots":nearby_spots,
+
+            "selected_category":selected_category,
+            "categories":Spot_Category.objects.all(),
         },
     )
 

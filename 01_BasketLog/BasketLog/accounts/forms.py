@@ -35,3 +35,35 @@ class RegistForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+class EmailChangeForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["email"]
+        labels = {
+            "email":"メールアドレス",
+        }
+
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+
+        if User.objects.exclude(pk=self.instance.pk).filter(email=email).exists():
+            raise forms.ValidationError("このメールアドレスは既に使用されています")
+        
+        return email
+
+class UsernameChangeForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["username"]
+        labels = {
+            "username": "ユーザ名",
+        }
+
+    def clean_username(self):
+        username = self.cleaned_data["username"]
+
+        if User.objects.exclude(pk=self.instance.pk).filter(username=username).exists():
+            raise forms.ValidationError("このユーザ名は既に使用されています")
+        
+        return username

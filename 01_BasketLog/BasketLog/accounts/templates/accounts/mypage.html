@@ -12,16 +12,16 @@
             投稿履歴
         </a>
 
-        <a href="#" class="list-group-item list-group-item-action">
+        <a href="{% url 'accounts:username_change' %}" class="btn btn-outline-primary">
             ユーザ名の変更
         </a>
 
-        <a href="#" class="list-group-item list-group-item-action">
-            メールアドレスの変更
+        <a href="{% url 'accounts:email_change' %}" class="btn btn-primary">
+            メールアドレス変更
         </a>
 
-        <a href="#" class="list-group-item list-group-item-action">
-            パスワードの変更
+        <a href="{% url 'accounts:password_change' %}" class="btn btn-primary">
+            パスワード変更
         </a>
 
         

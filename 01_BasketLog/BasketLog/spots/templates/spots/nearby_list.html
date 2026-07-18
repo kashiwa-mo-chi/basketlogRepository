@@ -4,6 +4,26 @@
 
 <h2>{{ arena_name }} 周辺施設情報</h2>
 
+<ul class="nav nav-tabs mb-4 flex-nowrap overflow-auto">
+
+    <li class="nav-item">
+        <a class="nav-link {% if not selected_category %}active{% endif %}"
+           href="?">
+            すべて
+        </a>
+    </li>
+
+    {% for category in categories %}
+    <li class="nav-item">
+        <a class="nav-link {% if selected_category == category.id|stringformat:'s' %}active{% endif %}"
+           href="?category={{ category.id }}">
+            {{ category.spot_category }}
+        </a>
+    </li>
+    {% endfor %}
+
+</ul>
+
 <hr>
 
 <p>
