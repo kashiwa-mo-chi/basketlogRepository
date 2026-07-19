@@ -23,6 +23,7 @@ class DiaryForm(forms.ModelForm):
                 'rows':5,
                 'placeholder':'感想を入力しましょう'
             }),
+            'status':forms.RadioSelect(),
         }
 
     def clean(self):

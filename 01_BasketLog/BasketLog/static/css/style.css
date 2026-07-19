@@ -81,7 +81,7 @@ body{
 .card{
     border-radius: 15px;
     border: none;
-    box-shadow: 0 2px 8px  rgba(0,0,.08);
+    box-shadow: 0 2px 8px  rgba(0,0,0,.08);
     margin-bottom:15px;
 }
 
@@ -132,15 +132,707 @@ footer i{
 .home-link{
     display:inline-block;
     color:#f59700 !important;
-    font-size:1.2rem;
+    font-size:1.5rem;
     font-weight:bold;
     text-decoration:none;
-    padding-bottom:10px;
-    margin-bottom:20px;
-    border-bottom:3px solid #f59700;
+    margin-bottom:20px;    
 }
 
 .home-link:hover{
     color:#e65100;
-    border-bottom-color:#e65100;
+    }
+
+/* ==========================
+   観戦記録一覧
+========================== */
+
+
+.diary-page{
+    padding-top:20px;
+    padding-bottom:80px;
+}
+
+
+.page-title{
+    font-size:1.5rem;
+    font-weight:bold;
+    margin-bottom:20px;
+    color:#f59700;
+    text-align: center;
+}
+
+
+/* 検索 */
+
+.search-section{
+    background:#fff;
+    padding:15px;
+    border-radius:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+
+.search-box-group{
+    display:flex;
+    gap:8px;
+}
+
+
+.search-box-group input{
+    flex:1;
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:10px;
+}
+
+
+.search-btn{
+    background:#b0c4de;
+    color:#fff;
+    border:none;
+    width:45px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+
+/* 一覧 */
+
+.diary-list{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+
+.diary-item-link{
+    text-decoration:none;
+    color:inherit;
+}
+
+
+
+/* カード */
+
+.diary-card{
+    padding:15px;
+    background: #ffe4b5;
+    color:#696969;
+}
+
+.diary-item-link{
+    text-decoration:none;
+    color:#696969;
+}
+
+.match-meta{
+    font-size:.85rem;
+    color:#696969;
+    margin-bottom:10px;
+}
+
+
+.match-teams{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    font-size: 0.95rem;
+    gap:10px;
+    font-weight:bold;
+}
+
+
+.team{
+    text-align:center;
+}
+
+
+.vs{
+    color:#f59700;
+    font-size:.9rem;
+}
+
+/* 観戦記録カード内部 */
+
+.diary-content{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+
+.diary-info{
+    flex:1;
+}
+
+
+/* 写真 */
+
+.diary-thumbnail{
+    width:90px;
+    flex-shrink:0;
+}
+
+
+.diary-thumbnail img{
+    width:90px;
+    height:90px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+/* ページネーション */
+
+.pagination{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    margin-top:25px;
+}
+
+
+.page-btn{
+    width:40px;
+    height:40px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:50%;
+    background:#f59700;
+    color:#fff;
+    text-decoration:none;
+}
+
+
+.page-btn.disabled{
+    background:#ddd;
+}
+
+
+.page-current{
+    font-size:.9rem;
+}
+
+/* ==========================
+   観戦記録詳細
+========================== */
+
+
+.diary-detail-page{
+    padding-top:20px;
+    padding-bottom:80px;
+}
+
+
+/* タイトル */
+
+.diary-detail-page .page-title{
+    text-align:center;
+    color:#f59700;
+    font-size:1.5rem;
+    font-weight:bold;
+    margin-bottom:25px;
+}
+
+
+
+/* 日付・会場 */
+
+.diary-detail-page .match-meta{
+    text-align:center;
+    color:#000;
+    font-size:1.1rem;
+    font-weight: bold;
+    line-height:1.8;
+    margin-bottom:20px;
+}
+
+
+
+/* チーム表示 */
+
+.diary-detail-page .match-teams{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    color:#000;
+    font-size:1.1rem;
+    font-weight:bold;
+}
+
+
+.diary-detail-page .vs{
+    color:#000;
+    font-size:1rem;
+}
+
+
+
+/* スコア */
+
+.score-area{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    margin-top:20px;
+    font-size:1.4rem;
+    font-weight:bold;
+    color:#000;
+}
+
+
+.score-win{
+    color:#000;
+}
+
+
+.score-lose{
+    color:#000;
+}
+
+/* 感想 */
+
+.memo-box{
+    margin-top:25px;
+    padding:15px;
+    background:#fff;
+    border-radius:15px;
+    color:#000;
+    line-height:1.8;
+    min-height:120px;
+    white-space:pre-wrap;
+}
+
+/* 写真 */
+
+.photo-gallery{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:10px;
+    margin-top:25px;
+}
+
+
+.photo-wrapper img{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+
+
+/* ボタン */
+
+.diary-detail-page .btn-group{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-top:25px;
+}
+
+
+.diary-detail-page .btn{
+    min-width:100px;
+    padding:10px 20px;
+}
+
+
+/* ==========================
+   詳細画面ボタン
+========================== */
+
+
+.diary-detail-page .btn{
+    background:#ffe4b5;
+    border:none;
+    min-width:100px;
+    padding:10px 20px;
+    border-radius:10px;
+}
+
+
+/* 戻る */
+
+.back-btn{
+    color:#696969;
+}
+
+
+/* 編集 */
+
+.edit-btn{
+    color:#fff;
+}
+
+
+/* 削除 */
+
+.delete-btn{
+    color:red;
+}
+
+/* ==========================
+   観戦写真
+========================== */
+
+
+.photo-title{
+    font-size:1.2rem;
+    font-weight:bold;
+    color:#696969;
+    margin-top:30px;
+    margin-bottom:15px;
+}
+
+
+.photo-gallery{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:10px;
+}
+
+
+.photo-wrapper img{
+    width:100%;
+    height:140px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+/* ==========================
+   観戦記録フォーム
+========================== */
+
+
+.diary-form-page{
+    padding-top:20px;
+    padding-bottom:80px;
+}
+
+
+
+/* タイトル */
+
+.diary-form-page .page-title{
+    text-align:center;
+    color:#f59700;
+    font-size:1.5rem;
+    font-weight:bold;
+    margin-bottom:25px;
+}
+
+
+
+/* 入力カード */
+
+.diary-form-page .form-card{
+
+    background:#ffe4b5;
+    padding:15px;
+    border-radius:15px;
+    margin-bottom:20px;
+
+}
+
+
+.diary-form-page h3{
+
+    color:#696969;
+    font-size:1.1rem;
+    font-weight:bold;
+    margin-bottom:15px;
+
+}
+
+
+
+/* Djangoフォーム */
+
+.diary-form-page label{
+
+    display:block;
+    color:#696969;
+    font-weight:bold;
+    margin-bottom:5px;
+
+}
+
+
+.diary-form-page input:not([type="radio"]),
+.diary-form-page select,
+.diary-form-page textarea{
+
+    width:100%;
+    padding:10px;
+
+    border:1px solid #ddd;
+    border-radius:10px;
+
+    font-size:1rem;
+
+}
+
+
+
+.diary-form-page textarea{
+
+    min-height:150px;
+    resize:vertical;
+
+}
+
+
+
+/* 写真入力 */
+
+.diary-form-page .picture-fields{
+
+    background:#fff;
+
+}
+
+
+.diary-form-page .picture-fields label{
+
+    margin-bottom:8px;
+
+}
+
+
+
+/* エラー */
+
+.diary-form-page .errorlist{
+
+    color:red;
+    list-style:none;
+    padding-left:0;
+
+}
+
+
+
+/* 保存ボタン */
+
+.diary-submit-btn{
+
+    background:#f59700;
+    color:#fff;
+    border:none;
+    width:160px;
+    padding:10px 0;
+    border-radius:20px;
+    font-size:.95rem;
+    font-weight: bold;
+}
+
+.diary-submit-btn:hover{
+    opacity:.85;
+}
+
+/* ==========================
+   観戦記録入力フォーム調整
+========================== */
+
+
+.diary-form-page{
+    padding-top:10px;
+    padding-bottom:60px;
+}
+
+
+/* タイトル */
+
+.diary-form-page .page-title{
+    font-size:1.3rem;
+    margin-bottom:20px;
+}
+
+
+
+/* 入力エリア */
+
+.diary-input-area p{
+    margin-bottom:12px;
+}
+
+
+/* ラベル */
+
+.diary-input-area label{
+    font-size:.85rem;
+    margin-bottom:3px;
+}
+
+
+/* 入力欄 */
+
+.diary-input-area input,
+.diary-input-area select,
+.diary-input-area textarea{
+
+    padding:7px 10px;
+    font-size:.9rem;
+    border-radius:8px;
+
+}
+
+
+.diary-input-area textarea{
+    min-height:100px;
+}
+
+
+
+/* 公開範囲ラジオ */
+
+.diary-input-area input[type="radio"]{
+    width:auto;
+    margin-right:5px;
+}
+
+
+
+/* 写真 */
+
+.picture-fields{
+    margin-top:20px;
+    padding-top:15px;
+
+    border-top:1px solid #ddd;
+}
+
+
+.picture-fields h3{
+    font-size:1rem;
+    color:#696969;
+}
+
+
+.picture-fields input{
+    font-size:.85rem;
+}
+
+/* ==========================
+   公開範囲
+========================== */
+
+
+.status-options{
+    display:flex;
+    flex-direction:row;
+    gap:20px;
+    align-items:center;
+}
+
+
+.status-options label{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    gap:5px;
+    font-weight:normal;
+    margin:0;
+}
+
+
+.status-options input[type="radio"]{
+    width:auto;
+}
+
+/* ==========================
+   スコア入力
+========================== */
+
+
+.score-field{
+    margin-bottom:12px;
+}
+
+.score-title{
+    font-size:.85rem;
+    color:#696969;
+    font-weight:bold;
+    margin-bottom:3px;
+}
+
+
+.score-options{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+
+.score-options input{
+    width:80px;
+    text-align:center;
+}
+
+
+.score-options span{
+    font-size:1.2rem;
+    color:#696969;
+}
+
+/* ==========================
+   観戦写真入力
+========================== */
+
+
+.picture-fields{
+    margin-top:25px;
+    padding-top:15px;
+    border-top:1px solid #ddd;
+}
+
+.picture-title{
+    color:#696969;
+    font-size:1rem;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.picture-title span{
+    font-size:.8rem;
+    font-weight:normal;
+}
+
+/* 写真入力 */
+
+.picture-item{
+    margin-bottom:12px;
+}
+
+.picture-item label{
+    display:block;
+    color:#696969;
+    font-size:.85rem;
+    margin-bottom:3px;
+}
+
+.picture-item input[type="file"]{
+    width:100%;
+    padding:6px;
+    font-size:.85rem;
+    border-radius:8px;
+}
+
+/* ==========================
+   観戦記録フォーム タイトル
+========================== */
+.diary-form-page .page-title{
+    text-align:center;
+    color:#f59700;
+    font-size:1.4rem;
+    font-weight:bold;
+    margin-bottom:20px;
 }

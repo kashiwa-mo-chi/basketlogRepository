@@ -1,83 +1,176 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>MY観戦記録一覧画面</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-    <h1>MY観戦記録</h1>
-    <!--フリーワード検索エリア -->
-<div class="search-section">
-    <!-- 一覧画面（/games/diary/list/）に対して、キーワード（q）をGETで送信します -->
-    <form action="/games/diary/list/" method="get">
-        
-        <div class="search-box-group">
-            <!-- チーム名、アリーナ名などを何でも入力できる1つの検索窓 -->
-            <input type="search" name="q" value="{{ request.GET.q }}" placeholder="日付またはチーム名で検索">
-            
-            <!-- 検索実行ボタン -->
-            <button type="submit" class="btn search-btn">🔍</button>
-        </div>
-    </form>
-</div>
+{% block title %}
+MY観戦記録
+{% endblock %}
 
-<!-- 観戦記録のループ表示（5件ずつ） -->
-    <div class="diary-list">
-        {% for diary in page_obj %}
-            <!-- カード全体をクリックして詳細画面へ移動 -->
-            <a href="/games/diary/{{ diary.id }}/" class="diary-item-link">
-                <div class="diary-card">
-                    
-                    <!-- ① 日付 -->
-                    <div class="match-meta">
-                        〇 {{ diary.watch_date|date:"Y年m月d日" }}
-                    </div>
-                    <!-- ② ホームチーム名 VS アウェイチーム名 -->
-                    <div class="match-teams">
-                        <span class="team">{{ diary.get_home_team_name_display }}</span>
-                        <span class="vs">VS</span>
-                        <span class="team">{{ diary.get_away_team_name_display }}</span>
-                    </div>
-                    
-                    <!-- ③ 写真1枚（その試合の最初の写真があれば表示） -->
-                    {% if diary.pictures.all %}
-                        <div class="diary-thumbnail">
-                            <!-- .first で1枚目の写真だけを取り出します -->
-                            <img src="{{ diary.pictures.all.first.picture_url.url }}" alt="観戦写真">
-                        </div>
-                    {% endif %}
-                </div>
-            </a>
-        {% endfor %}
+
+{% block content %}
+
+<div class="container diary-page">
+
+    <h1 class="page-title">
+        MY観戦記録
+    </h1>
+
+
+    <!-- 検索 -->
+    <div class="search-section">
+
+        <form action="{% url 'games:diary_list' %}" method="get">
+
+            <div class="search-box-group">
+
+                <input 
+                    type="search"
+                    name="q"
+                    value="{{ request.GET.q }}"
+                    placeholder="日付またはチーム名で検索"
+                >
+
+                <button type="submit" class="search-btn">
+                    <i class="bi bi-search"></i>
+                </button>
+
+            </div>
+
+        </form>
+
     </div>
 
-    <!-- 📄 ページインデックス（ページネーション）エリア -->
-    {% if page_obj.has_other_pages %}
-        <div class="pagination">
-            
-            <!-- ◀ 前へボタン -->
-            {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="page-btn">＜</a>
-            {% else %}
-                <span class="page-btn disabled">＜</span>
-            {% endif %}
 
-            <!-- 数字のインデックス -->
-            <span class="page-current">
-                {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+
+    <!-- 一覧 -->
+    <div class="diary-list">
+
+        {% for diary in page_obj %}
+
+            <a href="{% url 'games:diary_detail' diary.id %}"
+               class="diary-item-link">
+
+
+                <div class="card diary-card">
+
+                    <div class="diary-content">
+
+                        <div class="diary-info">
+
+                        <div class="match-meta">
+                            {{ diary.watch_date|date:"Y年m月d日" }}
+                        </div>
+
+
+                        <div class="match-teams">
+
+                            <span class="team">
+                                {{ diary.get_home_team_name_display }}
+                            </span>
+
+                            <span class="vs">
+                                VS
+                            </span>
+
+                            <span class="team">
+                                {{ diary.get_away_team_name_display }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+    {% with picture=diary.pictures.first %}
+
+        {% if picture %}
+
+            <div class="diary-thumbnail">
+
+                <img src="{{ picture.picture_url.url }}"
+                     alt="観戦写真">
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+
+</div>               
+
+
+                </div>
+
+
+            </a>
+
+
+        {% empty %}
+
+            <p>
+                観戦記録がありません。
+            </p>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+
+
+    <!-- ページネーション -->
+
+    {% if page_obj.has_other_pages %}
+
+    <div class="pagination">
+
+
+        {% if page_obj.has_previous %}
+
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
+               class="page-btn">
+                ＜
+            </a>
+
+        {% else %}
+
+            <span class="page-btn disabled">
+                ＜
             </span>
 
-            <!-- ▶ 次へボタン -->
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="page-btn">＞</a>
-            {% else %}
-                <span class="page-btn disabled">＞</span>
-            {% endif %}
+        {% endif %}
 
-        </div>
+
+
+        <span class="page-current">
+            {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+        </span>
+
+
+
+        {% if page_obj.has_next %}
+
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
+               class="page-btn">
+                ＞
+            </a>
+
+        {% else %}
+
+            <span class="page-btn disabled">
+                ＞
+            </span>
+
+        {% endif %}
+
+
+    </div>
+
     {% endif %}
 
-</body>
-</html>
+
+</div>
+
+
+{% endblock %}

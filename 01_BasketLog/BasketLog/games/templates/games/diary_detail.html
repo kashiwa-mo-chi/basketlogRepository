@@ -1,27 +1,28 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>観戦記録詳細画面</title>
-</head>
-<body>
+{% extends "base.html" %}
 
 
-    <!-- 👑 追加：一番上のユーザー名表示 -->
-    <h1 class="user-title">
-        {{ diary.user.username }}の観戦記録 <!-- 👈 環境に合わせて diary.author や user.username 等に変更してください -->
+{% block title %}
+観戦記録詳細
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="container diary-detail-page">
+
+    <h1 class="page-title">
+        {{ diary.user.username }}の観戦記録
     </h1>
 
-    <!-- 1. 日付と会場 -->
-    <div class="match-meta">
-         {{ diary.watch_date|date:"Y年m月d日" }} 
-        <br> 
-         {{ diary.get_arena_name_display }}
-    </div>
+        <!-- 1. 日付と会場 -->
+        <div class="match-meta">
+            {{ diary.watch_date|date:"Y年m月d日" }} 
+            <br> 
+            {{ diary.get_arena_name_display }}
+        </div>
     
-    <!-- 2. スコアボード -->
-    <div class="score-board">
+         <!-- 2. スコアボード -->
+        <div class="score-board">
         <!-- チーム名とVSの横並び -->
         <div class="match-teams">
             <span class="team">{{ diary.get_home_team_name_display }}</span>
@@ -48,21 +49,24 @@
                 <span>{{ diary.away_team_score }}</span>
             {% endif %}
         </div>
+
     </div>
     
-    <!-- 3. 感想 -->
-    
-    <div class="memo-box">{{ diary.memory }}</div>
+    <!-- 3. 感想 -->         
+
+    <div class="memo-box">
+        {{ diary.memory }}
+    </div>
 
     <!-- 4. 写真のループ表示 -->
     {% if diary.pictures.all %}
-        <h2>📸 観戦フォト</h2>
         <div class="photo-gallery">
             {% for pic in diary.pictures.all %}
                 {% if pic.picture_url %}
                     <div class="photo-wrapper">
                         <img src="{{ pic.picture_url.url }}" alt="観戦写真">
                     </div>
+
                 {% endif %}
             {% endfor %}
         </div>
@@ -80,7 +84,7 @@
             <!-- 削除確認・処理画面への遷移ボタン -->
             <a href="/games/diary/{{ diary.id }}/delete/" class="btn delete-btn" onclick="return confirm('本当に削除してよろしいですか？');">削除</a>
         </div>
-        
-        
-        
     </div>
+   
+</div>
+{% endblock %}

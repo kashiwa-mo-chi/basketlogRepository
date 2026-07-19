@@ -1,59 +1,150 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>試合観戦記録の投稿</title>
-    <style>
-        /* 画面を少し見やすくするためのシンプルなスタイル */
-        body { font-family: sans-serif; max-width: 600px; margin: 20px auto; padding: 0 10px; }
-        .form-group { margin-bottom: 15px; }
-        .picture-fields { background: #f9f9f9; padding: 15px; border-radius: 5px; margin-top: 20px; }
-        .submit-btn { background: #ff6600; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        .submit-btn:hover { background: #e65c00; }
-        .errorlist { color: red; list-style: none; padding-left: 0; }
-        </style>
-</head>
-<body>
+{% extends "base.html" %}
 
-    <h1>🏀 試合観戦記録の投稿</h1>
+{% block content %}
 
-    <!-- 【超重要】画像を送信するために enctype="multipart/form-data" が必須です -->
+<div class="container mt-4 diary-form-page">
+
+    <h2 class="page-title">
+        観戦記録を作成する
+    </h2>
+
+
     <form method="post" enctype="multipart/form-data">
-        {% csrf_token %} <!-- セキュリティのためのお守り -->
 
-        <!-- 1. 全体に関わるエラー（チームの重複など）があれば一番上に表示する -->
+        {% csrf_token %}
+
+
         {% if diary_form.non_field_errors %}
             <div class="errorlist">
                 {{ diary_form.non_field_errors }}
             </div>
         {% endif %}
 
-        <!-- 2. 日記（観戦記録）本体の入力欄 -->
-        <h2>試合情報・感想</h2>
-        <div>
-            {{ diary_form.as_p }}
-        </div>
 
-        <!-- 3. 写真（最大5枚）のアップロード欄 -->
-        <div class="picture-fields">
-            <h2>📸 観戦写真（最大5枚まで）</h2>
-            
-            <!-- フォームセットが正しく動くために裏側で必須のデータ管理タグ -->
-            {{ picture_formset.management_form }}
-            
-            <!-- 5枚分のファイル選択ボタンをループ処理で並べる -->
-            {% for form in picture_formset %}
-                <div class="form-group">
-                    <label>写真 {{ forloop.counter }}:</label>
-                    {{ form.picture_url }}
-                    {{ form.id }} <!-- データの識別に必須の隠しタグ -->
+        <!-- 試合情報 -->
+        <div class="diary-input-area">
+            {% for field in diary_form %}
+
+                {% if field.name == "status" %}
+
+                    <div class="status-field">
+
+                        <div class="status-title">
+                            {{ field.label }}
+                        </div>
+
+
+                    <div class="status-options">
+
+                        {% for radio in field %}
+
+                            <label>
+                                {{ radio.tag }}
+                                {{ radio.choice_label }}
+                            </label>
+
+                        {% endfor %}
+
+                    </div>
+
                 </div>
-            {% endfor %}
+
+
+
+            {% elif field.name == "home_team_score" %}
+
+
+                <div class="score-field">
+
+                    <div class="score-title">
+                        スコア
+                    </div>
+
+
+                    <div class="score-options">
+
+                        {{ field }}
+
+                        <span>-</span>
+
+                        {{ diary_form.away_team_score }}
+
+                    </div>
+
+
+                </div>
+
+
+
+            {% elif field.name != "away_team_score" %}
+
+
+                <p>
+
+                    {{ field.label }}
+
+                    {{ field }}
+
+                </p>
+
+
+            {% endif %}
+
+
+        {% endfor %}
+
         </div>
 
-        <br>
-        <button type="submit" class="submit-btn">観戦記録を保存する</button>
+        </div>
+
+
+
+        <!-- 写真 -->
+        <div class="picture-fields">
+
+            <div class="picture-title">
+                 観戦写真
+                <span>（最大5枚まで）</span>
+            </div>
+
+
+            {{ picture_formset.management_form }}
+
+
+            {% for form in picture_formset %}
+
+                <div class="picture-item">
+
+                    <label>
+                        写真 {{ forloop.counter }}
+                    </label>
+
+                    {{ form.picture_url }}
+
+                    {{ form.id }}
+
+                </div>
+
+            {% endfor %}
+
+
+        </div>
+
+
+
+        <div class="text-center mt-4">
+
+            <button type="submit" class="diary-submit-btn">
+                保存
+            </button>
+
+        </div>
+
+
     </form>
 
-</body>
-</html>
+
+</div>
+
+
+{% endblock %}
