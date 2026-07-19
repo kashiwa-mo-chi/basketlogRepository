@@ -1,89 +1,89 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index.ホーム画面</title>
-</head>
-<body>
-    <header>
-        <h1 class="title">バスケログ</h1>
-        <nav class="nav">
-            <ul class="menu-group">
-                <li class="menu-item"><a href="#">ホーム</li>
-                <li class="menu-item"><a href="#">マイページ</li>
-                <li class="menu-item"><a href="#">ログアウト</li>
-        </nav>
-    </header>
+{% extends "base.html" %}
+
+{% block title %}
+ホーム
+{% endblock %}
+
+{% block content %}
     
+<a href="{% url 'games:public_diary_list' %}"
+   class="home-link">
+    <i class="bi bi-people-fill"></i>
+    みんなの観戦記録
+</a>
 
-    <a href="{% url 'games:public_diary_list' %}"class="btn">みんなの観戦記録</a>
-<div class="search-section">
-    <!-- 💡 ポイント：actionの送信先を「みんなの一覧画面（/games/diary/public/）」に指定します -->
-    <form action="/games/diary/public/" method="get">
-        
-        <div class="search-box-group">
-            <!-- チーム名、アリーナ名、日付を何でも入力できる検索窓 -->
-            <input type="search" name="q" placeholder="日付やチーム名で検索">
-            
-            <!-- 検索実行（虫眼鏡）ボタン -->
-            <button type="submit" class="btn search-btn">🔍</button>
-        </div>
+<form action="{% url 'games:public_diary_list' %}" method="get" class="mb-4">
 
-    </form>
-</div>
+    <div class="input-group">
 
-<div class="recent=section">
-    <img src="new.png" alt="new"><h2>最新観戦記録</h2>
+        <input
+            type="search"
+            name="q"
+            class="form-control"
+            placeholder="日付・チーム名で検索">
 
-    <div class="diary-list">
-            {% for diary in recent_diaries %}
-                <!-- カード全体をクリックすると詳細画面へ直接ジャンプできます -->
-                <a href="/games/diary/{{ diary.id }}/" class="diary-item-link">
-                    <div class="diary-card">
-                        
-                        <!-- 👤 投稿者のユーザー名 -->
-                        <div class="diary-author" style="font-size: 13px; color: #555; font-weight: bold;">
-                            👤 {{ diary.user.username }} さんの記録
-                        </div>
+        <button class="btn btn-outline-primary" type="submit">
+            <i class="bi bi-search"></i>
+        </button>
 
-                        <!-- ① 日付 -->
-                        <div class="match-meta">
-                            📅 {{ diary.watch_date|date:"Y年m月d日" }}
-                            </div>
-                        
-                        <!-- ② ホームチーム名 VS アウェイチーム名 -->
-                        <div class="match-teams">
-                            <span class="team">{{ diary.get_home_team_name_display }}</span>
-                            <span class="vs">VS</span>
-                            <span class="team">{{ diary.get_away_team_name_display }}</span>
-                        </div>
-                        
-                        <!-- ③ 写真1枚（あれば表示） -->
-                        {% if diary.pictures.all %}
-                            <div class="diary-thumbnail">
-                                <img src="{{ diary.pictures.all.first.picture_url.url }}" alt="観戦写真">
-                                </div>
-                        {% endif %}
-
-                    </div>
-                </a>
-            {% empty %}
-                <!-- まだデータがない場合 -->
-                <p class="no-data">最新の観戦記録はまだありません。</p>
-            {% endfor %}
-        </div>
     </div>
 
+</form>
 
+<h3 class="mb-3">
+    <i class="bi bi-stars text-warning"></i>
+    最新観戦記録
+</h3>
 
-   <nav class="navbar">
-      <ul>
-          <li><a href="{% url 'games:diary_create' %}" class="btn">観戦を記録</a></li>
-          <li><a href="{% url 'games:diary_list' %}" class="btn">MY観戦記録</a></li>
-          <li><a href="{% url 'spots:arena_list' %}" class="btn">アリーナ情報</a></li>
-        </ul>
-    </nav>
-  
-</body>
-</html>
+{% if recent_diaries %}
+
+    {% for diary in recent_diaries %}
+
+        <div class="card mb-3 shadow-sm">
+
+            {% if diary.pictures.all %}
+                <img src="{{ diary.pictures.all.first.picture_url.url }}"
+                     class="card-img-top"
+                     alt="観戦写真">
+            {% endif %}
+
+            <div class="card-body">
+
+                <h5 class="card-title fw-bold">
+                    {{ diary.get_home_team_name_display }}
+                    <span class="text-primary">VS</span>
+                    {{ diary.get_away_team_name_display }}
+                </h5>
+
+                <p class="card-text mb-1">
+                    <i class="bi bi-calendar-event"></i>
+                    {{ diary.watch_date|date:"Y年m月d日" }}
+                </p>
+
+                <p class="card-text mb-3">
+                    <i class="bi bi-person"></i>
+                    {{ diary.user.username }} さん
+                </p>
+
+                <div class="text-end">
+                    <a href="{% url 'games:diary_detail' diary_id=diary.id %}"
+                       class="btn btn-outline-primary btn-sm">
+                        詳細を見る
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <div class="alert alert-secondary">
+        最新の観戦記録はまだありません。
+    </div>
+
+{% endif %}
+
+{% endblock %}

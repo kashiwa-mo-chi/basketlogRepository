@@ -1,0 +1,146 @@
+/* ==========================
+   共通
+========================== */
+
+body {
+    background-color: #ffffff;
+    font-family: sans-serif;
+}
+
+/* ページタイトル */
+
+h2{
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* ==========================
+   ヘッダー
+========================== */
+
+.app-header{
+    background:#f59700;
+    height:60px;
+}
+
+.app-header a{
+    color:#212529;
+    text-decoration:none;
+}
+
+.app-header .text-white{
+    color:#fff !important;
+}
+
+.app-header i{
+    vertical-align:middle;
+}
+
+.app-header .row{
+    height:60px;
+}
+
+.app-header .col-8{
+    white-space:nowrap;
+}
+
+/* ==========================
+   フッター
+========================== */
+
+.app-footer {
+    background: #f59700;
+}
+
+.app-footer a {
+    color: #fff;              /* 文字 */
+    text-decoration: none;
+}
+
+.app-footer a i {
+    color: #212529;           /* アイコン */
+}
+
+/* ==========================
+   スマホアプリ表示用
+========================== */
+
+body{
+    max-width:430px;
+    margin:0 auto;
+    min-height:100vh;
+}
+
+
+
+/* ==========================
+   カード
+========================== */
+
+.card{
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 2px 8px  rgba(0,0,.08);
+    margin-bottom:15px;
+}
+
+/* ==========================
+   ボタン
+========================== */
+
+.btn{
+    border-radius: 10px;
+}
+
+/* ==========================
+   フォーム
+========================== */
+
+.form-control{
+    border-radius: 10px;
+}
+
+.form-select{
+    border-radius: 10px;
+}
+
+/* ==========================
+   画像
+========================== */
+
+img{
+    border-radius: 10px;
+}
+
+/* ==========================
+   押しやすくする
+========================== */
+
+footer small{
+    font-size: .75rem;
+}
+
+footer i{
+    font-size: 1.4rem;
+}
+
+/* ==========================
+   ホーム画面
+========================== */
+
+.home-link{
+    display:inline-block;
+    color:#f59700 !important;
+    font-size:1.2rem;
+    font-weight:bold;
+    text-decoration:none;
+    padding-bottom:10px;
+    margin-bottom:20px;
+    border-bottom:3px solid #f59700;
+}
+
+.home-link:hover{
+    color:#e65100;
+    border-bottom-color:#e65100;
+}
