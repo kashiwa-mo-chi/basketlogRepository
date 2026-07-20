@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<h2 class="mb-4">
+<div class="arena-list-title">
     アリーナ情報
-</h2>
+</div>
 
 <form method="get" class="mb-4">
 
@@ -17,10 +17,8 @@
             placeholder="検索"
             value="{{ query }}">
 
-        <button class="btn btn-primary" type="submit">
-
+        <button class="arena-search-btn" type="submit">
             <i class="bi bi-search"></i>
-
         </button>
 
     </div>
@@ -29,16 +27,24 @@
 
 <hr>
 
-<ul>
-    {% for arena_id, arena_name in arenas %}
-        <li>
-            <a href="{% url 'spots:arena_top' arena_id %}">
-                {{ arena_name }}
-            </a>
-        </li>
-    {% empty %}
-        <li>該当するアリーナがありません</li>
-    {% endfor %}
-</ul>
+<ul class="arena-simple-list">
 
+    {% for arena_id, arena_name in arenas %}
+
+    <li>
+        <a href="{% url 'spots:arena_top' arena_id %}">
+         {{ arena_name }}
+        </a>
+    </li>
+
+    {% empty %}
+
+    <li>
+        該当するアリーナがありません
+    </li>
+
+    {% endfor %}
+
+</ul>
+    
 {% endblock %}

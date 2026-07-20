@@ -7,12 +7,12 @@
 <div class="container mt-4">
 
     <!-- アリーナ名 -->
-    <h1 class="display-5 fw-bold text-center mb-4">
+    <div class="arena_title">
         {{ arena_name }}
-    </h1>
+    </div>
 
     <!-- カテゴリタブ -->
-    <ul class="nav nav-tabs mb-4 flex-nowrap overflow-auto">
+    <ul class="arena_category-tabs mb-4">
 
         <li class="nav-item">
             <a class="nav-link {% if not selected_category %}active{% endif %}"
@@ -63,62 +63,45 @@
         </div>
     </div>
 
-    <!-- 最新口コミ -->
-    <h4 class="mb-3">最新口コミ</h4>
+<!-- 最新口コミ -->
 
-    {% for post in recent_posts %}
-    <a href="{% url 'spots:facility_detail' post.pk %}"
-       class="text-decoration-none text-dark">
+{% for post in recent_posts %}
 
-        <div class="card mb-2">
-            <div class="card-body">
-                            </div>
-        </div>
+<a href="{% url 'spots:facility_detail' post.pk %}"
+   class="text-decoration-none text-dark">
 
-    </a>
-
-
-                <small class="text-muted">
-                    {{ post.category }}
-                </small>
-
-                <p class="mb-1">
-                    {{ post.review|truncatechars:30 }}
-                </p>
-
-                {% if post.images.all %}
-                <div class="row mb-2">
-                    {% for image in post.images.all %}
-                        <div class="col-4">
-                            <img
-                                src="{{ image.image.url }}"
-                                class="img-fluid rounded"
-                                alt="口コミ画像">
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
+    <div class="card mb-3">
+        <div class="card-body">
 
             <small class="text-muted">
-                {{ post.created_at }}
+                {{ post.category }}
             </small>
 
-            </div>
+            <p class="mb-2">
+                {{ post.review|truncatechars:15 }}
+            </p>
+
         </div>
-    {% empty %}
-        <p>まだ投稿がありません</p>
-    {% endfor %}
+    </div>
+
+</a>
+
+{% empty %}
+
+<p>まだ投稿がありません</p>
+
+{% endfor %}
 
     <!-- 投稿ボタン -->
-    <div class="text-center mt-4">
+    <div class="arena-action-buttons mt-4">
 
         <a href="{% url 'spots:facility_post_create' arena_id %}"
-           class="btn btn-primary me-2">
+           class="arena-post-btn">
             新規投稿
         </a>
 
         <a href="{% url 'spots:nearby_list' arena_id %}"
-           class="btn btn-success">
+           class="arena-nearby-btn">
             周辺施設情報を見る
         </a>
 

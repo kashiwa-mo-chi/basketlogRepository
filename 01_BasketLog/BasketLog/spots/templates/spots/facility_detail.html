@@ -8,18 +8,15 @@
 
 <div class="container mt-4">
 
-    <h2>{{ post.get_arena_name_display }}</h2>
+    <div class="arena_title">
+        {{ post.get_arena_name_display }}
+    </div>
 
     <p class="text-muted">
         投稿日：{{ post.created_at|date:"Y年m月d日 H:i" }} ユーザ名：{{ post.user.username }}<br>
     </p>
 
-    <hr>
-
-    <h4>カテゴリ</h4>
-    <p>{{ post.category }}</p>
-
-    <hr>
+    
 
     <h4>設備</h4>
 
@@ -28,6 +25,13 @@
     <p>おむつ交換台：{{ post.get_diaper_table_display }}</p>
 
     <p>授乳室：{{ post.get_nursing_room_display }}</p>
+
+    <hr>
+
+    <hr>
+
+    <h4>カテゴリ</h4>
+    <p>{{ post.category }}</p>
 
     <hr>
 
