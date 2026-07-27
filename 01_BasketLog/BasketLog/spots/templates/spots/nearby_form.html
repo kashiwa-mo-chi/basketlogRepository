@@ -9,18 +9,26 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+
+    <hr>
+
+    <h3>施設名</h3>
+
+    <p>
+        {{ form.spot_name }}
+        {{ form.spot_name.errors }}
+    </p>
+
     <h3>カテゴリ</h3>
 
     <p>
         {{ form.category }}
         {{ form.category.errors }}
-    </p>
-
-    <h3>スポット名</h3>
-
-    <p>
-        {{ form.spot_name }}
-        {{ form.spot_name.errors }}
     </p>
 
     <hr>
@@ -32,51 +40,50 @@
         {{ form.review.errors }}
     </p>
 
+    <hr>
+
     <h3>写真（最大5枚）</h3>
 
     <p>
+
         <input
             type="file"
             name="images"
-            class="form-control"
             multiple
             accept="image/*">
+
     </p>
 
+    <hr>
 
-
-    {{ form.non_field_errors }}
     
-    <button type="submit" class="btn btn-primary">
+    <button type="submit" class="btn diary-submit-btn">
         投稿する
     </button>
-
     </form>
 
 {% if images %}
 <hr>
-
 <h5>現在の写真</h5>
 
 <div class="row">
     {% for image in images %}
         <div class="col-md-4 mb-3 text-center">
             <img src="{{ image.image.url }}"
-                 class="img-fluid rounded mb-2">
+                class="img-fluid rounded mb-2">
 
-            <form method="post"
+           <form method="post"
                   action="{% url 'spots:nearby_image_delete' image.pk %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger btn-sm">
                     写真を削除
                 </button>
             </form>
-
         </div>
     {% endfor %}
 </div>
 {% endif %}
-
+      
     
 
 {% endblock %}

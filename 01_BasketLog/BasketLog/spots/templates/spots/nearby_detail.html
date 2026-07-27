@@ -1,92 +1,81 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{ nearby.spot_name }}
+{{ post.get_arena_name_display }}
 {% endblock %}
 
 {% block content %}
 
 <div class="container mt-4">
 
-    <h2>{{ nearby.spot_name }}</h2>
+    <div class="arena_title">
+        {{ nearby.get_arena_name_display }}
+    </div>
 
     <p class="text-muted">
         投稿日：{{ nearby.created_at|date:"Y年m月d日 H:i" }} ユーザ名：{{ nearby.user.username }}<br>
     </p>
 
-    <hr>
+    <h5 class="section-title">施設名</h5>
 
-    <h4>カテゴリ</h4>
-    <p>{{ nearby.category }}</p>
+    <p>{{ nearby.spot_name }}</p>
+
+    <hr>
     
 
-    <h4>口コミ</h4>
-
-    <p style="white-space: pre-wrap;">
-        {{ nearby.review }}
-    </p>
+    <h5 class="section-title">カテゴリ</h5>
+    <p>{{ nearby.category }}</p>
 
     <hr>
 
-    <h4>写真</h4>
+    <p style="white-space: pre-wrap;">{{ nearby.review }}</p>
 
-    {% if nearby.images.count %}
+    <hr>
 
-        <div class="row">
-            {% for image in nearby.images.all %}
-                <div class="col-md-4 mb-3">
-                    <img src="{{ image.image.url }}"
-                         class="img-fluid rounded"
-                         alt="投稿写真">
-                </div>
-            {% endfor %}
-        </div>
+    <div class="row">
 
-    {% else %}
+        {% for image in nearby.images.all %}
+            <div class="col-md-4 mb-3">
+                <img src="{{ image.image.url }}"
+                     class="img-fluid rounded">
+            </div>
+        {% empty %}
+            <p>写真はありません。</p>
+        {% endfor %}
 
-        <p class="text-muted">
-            写真はまだ投稿されていません。
-        </p>
+    </div>
 
-    {% endif %}
+</div>
 
-<div class="mt-4">
-
+<div class="btn-group mt-4">
     <a href="{% url 'spots:nearby_list' nearby.arena_name %}"
-       class="btn btn-outline-secondary">
-        ← 周辺施設一覧へ戻る
+       class="btn back-btn">
+        戻る
     </a>
-
 </div>
 
 {% if request.user == nearby.user %}
 
-<hr>
+<div class="action-box">
+    <div class="btn-group">
 
-<div class="d-flex gap-2">
-    
-    <a href="{% url 'spots:nearby_update' nearby.pk %}"
-       class="btn btn-outline-primary">
-        編集
-    </a>
-    
+        <a href="{% url 'spots:nearby_update' nearby.pk %}"
+            class="btn edit-btn">
+             編集
+        </a>
 
-    
-    <button
-        type="button"
-        class="btn btn-outline-danger"
-        data-bs-toggle="modal"
-        data-bs-target="#deleteModal">
+        <button
+            type="button"
+            class="btn delete-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteModal">
+            削除
+        </button>
 
-        削除
-
-    </button>
-    
-
+    </div>
 </div>
 
 {% endif %}
-
 
 <!-- 削除確認モーダル -->
 <div class="modal fade"
@@ -101,7 +90,7 @@
             <div class="modal-header">
 
                 <h5 class="modal-title">
-                    投稿を削除しますか？
+                    周辺施設情報を削除しますか？
                 </h5>
 
                 <button type="button"
@@ -113,7 +102,7 @@
 
             <div class="modal-body">
 
-                本当に削除してよろしいですか
+                本当に削除してもよろしいですか
 
             </div>
 
@@ -133,7 +122,6 @@
         </button>
 
     </form>
-    
 
     <button
         type="button"

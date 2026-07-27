@@ -98,3 +98,51 @@ def public_diary_list(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'games/public_diary_list.html', {'page_obj': page_obj})
+@login_required
+def diary_update(request, diary_id):
+    """観戦記録編集"""
+
+    diary = get_object_or_404(Diary, id=diary_id)
+
+    # 投稿者以外は編集できない
+    if diary.user != request.user:
+        return redirect("games:diary_detail", diary_id=diary.id)
+
+    if request.method == "POST":
+        diary_form = DiaryForm(request.POST, instance=diary)
+        picture_formset = DiaryPictureFormSet(
+            request.POST,
+            request.FILES,
+            instance=diary
+        )
+
+        if diary_form.is_valid() and picture_formset.is_valid():
+            diary_form.save()
+            picture_formset.save()
+
+            return redirect("games:diary_detail", diary_id=diary.id)
+
+    else:
+        diary_form = DiaryForm(instance=diary)
+        picture_formset = DiaryPictureFormSet(instance=diary)
+
+    context = {
+        "diary_form": diary_form,
+        "picture_formset": picture_formset,
+        "is_edit": True,
+    }
+
+    return render(request, "games/diary_form.html", context)
+
+@login_required
+def diary_delete(request, diary_id):
+    diary = get_object_or_404(Diary, pk=diary_id)
+
+    # 投稿者以外は削除できない
+    if diary.user != request.user:
+        return redirect("games:diary_detail", diary_id=diary_id)
+
+    if request.method == "POST":
+        diary.delete()
+
+    return redirect("games:diary_list")

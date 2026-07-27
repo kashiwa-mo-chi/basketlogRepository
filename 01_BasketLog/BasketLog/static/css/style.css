@@ -408,6 +408,8 @@ footer i{
     line-height:1.8;
     min-height:120px;
     white-space:pre-wrap;
+
+    text-align:left;
 }
 
 /* 写真 */
@@ -431,7 +433,7 @@ footer i{
 
 /* ボタン */
 
-.diary-detail-page .btn-group{
+.btn-group{
     display:flex;
     justify-content:center;
     gap:15px;
@@ -439,18 +441,19 @@ footer i{
 }
 
 
-.diary-detail-page .btn{
+.btn-group .btn{
     min-width:100px;
     padding:10px 20px;
 }
 
 
 /* ==========================
-   詳細画面ボタン
+   詳細画面ボタン共通　観戦記録・アリーナ詳細
 ========================== */
 
-
-.diary-detail-page .btn{
+.back-btn,
+.edit-btn,
+.delete-btn{
     background:#ffe4b5;
     border:none;
     min-width:100px;
@@ -458,22 +461,16 @@ footer i{
     border-radius:10px;
 }
 
-
-/* 戻る */
-
 .back-btn{
     color:#696969;
+    border:none;
 }
-
-
-/* 編集 */
 
 .edit-btn{
-    color:#fff;
+    background: #ffe4b5;
+    color:#fff !important;
+    border:none;
 }
-
-
-/* 削除 */
 
 .delete-btn{
     color:red;
@@ -941,4 +938,59 @@ footer i{
     color:#696969;
     text-decoration:none;
     font-weight:bold;
+}
+
+/* ==========================
+   アリーナ詳細
+========================== */
+
+.section-title{
+    font-weight:600;
+    margin-bottom:15px;
+    color:#444;
+}
+
+/* ==========================
+   nearby_list
+========================== */
+
+.page-title{
+    color:#f59700;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.nearby-card{
+    background:#ffe4b5;
+    border:none;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+}
+
+.nearby-thumbnail{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.nearby-body{
+    color:#696969;
+}
+
+.nearby-name{
+    color:#f59700;
+    font-size:1.1rem;
+    font-weight:bold;
+}
+
+.detail-btn{
+    border:2px solid #f59700;
+    color:#f59700;
+    border-radius:12px;
+}
+
+.detail-btn:hover{
+    background:#f59700;
+    color:#fff;
 }

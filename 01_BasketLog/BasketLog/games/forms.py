@@ -49,3 +49,4 @@ DiaryPictureFormSet = forms.inlineformset_factory(
     max_num=5,
     can_delete=True
 )
+

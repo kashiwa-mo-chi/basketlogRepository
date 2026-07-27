@@ -54,9 +54,7 @@
     
     <!-- 3. 感想 -->         
 
-    <div class="memo-box">
-        {{ diary.memory }}
-    </div>
+    <div class="memo-box">{{ diary.memory }}</div>
 
     <!-- 4. 写真のループ表示 -->
     {% if diary.pictures.all %}
@@ -73,18 +71,96 @@
     {% endif %}
 
     <!-- 5. 下部ボタンエリア -->
-     <div class="btn-group">
+    <div class="btn-group">
             <!-- 一覧画面への遷移ボタン -->
-            <a href="/games/diary/list/" class="btn back-btn">戻る</a>
-        </div>
+        <a href="/games/diary/list/" class="btn back-btn">戻る</a>
+    </div>
+
+    {% if diary.user == request.user %}
+
     <div class="action-box">
         <div class="btn-group">
             <!-- 編集画面への遷移ボタン -->
-            <a href="/games/diary/{{ diary.id }}/edit/" class="btn edit-btn">編集</a>
+            <a href="{% url 'games:diary_update' diary.id %}"
+                class="btn edit-btn">
+                 編集
+            </a>
+            
             <!-- 削除確認・処理画面への遷移ボタン -->
-            <a href="/games/diary/{{ diary.id }}/delete/" class="btn delete-btn" onclick="return confirm('本当に削除してよろしいですか？');">削除</a>
+            <button
+                type="button"
+                class="btn delete-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal">
+                削除
+            </button>
+
         </div>
     </div>
-   
+
+    {% endif %}
+
+    <!-- 削除確認モーダル -->
+    <div class="modal fade"
+        id="deleteModal"
+        tabindex="-1"
+        aria-hidden="true">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        観戦記録を削除しますか？
+                    </h5>
+
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+            <div class="modal-body">
+
+                本当に削除してもよろしいですか
+
+            </div>
+
+<div class="modal-footer d-block">
+
+    <form method="post"
+          action="{% url 'games:diary_delete' diary.pk %}">
+
+        {% csrf_token %}
+
+        <button
+            type="submit"
+            class="btn btn-danger w-100 mb-2">
+
+            削除する
+
+        </button>
+
+    </form>
+
+    <button
+        type="button"
+        class="btn btn-outline-secondary w-100"
+        data-bs-dismiss="modal">
+
+        戻る
+
+    </button>
+
 </div>
+
+        </div>
+    </div>
+</div>
+
 {% endblock %}
+
+

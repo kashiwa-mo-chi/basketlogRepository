@@ -5,9 +5,12 @@
 <div class="container mt-4 diary-form-page">
 
     <h2 class="page-title">
-        観戦記録を作成する
+        {% if is_edit %}
+            観戦記録を編集する
+        {% else %}
+            観戦記録を作成する
+        {% endif %}
     </h2>
-
 
     <form method="post" enctype="multipart/form-data">
 

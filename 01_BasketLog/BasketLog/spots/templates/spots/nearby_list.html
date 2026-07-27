@@ -1,93 +1,104 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
+{% block title %}{{ arena_name }} | バスケログ{% endblock %}
 
 {% block content %}
 
-<h2>{{ arena_name }} 周辺施設情報</h2>
+<div class="container mt-4">
 
-<ul class="nav nav-tabs mb-4 flex-nowrap overflow-auto">
+    <!-- アリーナ名 -->
+    <div class="arena_title">
+        {{ arena_name }}
+    </div>
 
-    <li class="nav-item">
-        <a class="nav-link {% if not selected_category %}active{% endif %}"
-           href="?">
-            すべて
-        </a>
-    </li>
+    <!-- カテゴリタブ -->
+    <ul class="arena_category-tabs mb-4">
 
-    {% for category in categories %}
-    <li class="nav-item">
-        <a class="nav-link {% if selected_category == category.id|stringformat:'s' %}active{% endif %}"
-           href="?category={{ category.id }}">
-            {{ category.spot_category }}
-        </a>
-    </li>
-    {% endfor %}
+        <li class="nav-item">
+            <a class="nav-link {% if not selected_category %}active{% endif %}"
+               href="?">
+                すべて
+            </a>
+        </li>
 
-</ul>
+        {% for category in categories %}
+        <li class="nav-item">
+            <a class="nav-link {% if selected_category == category.id|stringformat:'s' %}active{% endif %}"
+               href="?category={{ category.id }}">
+                {{ category.spot_category }}
+            </a>
+        </li>
+        {% endfor %}
 
-<hr>
+    </ul>
 
-<p>
-    <a href="{% url 'spots:nearby_create' arena_id %}"
-       class="btn btn-primary">
-        新規投稿
-    </a>
-</p>
-
-<hr>
+<!-- 最新口コミ -->
 
 {% if nearby_spots %}
-    {% for spot in nearby_spots %}
 
-        <div class="card mb-3">
+{% for spot in nearby_spots %}
 
-            {% if spot.images.first %}
-                <img src="{{ spot.images.first.image.url }}"
-                     class="card-img-top"
-                     style="height: 220px; object-fit: cover;"
-                     alt="投稿写真">
-            {% endif %}
+<a href="{% url 'spots:nearby_detail' spot.pk %}"
+   class="text-decoration-none text-dark">
 
-            <div class="card-body">
+    <div class="card mb-3">
 
-                <h5>{{ spot.spot_name }}</h5>
+        {% if spot.images.first %}
+            <img src="{{ spot.images.first.image.url }}"
+                 class="card-img-top"
+                 style="height:220px;object-fit:cover;"
+                 alt="投稿写真">
+        {% endif %}
 
-                <p>
-                    <strong>カテゴリ：</strong>
-                    {{ spot.category }}
-                </p>
+        <div class="card-body">
 
-                <p>
-                    {{ spot.review|truncatechars:100 }}
-                </p>
+            <small class="text-muted">
+                {{ spot.category }}
+            </small>
 
-                <p class="text-muted">
-                    投稿者：{{ spot.user.username }}
-                    ／
-                    {{ spot.created_at|date:"Y/m/d" }}
-                </p>
+            <h5 class="mt-2">
+                {{ spot.spot_name }}
+            </h5>
 
-                <a href="{% url 'spots:nearby_detail' spot.pk %}"
-                   class="btn btn-outline-primary btn-sm">
-                    詳細を見る
-                </a>
+            <p class="mb-2">
+                {{ spot.review|truncatechars:40 }}
+            </p>
 
-                
+            <small class="text-muted">
+                {{ spot.user.username }}
+                ・
+                {{ spot.created_at|date:"Y/m/d" }}
+            </small>
 
-            </div>
         </div>
 
-    {% endfor %}
+    </div>
+
+</a>
+
+{% endfor %}
+
 {% else %}
 
 <p>まだ周辺施設情報は投稿されていません。</p>
 
 {% endif %}
 
-<p>
-    <a href="{% url 'spots:arena_top' arena_id %}"
-       class="btn btn-secondary">
-        アリーナへ戻る
-    </a>
-</p>
+    <!-- 投稿ボタン -->
+    <div class="arena-action-buttons mt-4">
+
+        <a href="{% url 'spots:nearby_create' arena_id %}"
+           class="arena-post-btn">
+            新規投稿
+        </a>
+
+        <a href="{% url 'spots:arena_top' arena_id %}"
+           class="arena-nearby-btn">
+            アリーナ情報一覧へ戻る
+        </a>
+
+    </div>
+
+</div>
 
 {% endblock %}

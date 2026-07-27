@@ -18,7 +18,7 @@
 
     
 
-    <h4>設備</h4>
+    <h5 class="section-title">設備</h5>
 
     <p>キッズスペース：{{ post.get_kids_space_display }}</p>
 
@@ -28,22 +28,14 @@
 
     <hr>
 
-    <hr>
-
-    <h4>カテゴリ</h4>
+    <h5 class="section-title">カテゴリ</h5>
     <p>{{ post.category }}</p>
 
     <hr>
 
-    <h4>口コミ</h4>
-
-    <p style="white-space: pre-wrap;">
-        {{ post.review }}
-    </p>
+    <p style="white-space: pre-wrap;">{{ post.review }}</p>
 
     <hr>
-
-    <h4>写真</h4>
 
     <div class="row">
 
@@ -60,36 +52,32 @@
 
 </div>
 
-<div class="mt-4">
-
+<div class="btn-group mt-4">
     <a href="{% url 'spots:arena_top' post.arena_name %}"
-       class="btn btn-outline-secondary">
-        ← アリーナ情報へ戻る
+       class="btn back-btn">
+        戻る
     </a>
-
 </div>
 
 {% if request.user == post.user %}
 
-<hr>
+<div class="action-box">
+    <div class="btn-group">
 
-<div class="d-flex gap-2">
+        <a href="{% url 'spots:facility_post_update' post.pk %}"
+            class="btn edit-btn">
+             編集
+        </a>
 
-    <a href="{% url 'spots:facility_post_update' post.pk %}"
-       class="btn btn-outline-primary">
-        編集
-    </a>
+        <button
+            type="button"
+            class="btn delete-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteModal">
+            削除
+        </button>
 
-    <button
-        type="button"
-        class="btn btn-outline-danger"
-        data-bs-toggle="modal"
-        data-bs-target="#deleteModal">
-
-        削除
-
-    </button>
-
+    </div>
 </div>
 
 {% endif %}
@@ -119,7 +107,7 @@
 
             <div class="modal-body">
 
-                本当に削除してよろしいですか
+                本当に削除してもよろしいですか
 
             </div>
 
