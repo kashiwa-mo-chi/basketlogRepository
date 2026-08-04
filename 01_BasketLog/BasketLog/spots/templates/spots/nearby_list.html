@@ -39,36 +39,19 @@
 {% for spot in nearby_spots %}
 
 <a href="{% url 'spots:nearby_detail' spot.pk %}"
-   class="text-decoration-none text-dark">
+   class="text-decoration-none">
 
-    <div class="card mb-3">
-
-        {% if spot.images.first %}
-            <img src="{{ spot.images.first.image.url }}"
-                 class="card-img-top"
-                 style="height:220px;object-fit:cover;"
-                 alt="投稿写真">
-        {% endif %}
+    <div class="nearby-card mb-3">
 
         <div class="card-body">
 
-            <small class="text-muted">
-                {{ spot.category }}
-            </small>
-
-            <h5 class="mt-2">
+            <h5 class="nearby-name">
                 {{ spot.spot_name }}
             </h5>
 
-            <p class="mb-2">
-                {{ spot.review|truncatechars:40 }}
+            <p class="nearby-review">
+                {{ spot.review|truncatechars:13 }}
             </p>
-
-            <small class="text-muted">
-                {{ spot.user.username }}
-                ・
-                {{ spot.created_at|date:"Y/m/d" }}
-            </small>
 
         </div>
 
@@ -77,6 +60,32 @@
 </a>
 
 {% endfor %}
+
+{% if nearby_spots.has_other_pages %}
+
+<div class="pagination-area text-center">
+
+    {% if nearby_spots.has_previous %}
+        <a href="?page={{ nearby_spots.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}">
+            ← 前へ
+        </a>
+    {% endif %}
+
+
+    <span>
+        {{ nearby_spots.number }} / {{ nearby_spots.paginator.num_pages }}
+    </span>
+
+
+    {% if nearby_spots.has_next %}
+        <a href="?page={{ nearby_spots.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}">
+            次へ →
+        </a>
+    {% endif %}
+
+</div>
+
+{% endif %}
 
 {% else %}
 

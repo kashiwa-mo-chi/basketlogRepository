@@ -2,103 +2,165 @@
 
 {% block content %}
 
-<h2>{{ arena_name }}</h2>
+<div class="container mt-4">
 
-<h3>{{ title }}</h3>
+    <h2 class="page-title">{{ arena_name }}</h2>
+    <p class="form-subtitle">{{ title }}</p>
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
+    <div class="card form-card">
 
-    {% if form.non_field_errors %}
-        <div class="alert alert-danger">
-            {{ form.non_field_errors }}
+        <div class="card-body">
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <!-- 設備 -->
+                <div class="facility-row">
+
+                    <label class="facility-label">
+                        {{ form.kids_space.label }}
+                    </label>
+
+                    <div class="radio-inline">
+                        {% for radio in form.kids_space %}
+                            <label>
+                                {{ radio.tag }}
+                                {{ radio.choice_label }}
+                            </label>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                {{ form.kids_space.errors }}
+
+                <div class="facility-row">
+
+                    <label class="facility-label">
+                        {{ form.diaper_table.label }}
+                    </label>
+
+                    <div class="radio-inline">
+                        {% for radio in form.diaper_table %}
+                            <label>
+                                {{ radio.tag }}
+                                {{ radio.choice_label }}
+                            </label>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                {{ form.diaper_table.errors }}
+
+                
+                <div class="facility-row">
+
+                    <label class="facility-label">
+                        {{ form.nursing_room.label }}
+                    </label>
+
+                    <div class="radio-inline">
+                        {% for radio in form.nursing_room %}
+                            <label>
+                                {{ radio.tag }}
+                                {{ radio.choice_label }}
+                            </label>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                {{ form.nursing_room.errors }}
+
+                <!-- カテゴリ -->
+                <div class="category-radio">
+
+                    {% for radio in form.category %}
+                        <label class="category-item">
+                            {{ radio.tag }}
+                            {{ radio.choice_label }}
+                        </label>
+                    {% endfor %}
+
+                </div>
+
+                {{ form.category.errors }}
+                
+                <!-- 口コミ -->
+                
+                <div class="mb-4">
+                    {{ form.review }}
+                    {{ form.review.errors }}
+                </div>
+
+                <!-- 写真 -->
+                <h5 class="section-title">写真（最大5枚）</h5>
+
+                <div class="mb-4">
+                    <input
+                        type="file"
+                        name="images"
+                        multiple
+                        accept="image/*"
+                        class="form-control">
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-warning px-4">
+                        投稿する
+                    </button>
+                </div>
+
+            </form>
+
         </div>
+
+    </div>
+
+    {% if images %}
+
+    <div class="card form-card mt-4">
+
+        <div class="card-body">
+
+            <h5 class="section-title">現在の写真</h5>
+
+            <div class="row">
+                {% for image in images %}
+                    <div class="col-6 mb-4 text-center">
+
+                        <img src="{{ image.image.url }}"
+                             class="img-fluid rounded mb-2">
+
+                        <form method="post"
+                              action="{% url 'spots:facility_image_delete' image.pk %}">
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="btn btn-outline-danger btn-sm">
+                                写真を削除
+                            </button>
+
+                        </form>
+
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </div>
+
     {% endif %}
 
-    <hr>
-
-    <h3>設備</h3>
-
-    <p>
-        {{ form.kids_space.label }}<br>
-        {{ form.kids_space }}
-        {{ form.kids_space.errors }}
-    </p>
-
-    <p>
-        {{ form.diaper_table.label }}<br>
-        {{ form.diaper_table }}
-        {{ form.diaper_table.errors }}
-    </p>
-
-    <p>
-        {{ form.nursing_room.label }}<br>
-        {{ form.nursing_room }}
-        {{ form.nursing_room.errors }}
-    </p>
-
-    <hr>
-
-    <h3>カテゴリ</h3>
-
-    <p>
-        {{ form.category }}
-        {{ form.category.errors }}
-    </p>
-
-    <hr>
-
-    <h3>口コミ</h3>
-
-    <p>
-        {{ form.review }}
-        {{ form.review.errors }}
-    </p>
-
-    <hr>
-
-    <h3>写真（最大5枚）</h3>
-
-    <p>
-
-        <input
-            type="file"
-            name="images"
-            multiple
-            accept="image/*">
-
-    </p>
-
-    <hr>
-
-    
-    <button type="submit">
-        投稿する
-    </button>
-    </form>
-
-{% if images %}
-<hr>
-<h5>現在の写真</h5>
-
-<div class="row">
-    {% for image in images %}
-        <div class="col-md-4 mb-3 text-center">
-            <img src="{{ image.image.url }}"
-                class="img-fluid rounded mb-2">
-
-           <form method="post"
-                  action="{% url 'spots:facility_image_delete' image.pk %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger btn-sm">
-                    写真を削除
-                </button>
-            </form>
-        </div>
-    {% endfor %}
 </div>
-{% endif %}
-      
-    
 
 {% endblock %}

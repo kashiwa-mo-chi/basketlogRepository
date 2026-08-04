@@ -4,6 +4,7 @@ from .models import ArenaFacility, ArenaNearbySpot, ArenaFacilityImage, ArenaNea
 from .forms import ArenaFacilityForm, ArenaNearbySpotForm
 from games.models import Diary
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 def arena_list(request):
     arenas = Diary.ARENA_CHOICES
@@ -55,8 +56,10 @@ def arena_top(request, arena_id):
     diaper_rate = int(diaper_yes / total * 100) if total else 0
     nursing_rate = int(nursing_yes / total * 100) if total else 0
 
-    # 最新口コミ5件
-    recent_posts = facilities[:5]
+    # ページネーション
+    paginator = Paginator(facilities, 5)
+    page_number = request.GET.get("page")
+    recent_posts = paginator.get_page(page_number)
 
     # アリーナ名
     arena_name = dict(Diary.ARENA_CHOICES).get(arena_id, "")
@@ -119,7 +122,7 @@ def facility_post_create(request, arena_id):
         
     return render(request, 'spots/arena_form.html', {
         'form': form, 
-        'title': 'アリーナ内情報の投稿',
+        'title': '新しい口コミを投稿する',
         'arena_id': arena_id,
         'arena_name': arena_name,
     })
@@ -179,7 +182,7 @@ def facility_post_update(request, pk):
 
     return render(request, "spots/arena_form.html", {
         "form": form,
-        "title": "アリーナ内情報の編集",
+        "title": "口コミを編集する",
         "arena_id": post.arena_name,
         "arena_name": arena_name,
         "images": images,
@@ -238,6 +241,12 @@ def nearby_list(request, arena_id):
         nearby_spots = nearby_spots.filter(category_id=selected_category)
 
     nearby_spots = nearby_spots.order_by("-created_at")
+
+    paginator = Paginator(nearby_spots, 5)
+
+    page_number = request.GET.get("page")
+
+    nearby_spots = paginator.get_page(page_number)
 
     arena_name =dict(Diary.ARENA_CHOICES).get(arena_id)
 

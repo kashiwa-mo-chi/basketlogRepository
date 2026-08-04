@@ -92,6 +92,26 @@
 
 {% endfor %}
 
+<div class="pagination-area text-center">
+
+    {% if recent_posts.has_previous %}
+        <a href="?page={{ recent_posts.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}">
+            ← 前へ
+        </a>
+    {% endif %}
+
+    <span>
+        {{ recent_posts.number }} / {{ recent_posts.paginator.num_pages }}
+    </span>
+
+    {% if recent_posts.has_next %}
+        <a href="?page={{ recent_posts.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}">
+            次へ →
+        </a>
+    {% endif %}
+
+</div>
+
     <!-- 投稿ボタン -->
     <div class="arena-action-buttons mt-4">
 

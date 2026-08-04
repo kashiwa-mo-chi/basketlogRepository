@@ -963,25 +963,43 @@ footer i{
 .nearby-card{
     background:#ffe4b5;
     border:none;
-    border-radius:18px;
-    overflow:hidden;
-    box-shadow:0 2px 6px rgba(0,0,0,.08);
+    border-radius:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
 
-.nearby-thumbnail{
-    width:100%;
-    height:220px;
-    object-fit:cover;
-}
-
-.nearby-body{
-    color:#696969;
+.nearby-card .card-body{
+    padding:15px 20px;
 }
 
 .nearby-name{
-    color:#f59700;
-    font-size:1.1rem;
+    color:#000;
+    font-size:1rem;
     font-weight:bold;
+    margin-bottom:8px;
+}
+
+.nearby-review{
+    color:#696969;
+    font-size:.9rem;
+    margin-bottom:0;
+}
+
+.pagination-area{
+    width:100%;
+    display:flex !important;
+    justify-content:center !important;
+    align-items:center;
+    gap:20px;
+    margin:25px 0;
+}
+
+.pagination-area a{
+    color:#696969;
+    text-decoration:none;
+}
+
+.pagination-area a:hover{
+    color:#f59700;
 }
 
 .detail-btn{
@@ -993,4 +1011,114 @@ footer i{
 .detail-btn:hover{
     background:#f59700;
     color:#fff;
+}
+
+/* ==========================
+   新規投稿フォーム　arena,nearby
+========================== */
+
+.form-card{
+    background:#fff;
+    border:none;
+    border-radius:15px;
+}
+
+.page-title{
+    background:#f59700;
+    color:#696969;
+    font-size:1.4rem;
+    font-weight:bold;
+    text-align:center;
+    padding:12px;
+    border-radius:15px;
+    margin-bottom:10px;
+}
+
+.page-subtitle{
+    color:#696969;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.form-subtitle{
+    color:#0d6efd;
+    text-align:center;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.section-title{
+    color:#f59700;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.form-item-title{
+    display:block;
+    font-size:0.95rem;
+    font-weight:600;
+    color:#000;
+    margin-bottom:8px;
+}
+
+.form-label{
+    color:#696969;
+    font-weight:bold;
+}
+
+.form-card textarea{
+    min-height:140px;
+}
+
+.form-card .btn-warning{
+    background:#f59700;
+    border:none;
+    color:#fff;
+    border-radius:15px;
+    padding:10px 30px;
+}
+
+.form-card .btn-warning:hover{
+    opacity:.9;
+}
+
+.facility-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:15px;
+}
+
+.facility-label{
+    width:120px;
+    flex-shrink:0;
+    font-weight:bold;
+    color:#696969;
+    margin-bottom:0;
+}
+
+.radio-inline{
+    display:flex;
+    gap:20px;
+}
+
+.radio-inline label{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    margin-bottom:0;
+}
+
+.category-radio{
+    display: flex;
+    flex-wrap: wrap;   /* 折り返しを許可 */
+    gap: 15px 25px;    /* 縦 横 */
+}
+
+.category-item{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 0;
+    color: #696969;
 }
