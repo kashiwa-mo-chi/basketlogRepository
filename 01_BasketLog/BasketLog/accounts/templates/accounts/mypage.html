@@ -4,32 +4,29 @@
 
 <div class="container mt-4">
 
-    <h2 class="mb-4">マイページ</h2>
+    <h2 class="page-title">マイページ</h2>
 
-    <div class="list-group mt-4">
+    <div class="mypage-menu">
 
-        <a href="{% url 'accounts:history' %}" class="list-group-item list-group-item-action">
-            投稿履歴
+        <a href="{% url 'accounts:history' %}" class="mypage-item">
+            <span>投稿履歴</span>            
         </a>
 
-        <a href="{% url 'accounts:username_change' %}" class="btn btn-outline-primary">
-            ユーザ名の変更
+        <a href="{% url 'accounts:username_change' %}" class="mypage-item">
+            <span>ユーザ名の変更</span>            
         </a>
 
-        <a href="{% url 'accounts:email_change' %}" class="btn btn-primary">
-            メールアドレス変更
+        <a href="{% url 'accounts:email_change' %}" class="mypage-item">
+            <span>メールアドレス変更</span>            
         </a>
 
-        <a href="{% url 'accounts:password_change' %}" class="btn btn-primary">
-            パスワード変更
+        <a href="{% url 'accounts:password_change' %}" class="mypage-item">
+            <span>パスワード変更</span>            
         </a>
 
-        
     </div>
 
 </div>
 
 {% endblock %}
-
-
 

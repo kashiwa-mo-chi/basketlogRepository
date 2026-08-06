@@ -60,6 +60,11 @@ class UsernameChangeForm(forms.ModelForm):
             "username": "ユーザ名",
         }
 
+    def __init__(self,*args, **kwargs):
+        super().__init__(*args,**kwargs)
+
+        self.initial["username"] = ""
+
     def clean_username(self):
         username = self.cleaned_data["username"]
 

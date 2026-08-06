@@ -4,20 +4,38 @@
 
 <div class="container mt-4">
 
-    <h2 class="mb-4">投稿履歴</h2>
+    <h2 class="page-title">投稿履歴</h2>
 
-    <div class="d-flex gap-2 mb-4">
-        <a href="{% url 'accounts:history' %}?tab=facility"
-           class="btn {% if tab == 'facility' %}btn-primary{% else %}btn-outline-primary{% endif %} flex-fill">
-            アリーナ情報
-        </a>
+    <div class="history-tabs mb-4">
 
-        <a href="{% url 'accounts:history' %}?tab=nearby"
-           class="btn {% if tab == 'nearby' %}btn-primary{% else %}btn-outline-primary{% endif %} flex-fill">
-            周辺情報
-        </a>
+    <a href="{% url 'accounts:history' %}?tab=facility"
+       class="history-tab {% if tab == 'facility' %}active{% endif %}">
+        アリーナ情報
+    </a>
 
-    </div>
+    <a href="{% url 'accounts:history' %}?tab=nearby"
+       class="history-tab {% if tab == 'nearby' %}active{% endif %}">
+        周辺情報
+    </a>
+
+</div>
+
+<div class="history-sort">
+
+    
+        <select onchange="location.href=this.value;">
+            <option value="{% url 'accounts:history' %}?tab={{ tab }}&order=new"
+                {% if order == "new" %}selected{% endif %}>
+                新しい順
+            </option>
+
+            <option value="{% url 'accounts:history' %}?tab={{ tab }}&order=old"
+                {% if order == "old" %}selected{% endif %}>
+                古い順
+            </option>
+        </select>
+    
+</div>
 
 {% if tab == "facility" %}
 
@@ -28,9 +46,7 @@
             <a href="{% url 'spots:facility_detail' post.pk %}"
                class="text-decoration-none text-dark">
 
-                <div class="card mb-3">
-                    <div class="card-body">
-
+                <div class="history-card">
                         <h5 class="mb-2">
                             {{ post.get_arena_name_display }}
                         </h5>
@@ -43,7 +59,6 @@
                             投稿日：{{ post.created_at|date:"Y/m/d" }}
                         </small>
 
-                    </div>
                 </div>
 
             </a>
@@ -69,11 +84,9 @@
             <a href="{% url 'spots:nearby_detail' post.pk %}"
                class="text-decoration-none text-dark">
 
-                <div class="card mb-3">
-                    <div class="card-body">
-
+                <div class="history-card">
                         <h5 class="mb-2">
-                            {{ post.get_arena_name_display }}
+                            {{ post.spot_name }}
                         </h5>
 
                         <p class="mb-2">
@@ -84,7 +97,6 @@
                             投稿日：{{ post.created_at|date:"Y/m/d" }}
                         </small>
 
-                    </div>
                 </div>
 
             </a>
@@ -100,6 +112,12 @@
     {% endif %}
 
 {% endif %}
+
+<div class="history-back">
+    <a href="{% url 'accounts:mypage' %}">
+        戻る
+    </a>
+</div>
 
 </div>
 

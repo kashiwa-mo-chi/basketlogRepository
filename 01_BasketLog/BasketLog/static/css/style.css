@@ -72,7 +72,15 @@ body{
     min-height:100vh;
 }
 
+/* ==========================
+   メッセージ表示
+========================== */
 
+.message-area{
+    max-width:430px;
+    margin:50px auto 0;
+    padding:0 15px;
+}
 
 /* ==========================
    カード
@@ -954,12 +962,6 @@ footer i{
    nearby_list
 ========================== */
 
-.page-title{
-    color:#f59700;
-    font-weight:bold;
-    margin-bottom:20px;
-}
-
 .nearby-card{
     background:#ffe4b5;
     border:none;
@@ -1023,7 +1025,7 @@ footer i{
     border-radius:15px;
 }
 
-.page-title{
+.form-title{
     background:#f59700;
     color:#696969;
     font-size:1.4rem;
@@ -1121,4 +1123,184 @@ footer i{
     gap: 5px;
     margin-bottom: 0;
     color: #696969;
+}
+
+/* ==========================
+   マイページ
+========================== */
+
+.mypage-menu{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.mypage-item{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:16px 18px;
+    background:#ffe4b5;
+    border:1px solid #ffe4b5;
+    border-radius:15px;
+    text-decoration:none;
+    color:#0d6efd;
+    font-size:1rem;
+    font-weight:bold;
+    transition:.2s;
+}
+
+.mypage-item i{
+    display:none;
+}
+
+.mypage-item:hover{
+    background:#fff7ec;
+    color:#f59700;
+}
+
+/* ==========================
+   投稿履歴
+========================== */
+
+.history-tabs{
+    display:flex;
+    gap:10px;
+}
+
+.history-tab{
+    flex:1;
+    text-align:center;
+    padding:10px;
+    border-radius:15px;
+    background:#fff;
+    border:1px solid #f59700;
+    color:#f59700;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.history-tab.active{
+    background:#f59700;
+    color:white;
+}
+
+
+.history-card{
+    background:#ffe4b5;
+    border-radius:15px;
+    padding:15px;
+    margin-bottom:15px;
+    text-align:center;
+}
+
+.history-card h5{
+    color:#696969;
+    font-weight:bold;
+}
+
+.history-card p{
+    color:#696969;
+    margin-bottom:10px;
+}
+
+.history-card small{
+    color:#696969 !important;
+}
+
+/* ==========================
+   投稿履歴 戻るボタン
+========================== */
+
+.history-back{
+    text-align:center;
+    margin-top:30px;
+}
+
+.history-back a{
+    display:inline-block;
+    padding:10px 30px;
+    border:1px solid #ffe4b5;
+    border-radius:15px;
+    color:#696969;
+    text-decoration:none;
+    background:#ffe4b5;
+}
+
+.history-back a:hover{
+    background:#fff7ec;
+}
+
+/* ==========================
+   投稿履歴 並び替え
+========================== */
+
+.history-sort{
+    text-align:right;
+    margin-bottom:15px;
+}
+
+.history-sort select{
+    padding:8px 35px 8px 12px;
+    border-radius:15px;
+    border:1px solid #f59700;
+    background:#fff;
+    color:#696969;
+}
+
+/* ==========================
+   ユーザ名変更
+========================== */
+
+.account-label{
+    color:#696969;
+    font-size:.9rem;
+    margin-bottom:8px;
+    text-align:center;
+}
+
+
+.current-name{
+    color:#696969;    
+    margin-bottom:25px;
+    text-align:center;
+}
+
+
+.form-group{
+    text-align:center;
+}
+
+.form-group input{
+    width:90%;
+    max-width: 350px;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #ddd;
+}
+
+.account-form-buttons{
+    margin-top:30px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:15px;
+}
+
+.account-save-btn{
+    background:#f59700;
+    color:white;
+    border:none;
+    border-radius:15px;
+    padding:10px 25px;
+}
+
+
+.account-back-btn{
+    background:#ffe4b5;
+    color:#696969;
+    border:1px solid #ccc;
+    border-radius:15px;
+    padding:10px 25px;
+    text-decoration:none;
 }

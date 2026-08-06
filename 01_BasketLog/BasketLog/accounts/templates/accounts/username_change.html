@@ -1,24 +1,72 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-4" style="max-width: 600px;">
 
-    <h2 class="mb-4">ユーザ名変更</h2>
+<div class="container mt-4">
 
-    <form method="post">
-        {% csrf_token %}
+    <h2 class="page-title">
+        ユーザ名の変更
+    </h2>
 
-        {{ form.as_p }}
 
-        <button type="submit" class="btn btn-primary">
-            変更する
-        </button>
+        <div class="current-username">
 
-        <a href="{% url 'accounts:mypage' %}" class="btn btn-secondary">
-            戻る
-        </a>
+            <p class="account-label">
+                現在のユーザ名
+            </p>
 
-    </form>
+            <div class="current-name">
+                {{ request.user.username }}
+            </div>
+
+        </div>
+
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+
+            <div class="form-group">
+
+                <label class="account-label">
+                    新しいユーザ名を入力
+                </label>
+
+
+                {{ form.username }}
+
+
+                {% if form.username.errors %}
+                    <div class="text-danger mt-2">
+                        {{ form.username.errors }}
+                    </div>
+                {% endif %}
+
+
+            </div>
+
+
+
+            <div class="account-form-buttons">
+
+                <button type="submit" class="account-save-btn">
+                    変更
+                </button>
+
+
+                <a href="{% url 'accounts:mypage' %}" class="account-back-btn">
+                    戻る
+                </a>
+
+            </div>
+
+
+        </form>
+
+
 
 </div>
+
 {% endblock %}

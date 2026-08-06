@@ -13,9 +13,6 @@ from .models import User
 from .forms import RegistForm, EmailChangeForm, UsernameChangeForm
 
 
-
-
-
 class HomeView(TemplateView):
     template_name = 'accounts/home.html'
     
@@ -43,17 +40,24 @@ def mypage(request):
 @login_required
 def history(request):
     tab = request.GET.get("tab", "facility")
+    order = request.GET.get("order", "new")
+
+    if order == "old":
+        sort_order = "created_at"
+    else:
+        sort_order = "-created_at"        
 
     facility_posts = ArenaFacility.objects.filter(
         user=request.user        
-    ).order_by("-created_at")
+    ).order_by(sort_order)
 
     nearby_posts = ArenaNearbySpot.objects.filter(
         user=request.user        
-    ).order_by("-created_at")
+    ).order_by(sort_order)
 
     context = {
         "tab": tab,
+        "order": order,
         "facility_posts": facility_posts,
         "nearby_posts": nearby_posts,
     }
