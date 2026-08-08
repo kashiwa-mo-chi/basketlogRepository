@@ -22,6 +22,8 @@ h2{
 .app-header{
     background:#f59700;
     height:60px;
+    max-width:430px;
+    margin:0 auto;
 }
 
 .app-header a{
@@ -45,12 +47,47 @@ h2{
     white-space:nowrap;
 }
 
+.app-header-inner{
+    width:100%;
+    max-width:430px;
+    height:60px;
+    margin:0 auto;
+
+    display:flex;
+    align-items:center;
+}
+
+.header-left{
+    width:20%;
+    text-align:left;
+    padding-left:15px;
+}
+
+.header-title{
+    width:60%;
+    text-align:center;
+    white-space:nowrap;
+}
+
+.header-right{
+    width:20%;
+    text-align:right;
+    padding-right:15px;
+    white-space: nowrap;
+}
+
+.header-right a{
+    margin-left:8px;
+}
+
 /* ==========================
    フッター
 ========================== */
 
 .app-footer {
     background: #f59700;
+    max-width:430px;
+    margin:0 auto;
 }
 
 .app-footer a {
@@ -1139,6 +1176,8 @@ footer i{
     display:flex;
     justify-content:center;
     align-items:center;
+    width:80%;
+    margin:0 auto;
     padding:16px 18px;
     background:#ffe4b5;
     border:1px solid #ffe4b5;
@@ -1249,19 +1288,17 @@ footer i{
 }
 
 /* ==========================
-   ユーザ名変更
+   ユーザ名変更,メールアドレス変更、パスワード変更
 ========================== */
 
 .account-label{
-    color:#696969;
     font-size:.9rem;
     margin-bottom:8px;
     text-align:center;
 }
 
 
-.current-name{
-    color:#696969;    
+.current-name{    
     margin-bottom:25px;
     text-align:center;
 }
@@ -1303,4 +1340,18 @@ footer i{
     border-radius:15px;
     padding:10px 25px;
     text-decoration:none;
+}
+
+.current-username,
+.current-name,
+.account-label,
+.form-group{
+    color:#000;
+}
+
+.email-change-input{
+    display:block;
+    width:100%;
+    max-width:350px;
+    margin:0 auto;
 }

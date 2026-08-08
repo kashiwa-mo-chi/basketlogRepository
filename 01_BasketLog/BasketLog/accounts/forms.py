@@ -44,6 +44,7 @@ class EmailChangeForm(forms.ModelForm):
             "email":"メールアドレス",
         }
 
+
     def clean_email(self):
         email = self.cleaned_data["email"]
 
