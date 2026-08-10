@@ -291,11 +291,7 @@ footer i{
 
 /* 検索 */
 
-.search-section{
-    background:#fff;
-    padding:15px;
-    border-radius:15px;
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
+.search-section{ 
     margin-bottom:20px;
 }
 
@@ -312,19 +308,6 @@ footer i{
     border-radius:10px;
     padding:10px;
 }
-
-
-.search-btn{
-    background:#b0c4de;
-    color:#fff;
-    border:none;
-    width:45px;
-    height:40px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
 
 /* 一覧 */
 
@@ -378,7 +361,7 @@ footer i{
 
 
 .vs{
-    color:#f59700;
+    color:#696969;
     font-size:.9rem;
 }
 
@@ -1075,6 +1058,13 @@ footer i{
     font-weight:600;
     margin-bottom:15px;
     color:#444;
+}
+
+.spot-name{
+    color:#f59700;
+    font-size:1.2rem;
+    font-weight:bold;
+    margin-bottom:15px;
 }
 
 /* ==========================

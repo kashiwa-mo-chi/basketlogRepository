@@ -16,17 +16,19 @@
         投稿日：{{ nearby.created_at|date:"Y年m月d日 H:i" }} ユーザ名：{{ nearby.user.username }}<br>
     </p>
 
-    <h5 class="section-title">施設名</h5>
-
-    <p>{{ nearby.spot_name }}</p>
+    
+    
 
     <hr>
     
 
-    <h5 class="section-title">カテゴリ</h5>
-    <p>{{ nearby.category }}</p>
+        <p>{{ nearby.category }}</p>
 
     <hr>
+
+    <h3 class="spot-name">
+        {{ nearby.spot_name }}
+    </h3>
 
     <p style="white-space: pre-wrap;">{{ nearby.review }}</p>
 

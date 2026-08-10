@@ -115,7 +115,7 @@ def facility_post_create(request, arena_id):
                     image=image
                 )
 
-            return redirect('spots:arena_top', arena_id=arena_id)
+            return redirect('spots:facility_detail', pk=post.pk)
     else:
         form = ArenaFacilityForm()
 

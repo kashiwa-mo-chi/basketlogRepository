@@ -20,13 +20,13 @@ def diary_list(request):
 
         team_choices = Diary._meta.get_field('home_team_name').choices
         for num, name in team_choices:
-            if query in name:  # 例：「千葉」と入力して「千葉ジェッツ」に部分一致したら
+            if query in name:  
                 condition |= Q(home_team_name=num) | Q(away_team_name=num)
 
         # 3. 会場名（ARENA_CHOICES）から文字が一致する「数字」を探す
         arena_choices = Diary._meta.get_field('arena_name').choices
         for num, name in arena_choices:
-            if query in name:  # 例：「横浜」と入力して「横浜アリーナ」に部分一致したら
+            if query in name:  
                 condition |= Q(arena_name=num)
 
         # 最後に、まとめた条件でデータを一気に絞り込む
@@ -82,16 +82,16 @@ def public_diary_list(request):
 
         team_choices = Diary._meta.get_field('home_team_name').choices
         for num, name in team_choices:
-            if query in name:  # 例：「千葉」と入力して「千葉ジェッツ」に部分一致したら
+            if query in name:  
                 condition |= Q(home_team_name=num) | Q(away_team_name=num)
 
-        # 3. 会場名（ARENA_CHOICES）から文字が一致する「数字」を探す
+       
         arena_choices = Diary._meta.get_field('arena_name').choices
         for num, name in arena_choices:
-            if query in name:  # 例：「横浜」と入力して「横浜アリーナ」に部分一致したら
+            if query in name: 
                 condition |= Q(arena_name=num)
 
-        # 最後に、まとめた条件でデータを一気に絞り込む
+        
         diaries = diaries.filter(condition)
     
     paginator = Paginator(diaries, 5)

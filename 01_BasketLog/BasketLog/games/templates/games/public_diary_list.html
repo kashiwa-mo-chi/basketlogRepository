@@ -1,83 +1,163 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>みんなの観戦記録一覧</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-<!-- 👑 一番上のタイトル（誰が書いた記録かをカード内に表示するため、ここは「みんなの」に統一） -->
-    <h1>みんなの観戦記録</h1>
+{% block title %}
+みんなの観戦記録
+{% endblock %}
 
-    <!-- 🔍 フリーワード検索バー -->
-    <div class="search-section">
-        <!-- 💡 送信先をみんなの一覧画面（/games/diary/public/）に設定 -->
-        <form action="/games/diary/public/" method="get">
-            <div class="search-box-group">
-                <input type="search" name="q" value="{{ request.GET.q }}" placeholder="日付またはチーム名で検索">
-                <button type="submit" class="btn search-btn">🔍</button>
-            </div>            
-        </form>
-    </div>
+{% block content %}
 
-    <!--  観戦記録のループ表示（5件ずつ） -->
-    <div class="diary-list">
-        {% for diary in page_obj %}
-            <!-- 各自の詳細画面へ移動 -->
-            <a href="/games/diary/{{ diary.id }}/" class="diary-item-link">
-                <div class="diary-card">
-                    
-                    <!-- 👤 投稿者のユーザー名（誰の記録か分かるように追加しました） -->
-                    <div class="diary-author" style="font-size: 13px; color: #555; font-weight: bold;">
-                        👤 {{ diary.user.username }} さんの記録
-                    </div>
+<h1 class="page-title">
+    みんなの観戦記録
+</h1>
 
-                    <!-- ① 日付 -->
-                    <div class="match-meta">
-                        {{ diary.watch_date|date:"Y年m月d日" }}
-                    </div>
-                    
-                    <!-- ② 対戦カード -->
-                    <div class="match-teams">
-                        <span class="team">{{ diary.get_home_team_name_display }}</span>
-                        <span class="vs">VS</span>
-                        <span class="team">{{ diary.get_away_team_name_display }}</span>
-                    </div>
-                    
-                    <!-- ③ 写真1枚 -->
-                    {% if diary.pictures.all %}
-                        <div class="diary-thumbnail">
-                            <img src="{{ diary.pictures.all.first.picture_url.url }}" alt="観戦写真">
+
+<!-- 検索 -->
+<div class="search-section">
+
+    <form action="{% url 'games:public_diary_list' %}" method="get">
+
+        <div class="search-box-group">
+
+            <input 
+                type="search"
+                name="q"
+                value="{{ request.GET.q }}"
+                placeholder="日付またはチーム名で検索"
+            >
+
+            <button class="btn btn-outline-primary" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<!-- 一覧 -->
+<div class="diary-list">
+
+    {% for diary in page_obj %}
+
+        <a href="{% url 'games:diary_detail' diary.id %}"
+           class="diary-item-link">
+
+            <div class="card diary-card">
+
+                <div class="diary-content">
+
+                    <div class="diary-info">
+
+                        <!-- 投稿者 -->
+                        <div class="diary-author">
+                            {{ diary.user.username }} さんの記録
                         </div>
-                    {% endif %}
+
+                        <!-- 日付 -->
+                        <div class="match-meta">
+                            {{ diary.watch_date|date:"Y年m月d日" }}
+                        </div>
+
+                        <!-- 対戦カード -->
+                        <div class="match-teams">
+
+                            <span class="team">
+                                {{ diary.get_home_team_name_display }}
+                            </span>
+
+                            <span class="vs">
+                                VS
+                            </span>
+
+                            <span class="team">
+                                {{ diary.get_away_team_name_display }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- 写真 -->
+                    {% with picture=diary.pictures.first %}
+
+                        {% if picture %}
+
+                            <div class="diary-thumbnail">
+
+                                <img src="{{ picture.picture_url.url }}"
+                                     alt="観戦写真">
+
+                            </div>
+
+                        {% endif %}
+
+                    {% endwith %}
 
                 </div>
-            </a>
-        {% endfor %}
-    </div>
 
-    <!-- 📄 ページインデックス -->
-    {% if page_obj.has_other_pages %}
-        <div class="pagination">
-            {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="page-btn">＜</a>
-            {% else %}
-                <span class="page-btn disabled">＜</span>
-            {% endif %}
+            </div>
 
-            <span class="page-current">
-                {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
-            </span>
+        </a>
 
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="page-btn">＞</a>
-            {% else %}
-                <span class="page-btn disabled">＞</span>
-            {% endif %}
-        </div>
+
+    {% empty %}
+
+        <p>
+            観戦記録がありません。
+        </p>
+
+    {% endfor %}
+
+</div>
+
+
+<!-- ページネーション -->
+
+{% if page_obj.has_other_pages %}
+
+<div class="pagination">
+
+    {% if page_obj.has_previous %}
+
+        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
+           class="page-btn">
+            ＜
+        </a>
+
+    {% else %}
+
+        <span class="page-btn disabled">
+            ＜
+        </span>
+
     {% endif %}
 
-</body>
-</html>
+
+    <span class="page-current">
+        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    </span>
+
+
+    {% if page_obj.has_next %}
+
+        <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
+           class="page-btn">
+            ＞
+        </a>
+
+    {% else %}
+
+        <span class="page-btn disabled">
+            ＞
+        </span>
+
+    {% endif %}
+
+</div>
+
+{% endif %}
+
+{% endblock %}

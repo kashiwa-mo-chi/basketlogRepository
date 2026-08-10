@@ -41,6 +41,15 @@ class DiaryPictureForm(forms.ModelForm):
         model = DiaryPicture
         fields = ['picture_url']
 
+        widgets = {
+            'picture_url':forms.ClearableFileInput(
+                attrs={
+                    'class':'form-control',
+                    'accept':'image/*',
+                }
+            )
+        }
+
 DiaryPictureFormSet = forms.inlineformset_factory(
     parent_model=Diary,
     model=DiaryPicture,
