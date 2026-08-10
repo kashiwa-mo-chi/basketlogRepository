@@ -5,27 +5,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン画面</title>
-    <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
 
+<body>
+
+<div class="login-page">
+
+    <header class="app-header login-header">
+        <div class="header-title text-white">
+            バスケログ
+        </div>
+    </header>
+
 <div class="login">
-  <h2>バスケログ</h2>
-  <form method='POST' action="">
-    {% csrf_token %} 
-     {% if form.non_field_errors %}
+
+<form method="POST" action="">
+    {% csrf_token %}
+
+    <p class="login-message">
+        記録作成・アリーナ情報・周辺情報の投稿には<br>
+        ログインが必要です
+    </p>
+
+    {% if form.non_field_errors %}
       <div style="color: #ef4444; font-size: 0.9rem; margin-bottom: 15px; font-weight: bold; background-color: #fee2e2; padding: 10px; border-radius: 6px;">
         {% for error in form.non_field_errors %}
-          ⚠️ {{ error }}
+            {{ error }}
         {% endfor %}
       </div>
     {% endif %}
-
   
     <div class="form-group">
       <label for="user_name" class="form-label">メールアドレス</label>
-      <input type="text" id="user_name" name="username" class="form-control" placeholder="ユーザ名かメールアドレスを入力" required>
+      <input type="text" id="user_name" name="username" class="form-control" placeholder="メールアドレスを入力" required>
     </div>
 
     <div class="form-group">

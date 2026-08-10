@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from .models import Diary
 
 #MY観戦記録一覧画面
+@login_required
 def diary_list(request):
     diaries = Diary.objects.filter(user=request.user).order_by('-watch_date')
 

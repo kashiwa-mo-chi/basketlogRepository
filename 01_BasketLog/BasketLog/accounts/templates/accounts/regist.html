@@ -5,13 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>アカウント登録</title>
-    <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
 
+<div class="login-page">
+
+<header class="app-header login-header">
+  <div class="header-title text-white">
+    バスケログ
+  </div>
+</header>
+
 <div class="login">
-  <h2>バスケログ - アカウント登録</h2>
   
     <form method='POST' action="">
     {% csrf_token %} 
@@ -28,11 +35,10 @@
             {{ field.label }}
         </label>
         
-        <!-- ⭕ 修正ポイント2：通常のinputタグではなく、Django標準のウィジェット（HTML構造）を自動で出力させます -->
-        <!-- これにより、パスワード入力時に文字が「●●●」と伏せ字になり、安全性とスマホ用のクラスが両立します -->
+    
         {{ field }}
         
-        <!-- 各入力欄ごとの個別エラーメッセージを表示 -->
+       
         {% if field.errors %}
           <div style="color: #ef4444; font-size: 0.8rem; margin-top: 4px;">
             {{ field.errors.0 }}

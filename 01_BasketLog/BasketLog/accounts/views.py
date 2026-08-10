@@ -31,7 +31,7 @@ class UserLoginView(LoginView):
     template_name = 'accounts/login.html'
 
 class UserLogoutView(LogoutView):
-    next_page = reverse_lazy('accounts:user_login')
+    next_page = reverse_lazy('accounts:home')
 
 @login_required
 def mypage(request):

@@ -1,3 +1,4 @@
+
 /* ==========================
    共通
 ========================== */
@@ -80,6 +81,26 @@ h2{
     margin-left:8px;
 }
 
+.logout-button {
+    border: none;
+    background: none;
+    padding: 0;
+    color: inherit;
+}
+
+.logout-confirm-btn {
+    background: #f59700;
+    color: #fff;
+    border-radius: 15px;
+    padding: 8px 20px;
+}
+
+.logout-cancel-btn {
+    color: #696969;
+    border: none;
+    margin-left: 10px;
+}
+
 /* ==========================
    フッター
 ========================== */
@@ -95,8 +116,11 @@ h2{
     text-decoration: none;
 }
 
-.app-footer a i {
-    color: #212529;           /* アイコン */
+.footer-icon {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    background: transparent;
 }
 
 /* ==========================
@@ -186,6 +210,64 @@ footer i{
 .home-link:hover{
     color:#e65100;
     }
+
+.home-diary-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    color: #696969;
+    text-decoration: none;
+    border: 1px solid #696969;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 15px;
+}
+
+.home-diary-card:hover {
+    color: #696969;
+    text-decoration: none;
+}
+
+.home-diary-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.home-diary-meta {
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+.home-diary-meta span {
+    margin-left: 8px;
+}
+
+.home-diary-info h5 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 4px 0;
+}
+
+.home-diary-vs {
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-align: left;
+    margin: 2px 0;
+}
+
+.home_diary_thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+    margin-left: 12px;
+}
+
+.home-diary-card:last-child {
+    margin-bottom: 25px;
+}
 
 /* ==========================
    観戦記録一覧
@@ -1354,4 +1436,87 @@ footer i{
     width:100%;
     max-width:350px;
     margin:0 auto;
+}
+
+/* ==========================
+   ログイン画面
+========================== */
+
+.login-page {
+    width: 100%;
+    max-width: 430px;
+    min-height: 100vh;
+    margin: 0 auto;
+    background: #fff;
+}
+
+.login-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-header .header-title {
+    width:100%;
+    text-align: center;
+    font-size: 1.5rem !important;
+    font-weight: bold;
+}
+
+.btn-login {
+    display: block;
+    margin: 20px auto 0;
+    background: #f59700;
+    color: #212529;
+    border: none;
+    border-radius: 15px;
+    padding: 10px 30px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.regist-link,
+.guest-login {
+    text-align: center;
+}
+
+.login-message {
+    text-align: center;
+    color: #696969;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.regist-link,
+.register-link,
+.guest-login {
+    text-align: center;
+}
+
+.regist-link a,
+.register-link a,
+.guest-login a {
+    color: #696969;
+}
+
+/* NEW! バッジ */
+.new-badge {
+    width: 20px !important;
+    height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    object-fit: contain;
+    vertical-align: middle;
+}
+
+.mypage-icon {
+    color: #fff;
+    background: #4a90e2;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }

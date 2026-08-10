@@ -6,6 +6,11 @@ from django.core.exceptions import ValidationError
 
 class RegistForm(forms.ModelForm):
 
+    password_confirm = forms.CharField(
+        label='パスワード(再入力)',
+        widget=forms.PasswordInput()
+    )
+
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
@@ -20,14 +25,31 @@ class RegistForm(forms.ModelForm):
 
     def clean_password(self):
         password = self.cleaned_data.get('password')
-        user = User(**{k: v for k, v in self.cleaned_data.items() if k != 'password'})
+        user = User(
+            **{k: v for k, v in self.cleaned_data.items()
+            if k not in ['password', 'password_confirm']
+            })
+        
         try:
             validate_password(password, user)
         except ValidationError as e:
             raise forms.ValidationError(e.messages)
         return password
 
+    def clean(self):
+        cleaned_data = super().clean()
 
+        password = cleaned_data.get('password')
+        password_confirm = cleaned_data.get('password_confirm')
+
+        if password and password_confirm:
+            if password != password_confirm:
+                self.add_error(
+                    'password_confirm',
+                    'パスワードが一致しません。'
+                )
+
+        return cleaned_data
 
     def save(self, commit=True):
         user = super().save(commit=False)
