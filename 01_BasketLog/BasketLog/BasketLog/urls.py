@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from BasketApp import views
 
 urlpatterns = [
+    path('',views.portfolio, name="home"),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('games/', include('games.urls')),
