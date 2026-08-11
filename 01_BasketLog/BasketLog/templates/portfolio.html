@@ -1,22 +1,70 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ポートフォリオ</title>
+    <style>
+        /* ここにスタイルを追加 */
+        body {
+            font-family: "Meiryo", sans-serif;
+            margin: 0; 
+            text-align: center; 
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        img {
+            width: 30%;
+            height: auto;
+            margin: 20px 0;
+        }
+        h1 {
+            text-align: center; 
+            color: #f59700;
+        }
+        p {
+            line-height: 1.0;
+        }
+        .link {
+            display: inline-block;
+            font-size: 20px; /* フォントサイズを大きく */
+            margin: 10px 20px; /* リンクの上下の間隔を広げる */
+            color: #f59700;
+            cursor: pointer;
+        }
+        .button {
+            display: inline-block;
+            background-color: #f59700;
+            color: #fff;
+            margin-top: 15px;
+            padding: 10px 15px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>ポートフォリオ</h1>
-    <h2>バスケログ</h2>
-    <p>バスケログとはバスケットボールの試合観戦を簡単に思い出として記録することができるアプリです。</p>
-    <p>また、試合会場や会場周辺の情報を口コミを投稿して他ユーザーと共有し、
-    </br>バスケットボールの観戦をより充実したものにします。</p>
-    <img src="roarkun.jpg" alt="ロウル君">
-    <a href="アプリのURL">アプリヘ</a>
-    <a href="企画書のURL">企画書</a>
-    <a href="画面設計図のURL">画面設計図</a>
-    <a href="画面遷移図のURL">画面遷移図</a>
-    <a href="ER図のURL">ER図</a>
-    
+    <div class="container">
+        <h1>バスケログ</h1>
+        <img src="{% static 'images/home.png' %}" alt="home画面のスクリーンショット">   
+        <p>バスケログとはバスケットボールの試合観戦を記録したり、試合会場の情報をユーザー同士で共有できるアプリです。</p>
+        <p>バスケットボールの観戦に特化した入力フォームで、観戦記録を手軽に作成でき思い出に残すことができます。</p>
+        <p>また、試合会場やその周辺の情報について口コミを投稿してユーザー同士で共有ができ、</p>
+        <p>バスケットボールの観戦をより充実したものにできます。</p>
+        
+        <a href="/media/企画書.pdf" class="link">企画書</a>
+        <a href="/media/画面設計図.pdf" class="link">画面設計図</a>
+        <a href="/media/画面遷移図.pdf" class="link">画面遷移図</a>
+        <a href="/media/ER図.pdf" class="link">ER図</a>
+        <br><a href="/accounts/user_login/" class="button">このアプリにアクセス</a>
+    </div>
 </body>
 </html>
