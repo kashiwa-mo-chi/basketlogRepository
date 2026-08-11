@@ -1,2 +1,4 @@
-__pyache__
+__pyache__/
+*.pyc
 db.sqlite3
+.venv/
