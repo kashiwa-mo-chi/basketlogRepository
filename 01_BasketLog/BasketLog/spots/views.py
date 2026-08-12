@@ -299,7 +299,6 @@ def nearby_create(request, arena_id):
         'arena_name': arena_name,
     })
 
-@login_required
 def nearby_detail(request, pk):
     nearby = get_object_or_404(
         ArenaNearbySpot,
