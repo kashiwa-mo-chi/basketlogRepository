@@ -1011,7 +1011,9 @@ img {
 }
 
 .form-card textarea {
-    min-height: 140px;
+    min-height: 120px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
 }
 
 .form-card .btn-warning {
@@ -1344,4 +1346,26 @@ img {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+
+/* スマホ表示用 */
+@media (max-width: 430px) {
+
+    .facility-row {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .facility-label {
+        width: 100%;
+    }
+
+    .radio-inline {
+        gap: 15px;
+    }
+
+    .category-radio {
+        gap: 12px 20px;
+    }
+
 }
