@@ -34,6 +34,10 @@
 
                         <div class="status-title">
                             {{ field.label }}
+
+                            {% if field.field.required %}
+                                <span class="required-mark">※必須</span>
+                            {% endif %}
                         </div>
 
 
@@ -61,6 +65,9 @@
 
                     <div class="score-title">
                         スコア
+                        {% if diary_form.home_team_score.field.required and diary_form.away_team_score.field.required %}
+                            <span class="required-mark">※必須</span>
+                        {% endif %}
                     </div>
 
 
@@ -83,11 +90,13 @@
 
 
                 <p>
-
                     {{ field.label }}
 
-                    {{ field }}
+                    {% if field.field.required %}
+                     <span class="required-mark">※必須</span>
+                    {% endif %}
 
+                    {{ field }}
                 </p>
 
 

@@ -1,0 +1,92 @@
+[
+    {
+        "model": "spots.arena_category",
+        "pk": 1,
+        "fields": {
+            "arena_category": "グルメ",
+            "created_at": "2026-07-04T16:19:28.647Z",
+            "updated_at": "2026-07-04T16:19:28.647Z"
+        }
+    },
+    {
+        "model": "spots.arena_category",
+        "pk": 2,
+        "fields": {
+            "arena_category": "チア",
+            "created_at": "2026-07-04T16:19:35.668Z",
+            "updated_at": "2026-07-04T16:19:35.668Z"
+        }
+    },
+    {
+        "model": "spots.arena_category",
+        "pk": 3,
+        "fields": {
+            "arena_category": "マスコット",
+            "created_at": "2026-07-04T16:19:39.532Z",
+            "updated_at": "2026-07-04T16:19:39.532Z"
+        }
+    },
+    {
+        "model": "spots.arena_category",
+        "pk": 4,
+        "fields": {
+            "arena_category": "子ども",
+            "created_at": "2026-07-04T16:19:48.499Z",
+            "updated_at": "2026-07-04T16:19:48.499Z"
+        }
+    },
+    {
+        "model": "spots.arena_category",
+        "pk": 5,
+        "fields": {
+            "arena_category": "その他",
+            "created_at": "2026-07-04T16:19:52.312Z",
+            "updated_at": "2026-07-04T16:19:52.312Z"
+        }
+    },
+    {
+        "model": "spots.spot_category",
+        "pk": 1,
+        "fields": {
+            "spot_category": "子連れ",
+            "created_at": "2026-07-04T16:20:24.652Z",
+            "updated_at": "2026-07-04T16:20:24.652Z"
+        }
+    },
+    {
+        "model": "spots.spot_category",
+        "pk": 2,
+        "fields": {
+            "spot_category": "グルメ",
+            "created_at": "2026-07-04T16:20:28.586Z",
+            "updated_at": "2026-07-04T16:20:28.586Z"
+        }
+    },
+    {
+        "model": "spots.spot_category",
+        "pk": 3,
+        "fields": {
+            "spot_category": "観光",
+            "created_at": "2026-07-04T16:20:34.546Z",
+            "updated_at": "2026-07-04T16:20:34.546Z"
+        }
+    },
+    {
+        "model": "spots.spot_category",
+        "pk": 4,
+        "fields": {
+            "spot_category": "チーム関連",
+            "created_at": "2026-07-04T16:20:38.137Z",
+            "updated_at": "2026-07-04T16:20:38.137Z"
+        }
+    },
+    {
+        "model": "spots.spot_category",
+        "pk": 5,
+        "fields": {
+            "spot_category": "その他",
+            "created_at": "2026-07-04T16:20:45.545Z",
+            "updated_at": "2026-07-04T16:20:45.545Z"
+        }
+    }
+]

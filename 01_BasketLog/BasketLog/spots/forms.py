@@ -20,6 +20,16 @@ class ArenaFacilityForm(forms.ModelForm):
             "category":forms.RadioSelect(),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field_name in ['kids_space', 'diaper_table', 'nursing_room']:
+            self.fields[field_name].choices = [
+                ('', '入力しない'),
+                (1, '有'),
+                (2, '無'),
+            ]
+
 #class ArenaFacilityImageForm(forms.ModelForm):
     #class Meta:
         #model = ArenaFacilityImage

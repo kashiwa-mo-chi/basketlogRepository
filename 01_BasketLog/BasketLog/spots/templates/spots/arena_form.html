@@ -82,6 +82,13 @@
                 <!-- カテゴリ -->
                 <div class="category-radio">
 
+                    {% if form.category.field.required %}
+                        <div class="form-label">
+                            {{ form.category.label }}
+                            <span class="required-mark">※必須</span>
+                        </div>
+                    {% endif %}
+
                     {% for radio in form.category %}
                         <label class="category-item">
                             {{ radio.tag }}
@@ -96,8 +103,18 @@
                 <!-- 口コミ -->
                 
                 <div class="mb-4">
+
+                    <label class="form-label">
+                        {{ form.review.label }}
+
+                        {% if form.review.field.required %}
+                            <span class="required-mark">※必須</span>
+                        {% endif %}
+                    </label>
+
                     {{ form.review }}
                     {{ form.review.errors }}
+
                 </div>
 
                 <!-- 写真 -->

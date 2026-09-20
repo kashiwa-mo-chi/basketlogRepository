@@ -1369,3 +1369,11 @@ img {
     }
 
 }
+
+/* 必須マーク */
+.required-mark {
+    color: #ef4444;
+    font-size: 0.8rem;
+    margin-left: 4px;
+    font-weight: normal;
+}

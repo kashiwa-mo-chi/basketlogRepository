@@ -18,11 +18,11 @@
 
     
 
-    <p>キッズスペース：{{ post.get_kids_space_display }}</p>
+    <p>キッズスペース：{{ post.get_kids_space_display|default:"未入力" }}</p>
 
-    <p>おむつ交換台：{{ post.get_diaper_table_display }}</p>
+    <p>おむつ交換台：{{ post.get_diaper_table_display|default:"未入力" }}</p>
 
-    <p>授乳室：{{ post.get_nursing_room_display }}</p>
+    <p>授乳室：{{ post.get_nursing_room_display|default:"未入力" }}</p>
 
     <hr>
 

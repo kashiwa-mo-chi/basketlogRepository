@@ -21,7 +21,12 @@
                 {% endif %}
 
                 <!-- スポット名 -->
-                <label class="form-item-title">スポット名</label>
+                <label class="form-item-title">
+                    {{ form.spot_name.label }}
+                    {% if form.spot_name.field.required %}
+                        <span class="required-mark">※必須</span>
+                    {% endif %}
+                </label>
 
                 <div class="mb-4">
                     {{ form.spot_name }}
@@ -29,7 +34,10 @@
                 </div>
 
                 <!-- カテゴリ -->
-                <label class="form-item-title">カテゴリを選択してください</label>
+                <label class="form-item-title">
+                    {{ form.category.label }}
+                    <span class="required-mark">※必須</span>
+                </label>
 
                 <div class="category-radio">
 
@@ -45,7 +53,13 @@
                 {{ form.category.errors }}
                 
                 <!-- 口コミ -->
-                <label class="form-item-title">見どころ</label>
+                <label class="form-item-title">
+                    {{ form.review.label }}
+                    {% if form.review.field.required %}
+                        <span class="required-mark">※必須</span>
+                    {% endif %}
+                </label>
+
                 <div class="mb-4">
                     {{ form.review }}
                     {{ form.review.errors }}

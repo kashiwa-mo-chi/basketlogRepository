@@ -49,19 +49,22 @@ class ArenaFacility(models.Model):
 
     kids_space = models.IntegerField(
         choices=FACILITY_CHOICES,
-        default=2,
+        blank=True,
+        null=True,
         verbose_name="キッズスペース"
     )
 
     diaper_table = models.IntegerField(
         choices=FACILITY_CHOICES,
-        default=2,
+        blank=True,
+        null=True,
         verbose_name="おむつ交換台"
     )
 
     nursing_room = models.IntegerField(
         choices=FACILITY_CHOICES,
-        default=2,
+        blank=True,
+        null=True,
         verbose_name="授乳室"
     )
 
