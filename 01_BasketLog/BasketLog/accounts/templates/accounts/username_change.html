@@ -8,7 +8,6 @@
         ユーザ名の変更
     </h2>
 
-
         <div class="current-username">
 
             <p class="account-label">
@@ -21,12 +20,9 @@
 
         </div>
 
-
-
         <form method="post">
 
             {% csrf_token %}
-
 
             <div class="form-group">
 
@@ -34,9 +30,7 @@
                     新しいユーザ名を入力
                 </label>
 
-
                 {{ form.username }}
-
 
                 {% if form.username.errors %}
                     <div class="text-danger mt-2">
@@ -44,10 +38,7 @@
                     </div>
                 {% endif %}
 
-
             </div>
-
-
 
             <div class="account-form-buttons">
 
@@ -55,17 +46,13 @@
                     変更
                 </button>
 
-
                 <a href="{% url 'accounts:mypage' %}" class="account-back-btn">
                     戻る
                 </a>
 
             </div>
 
-
         </form>
-
-
 
 </div>
 

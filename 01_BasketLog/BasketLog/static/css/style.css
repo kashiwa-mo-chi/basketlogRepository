@@ -133,7 +133,7 @@ h2 {
 
 .message-area {
     max-width: 430px;
-    margin: 50px auto 0;
+    margin: 70px auto 0;
     padding: 0 15px;
 }
 
@@ -347,11 +347,13 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
+    min-width: 0;
 }
 
 .diary-info {
     flex: 1;
+    min-width: 0;
 }
 
 
@@ -711,10 +713,8 @@ img {
 }
 
 .score-title {
-    font-size: .85rem;
-    color: #696969;
-    font-weight: bold;
-    margin-bottom: 3px;
+    color: #212529;
+    margin-bottom: 5px;
 }
 
 .score-options {
@@ -731,6 +731,20 @@ img {
 .score-options span {
     font-size: 1.2rem;
     color: #696969;
+}
+
+.score-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.score-input label {
+    font-family: inherit;
+    font-size: 0.85rem;
+    color: #696969;
+    font-weight: normal;
 }
 
 
@@ -797,7 +811,7 @@ img {
     display: flex;
     justify-content: center;
     gap: 5px;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     overflow-x: visible;
     padding: 0;
     margin: 0;
@@ -902,6 +916,9 @@ img {
     margin-bottom: 15px;
 }
 
+.arena-post-card {
+    border: 1px solid #d0d0d0;
+}
 
 /* ==========================
    nearby_list

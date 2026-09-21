@@ -14,18 +14,29 @@
 
 <form action="{% url 'games:public_diary_list' %}" method="get" class="mb-4">
 
-    <div class="input-group">
+    <div class="mb-2">
+        <label for="search-date" class="form-label">観戦日で検索</label>
+        <input
+            type="date"
+            id="search-date"
+            name="date"
+            class="form-control">
+    </div>
 
+    <div class="mb-3">
+        <label for="search-keyword" class="form-label">チーム名・キーワードで検索</label>
         <input
             type="search"
+            id="search-keyword"
             name="q"
             class="form-control"
-            placeholder="日付・チーム名で検索">
+            placeholder="チーム名・キーワードを入力">
+    </div>
 
+    <div class="text-center">
         <button class="btn btn-outline-primary" type="submit">
-            <i class="bi bi-search"></i>
+            <i class="bi bi-search"></i> 検索
         </button>
-
     </div>
 
 </form>

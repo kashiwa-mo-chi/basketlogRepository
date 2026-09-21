@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ポートフォリオ</title>
     <style>
-        /* ここにスタイルを追加 */
+        
         body {
             font-family: "Meiryo", sans-serif;
             margin: 0; 
@@ -48,16 +48,36 @@
             border: none;
             border-radius: 4px;
         }
+
+        .portfolio-images {
+            display: grid;
+            grid-template-columns: 30% 30%;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .portfolio-images img {
+            width: 100%;
+            height: auto;
+        }
+
     </style>
 </head>
 
 <body>
     <div class="container">
         <h1>バスケログ</h1>
-        <img src="{% static 'images/home.png' %}" alt="home画面のスクリーンショット">   
+
+        <div class="portfolio-images">
+            <img src="{% static 'images/home.png' %}" alt="home画面のスクリーンショット"> 
+            <img src="{% static 'images/diary.png' %}" alt="観戦記録投稿画面のスクリーンショット">
+            <img src="{% static 'images/arena.png' %}" alt="アリーナ情報画面のスクリーンショット">
+            <img src="{% static 'images/spot.png' %}" alt="周辺情報の投稿一覧画面のスクリーンショット">
+        </div>
+
         <p>バスケログとはバスケットボールの試合観戦を記録したり、試合会場の情報をユーザー同士で共有できるアプリです。</p>
-        <p>バスケットボールの観戦に特化した入力フォームで、観戦記録を手軽に作成でき思い出に残すことができます。</p>
-        <p>また、試合会場やその周辺の情報について口コミを投稿してユーザー同士で共有ができ、</p>
+        <p>バスケットボールの観戦に特化した入力フォームにより、観戦記録を手軽に作成することができます。</p>
+        <p>また、試合会場やその周辺の情報についての口コミを投稿し、ユーザー同士で共有できます。</p>
         <p>バスケットボールの観戦をより充実したものにできます。</p>
         
         <a href="/media/企画書.pdf" class="link">企画書</a>

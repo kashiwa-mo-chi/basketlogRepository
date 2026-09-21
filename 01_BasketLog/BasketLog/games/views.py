@@ -11,27 +11,29 @@ from .models import Diary
 def diary_list(request):
     diaries = Diary.objects.filter(user=request.user).order_by('-watch_date')
 
-    #検索機能
+    # 検索機能
     query = request.GET.get('q')
+    date_query = request.GET.get('date')
+
     if query:
         condition = Q(memory__icontains=query)
 
-        condition |= Q(watch_date__contains=query)
-
         team_choices = Diary._meta.get_field('home_team_name').choices
         for num, name in team_choices:
-            if query in name:  
+            if query in name:
                 condition |= Q(home_team_name=num) | Q(away_team_name=num)
 
-        # 3. 会場名（ARENA_CHOICES）から文字が一致する「数字」を探す
+    # 会場名（ARENA_CHOICES）から文字が一致する「数字」を探す
         arena_choices = Diary._meta.get_field('arena_name').choices
         for num, name in arena_choices:
-            if query in name:  
+            if query in name:
                 condition |= Q(arena_name=num)
 
-        # 最後に、まとめた条件でデータを一気に絞り込む
         diaries = diaries.filter(condition)
-    
+
+    if date_query:
+        diaries = diaries.filter(watch_date=date_query)
+
     paginator = Paginator(diaries, 5)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
@@ -73,26 +75,27 @@ def diary_detail(request, diary_id):
 def public_diary_list(request):
     diaries = Diary.objects.filter(status=1).order_by('-watch_date')
 
-    #検索機能
+    # 検索機能
     query = request.GET.get('q')
+    date_query = request.GET.get('date')
+
     if query:
         condition = Q(memory__icontains=query)
 
-        condition |= Q(watch_date__contains=query)
-
         team_choices = Diary._meta.get_field('home_team_name').choices
         for num, name in team_choices:
-            if query in name:  
+            if query in name:
                 condition |= Q(home_team_name=num) | Q(away_team_name=num)
 
-       
         arena_choices = Diary._meta.get_field('arena_name').choices
         for num, name in arena_choices:
-            if query in name: 
+            if query in name:
                 condition |= Q(arena_name=num)
 
-        
         diaries = diaries.filter(condition)
+
+    if date_query:
+        diaries = diaries.filter(watch_date=date_query)
     
     paginator = Paginator(diaries, 5)
     page_number = request.GET.get('page', 1)

@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="container mt-4 diary-form-page">
+<div class="container mt-4 diary-form-page pb-2">
 
     <h2 class="page-title">
         {% if is_edit %}
@@ -73,14 +73,17 @@
 
                     <div class="score-options">
 
-                        {{ field }}
+                        <div class="score-input">
+                            <label>ホーム</label>
+                            {{ field }}
+                        </div>
 
                         <span>-</span>
 
-                        {{ diary_form.away_team_score }}
-
-                    </div>
-
+                        <div class="score-input">
+                            <label>アウェイ</label>
+                            {{ diary_form.away_team_score }}
+                        </div>
 
                 </div>
 
@@ -149,6 +152,12 @@
             <button type="submit" class="diary-submit-btn">
                 保存
             </button>
+
+            <div class="mt-2">
+                <a href="{% url 'accounts:home' %}" class="btn btn-secondary">
+                 戻る
+                </a>
+            </div>
 
         </div>
 
