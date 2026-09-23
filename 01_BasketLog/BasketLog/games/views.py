@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django .core.paginator import Paginator
 from django.db.models import Q
-from .forms import DiaryForm, DiaryPictureFormSet
+from .forms import DiaryForm
 from django.contrib.auth import get_user_model
-from .models import Diary
+from .models import Diary, DiaryPicture
 
 #MY観戦記録一覧画面
 @login_required
@@ -43,26 +43,27 @@ def diary_list(request):
 @login_required
 def diary_create(request):
     if request.method == 'POST':
-        diary_form = DiaryForm(request.POST) #保存ボタンPOSTが押された時の処理
-        picture_formset = DiaryPictureFormSet(request.POST, request.FILES)
+        diary_form = DiaryForm(request.POST) 
+        images = request.FILES.getlist("images")
 
-        if diary_form.is_valid() and picture_formset.is_valid():
+        if diary_form.is_valid():
             diary = diary_form.save(commit=False)
             diary.user = request.user
             diary.save()
 
-            picture_formset.instance = diary
-            picture_formset.save()
+            for image in images:
+                DiaryPicture.objects.create(
+                    diary=diary,
+                    picture_url=image
+                )
 
-            return redirect('games:diary_detail', diary_id=diary.id) #投稿が完了したら飛ぶベージ、観戦記録詳細画面へ遷移
+            return redirect('games:diary_detail', diary_id=diary.id)
                
     else:
         diary_form = DiaryForm()
-        picture_formset = DiaryPictureFormSet()
 
     context = {
         'diary_form': diary_form,
-        'picture_formset': picture_formset,
     }
     return render(request, 'games/diary_form.html', context)
 
@@ -102,37 +103,47 @@ def public_diary_list(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'games/public_diary_list.html', {'page_obj': page_obj})
+
 @login_required
 def diary_update(request, diary_id):
     """観戦記録編集"""
 
     diary = get_object_or_404(Diary, id=diary_id)
 
-    # 投稿者以外は編集できない
     if diary.user != request.user:
         return redirect("games:diary_detail", diary_id=diary.id)
 
     if request.method == "POST":
         diary_form = DiaryForm(request.POST, instance=diary)
-        picture_formset = DiaryPictureFormSet(
-            request.POST,
-            request.FILES,
-            instance=diary
-        )
-
-        if diary_form.is_valid() and picture_formset.is_valid():
+        
+        if diary_form.is_valid():
             diary_form.save()
-            picture_formset.save()
+
+            delete_ids = request.POST.getlist("delete_images")
+            print("削除する画像ID:", delete_ids)
+
+            DiaryPicture.objects.filter(
+                id__in=delete_ids,
+                diary=diary
+            ).delete()
+
+            images = request.FILES.getlist("images")
+
+            for image in images:
+                DiaryPicture.objects.create(
+                    diary=diary,
+                    picture_url=image
+        )
 
             return redirect("games:diary_detail", diary_id=diary.id)
 
     else:
         diary_form = DiaryForm(instance=diary)
-        picture_formset = DiaryPictureFormSet(instance=diary)
+        pictures = diary.pictures.all()
 
     context = {
         "diary_form": diary_form,
-        "picture_formset": picture_formset,
+        "pictures": pictures,
         "is_edit": True,
     }
 

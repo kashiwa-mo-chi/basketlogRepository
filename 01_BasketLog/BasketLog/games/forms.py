@@ -1,5 +1,5 @@
 from django import forms
-from .models import Diary, DiaryPicture
+from .models import Diary
 
 class DiaryForm(forms.ModelForm):
     class Meta:
@@ -35,27 +35,4 @@ class DiaryForm(forms.ModelForm):
             raise forms.ValidationError("ホームチームとアウェイチームは異なるチームを選んでください")
         
         return cleaned_data
-    
-class DiaryPictureForm(forms.ModelForm):
-    class Meta:
-        model = DiaryPicture
-        fields = ['picture_url']
-
-        widgets = {
-            'picture_url':forms.ClearableFileInput(
-                attrs={
-                    'class':'form-control',
-                    'accept':'image/*',
-                }
-            )
-        }
-
-DiaryPictureFormSet = forms.inlineformset_factory(
-    parent_model=Diary,
-    model=DiaryPicture,
-    form=DiaryPictureForm,
-    extra=5,
-    max_num=5,
-    can_delete=True
-)
-
+   

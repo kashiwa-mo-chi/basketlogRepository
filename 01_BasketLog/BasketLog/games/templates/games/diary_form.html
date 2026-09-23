@@ -87,10 +87,7 @@
 
                 </div>
 
-
-
             {% elif field.name != "away_team_score" %}
-
 
                 <p>
                     {{ field.label }}
@@ -102,17 +99,13 @@
                     {{ field }}
                 </p>
 
-
             {% endif %}
-
 
         {% endfor %}
 
         </div>
 
         </div>
-
-
 
         <!-- 写真 -->
         <div class="picture-fields">
@@ -126,22 +119,152 @@
             {{ picture_formset.management_form }}
 
 
-            {% for form in picture_formset %}
+            <div class="picture-item">
 
-                <div class="picture-item">
+                <label>
+                    観戦写真
+                    <span>（最大5枚まで）</span>
+                </label>
 
-                    <label>
-                        写真 {{ forloop.counter }}
-                    </label>
+                <input
+                    type="file"
+                    name="images"
+                    multiple
+                    accept="image/*"
+                    class="form-control"
+                    data-existing-count="{% if is_edit %}{{ pictures|length }}{% else %}0{% endif %}">
 
-                    {{ form.picture_url }}
+                {% if is_edit %}
+                    {% for picture in pictures %}
+                        <div class="existing-picture">
 
-                    {{ form.id }}
+                            <img src="{{ picture.picture_url.url }}" alt="観戦写真"
+                                style="max-width: 150px; margin-top: 10px; margin-right: 5px; border-radius: 8px;">
 
-                </div>
+                            <label class="existing-delete-button">
+                                <input
+                                    type="checkbox"
+                                    name="delete_images"
+                                    value="{{ picture.id }}"
+                                    class="delete-image-checkbox">
+                                ×
+                            </label>                     
+                                                             
+                        </div>
+                    {% endfor %}
+                {% endif %}
 
-            {% endfor %}
+                <div class="image-preview-container"></div>                
 
+            </div>
+
+            <script>
+            document.addEventListener('DOMContentLoaded', function () {
+
+                const fileInputs = document.querySelectorAll(
+                    'input[type="file"]'
+                );
+
+                const existingDeleteButtons = document.querySelectorAll(
+                    '.existing-delete-button'
+                );
+
+                existingDeleteButtons.forEach(function (button) {
+
+                    button.addEventListener('click', function () {
+
+                        const checkbox = button.querySelector('input[type="checkbox"]');
+
+                        checkbox.checked = true;
+
+                        button.closest('.existing-picture').remove();
+                    });
+
+                });
+
+                const dataTransfer = new DataTransfer();
+
+                fileInputs.forEach(function (input) {
+
+                    input.addEventListener('change', function () {
+
+                        // すでに表示されているプレビューを削除
+                        const oldPreview = input.parentElement.querySelector('.image-preview-container');
+
+                        if (oldPreview) {
+                            oldPreview.innerHTML = '';
+                        }
+
+                        // 選択された画像がある場合
+                        dataTransfer.items.clear();
+
+                        for (let i = 0; i < input.files.length; i++) {
+                            dataTransfer.items.add(input.files[i]);
+                        }
+
+                        input.files = dataTransfer.files;
+
+                        const existingCount = Number(input.dataset.existingCount || 0);
+                        const deletedCount = document.querySelectorAll('.delete-image-checkbox:checked').length;
+
+                        if (existingCount - deletedCount + input.files.length > 5) {
+                            alert('写真は合計5枚までです。');
+                            input.value = '';
+                            return;
+                        }
+
+                        if (input.files && input.files.length > 0) {
+
+                            for (let i = 0; i < input.files.length; i++) {
+
+                                const img = document.createElement('img');
+
+                                img.src = URL.createObjectURL(input.files[i]);
+                                img.className = 'image-preview';
+
+                                const removeButton = document.createElement('button');
+
+                                removeButton.type = 'button';
+                                removeButton.textContent = '×';
+                                removeButton.className = 'image-remove-button';
+
+                                removeButton.addEventListener('click', function () {
+
+                                    const newDataTransfer = new DataTransfer();
+
+                                    for (let j = 0; j < input.files.length; j++) {
+                                        if (j !== i) {
+                                            newDataTransfer.items.add(input.files[j]);
+                                        }
+                                    }
+
+                                    input.files = newDataTransfer.files;
+
+                                    img.remove();
+                                    removeButton.remove();
+                                });
+
+                                img.style.maxWidth = '150px';
+                                img.style.marginTop = '10px';
+                                img.style.marginRight = '5px';
+                                img.style.borderRadius = '8px';
+
+                                const wrapper = document.createElement('div');
+                                wrapper.className = 'preview-wrapper';
+
+                                wrapper.appendChild(img);
+                                wrapper.appendChild(removeButton);
+
+                                oldPreview.appendChild(wrapper);
+                            }
+                        }
+
+                    });
+
+                });
+
+            });
+            </script>
 
         </div>
 
