@@ -64,18 +64,240 @@
                     {{ form.review }}
                     {{ form.review.errors }}
                 </div>
-
+                
                 <!-- 写真 -->
                 <label class="form-item-title">写真（最大5枚）</label>
 
                 <div class="mb-4">
+
                     <input
                         type="file"
                         name="images"
                         multiple
                         accept="image/*"
-                        class="form-control">
+                        class="form-control"
+                        data-existing-count="{% if images %}{{ images|length }}{% else %}0{% endif %}">
+
+                    <div class="image-preview-container"></div>
+
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+
+                        const fileInput = document.querySelector('input[name="images"]');
+                        const previewContainer = document.querySelector('.image-preview-container');
+
+                        let selectedFiles = [];                    
+
+                        fileInput.addEventListener('change', function () {
+
+                            // 新しく選択した写真を追加
+                            for (let i = 0; i < fileInput.files.length; i++) {
+                                selectedFiles.push(fileInput.files[i]);
+                            }
+
+                            const existingCount = Number(
+                                fileInput.dataset.existingCount || 0
+                            );
+
+                            const deletedCount = Number(
+                                fileInput.dataset.deletedCount || 0
+                            );
+
+
+                            // 既存写真＋新しく選択した写真が5枚を超える場合
+                            if (existingCount - deletedCount + selectedFiles.length > 5) {
+
+                                alert('写真は合計5枚までです。');
+
+                                // 今回追加した写真だけ取り消す
+                                selectedFiles.splice(
+                                    selectedFiles.length - fileInput.files.length,
+                                    fileInput.files.length
+                                );
+
+                                fileInput.value = '';
+                                return;
+                            }
+
+                            // DataTransferに現在選択されている写真を入れる
+                            const dataTransfer = new DataTransfer();
+
+                            selectedFiles.forEach(function (file) {
+                                dataTransfer.items.add(file);
+                            });
+
+                            fileInput.files = dataTransfer.files;
+
+                            // プレビューを作り直す
+                            previewContainer.innerHTML = '';
+
+                            selectedFiles.forEach(function (file, index) {
+
+                                const img = document.createElement('img');
+
+                                img.src = URL.createObjectURL(file);
+                                img.className = 'image-preview';
+
+                                const removeButton = document.createElement('button');
+
+                                removeButton.type = 'button';
+                                removeButton.textContent = '×';
+                                removeButton.className = 'image-remove-button';
+
+                                removeButton.addEventListener('click', function () {
+
+                                    // 選択中のファイルから削除
+                                    selectedFiles.splice(index, 1);
+
+                                    // inputのファイルも更新
+                                    const newDataTransfer = new DataTransfer();
+
+                                    selectedFiles.forEach(function (file) {
+                                        newDataTransfer.items.add(file);
+                                    });
+
+                                    fileInput.files = newDataTransfer.files;
+
+                                    // プレビューを作り直す
+                                    previewContainer.innerHTML = '';
+
+                                    selectedFiles.forEach(function (file, newIndex) {
+
+                                        const newImg = document.createElement('img');
+
+                                        newImg.src = URL.createObjectURL(file);
+                                        newImg.className = 'image-preview';
+
+                                        const newRemoveButton = document.createElement('button');
+
+                                        newRemoveButton.type = 'button';
+                                        newRemoveButton.textContent = '×';
+                                        newRemoveButton.className = 'image-remove-button';
+
+                                        newRemoveButton.addEventListener('click', function () {
+
+                                            selectedFiles.splice(newIndex, 1);
+
+                                            const updatedDataTransfer = new DataTransfer();
+
+                                            selectedFiles.forEach(function (file) {
+                                                updatedDataTransfer.items.add(file);
+                                            });
+
+                                            fileInput.files = updatedDataTransfer.files;
+
+                                            previewContainer.innerHTML = '';
+
+                                            selectedFiles.forEach(function (file, finalIndex) {
+
+                                                const finalImg = document.createElement('img');
+
+                                                finalImg.src = URL.createObjectURL(file);
+                                                finalImg.className = 'image-preview';
+
+                                                const finalRemoveButton = document.createElement('button');
+
+                                                finalRemoveButton.type = 'button';
+                                                finalRemoveButton.textContent = '×';
+                                                finalRemoveButton.className = 'image-remove-button';
+
+                                                finalRemoveButton.addEventListener('click', function () {
+                                                    selectedFiles.splice(finalIndex, 1);
+
+                                                    const finalDataTransfer = new DataTransfer();
+
+                                                    selectedFiles.forEach(function (file) {
+                                                        finalDataTransfer.items.add(file);
+                                                    });
+
+                                                    fileInput.files = finalDataTransfer.files;
+
+                                                    finalImg.parentElement.remove();
+                                                });
+
+                                                const finalWrapper = document.createElement('div');
+                                                finalWrapper.className = 'preview-wrapper';
+
+                                                finalWrapper.appendChild(finalImg);
+                                                finalWrapper.appendChild(finalRemoveButton);
+
+                                                previewContainer.appendChild(finalWrapper);
+                                            });
+                                        });
+
+                                        const newWrapper = document.createElement('div');
+                                        newWrapper.className = 'preview-wrapper';
+
+                                        newWrapper.appendChild(newImg);
+                                        newWrapper.appendChild(newRemoveButton);
+
+                                        previewContainer.appendChild(newWrapper);
+                                    });
+                                });
+
+                                const wrapper = document.createElement('div');
+                                wrapper.className = 'preview-wrapper';
+
+                                wrapper.appendChild(img);
+                                wrapper.appendChild(removeButton);
+
+                                previewContainer.appendChild(wrapper);
+
+                                
+                            });
+                            
+                                
+                        });
+
+                    });
+                    </script>
+
                 </div>
+
+                    {% if images %}
+
+                    <div class="card form-card mt-4">
+
+                        <div class="card-body">
+
+                            <h5 class="section-title">現在の写真</h5>
+
+                            <div class="row">
+
+                                {% for image in images %}
+
+                                    <div class="col-6 mb-4">
+
+                                        <div class="existing-picture">
+
+                                            <img src="{{ image.image.url }}"
+                                                class="img-fluid rounded">
+
+                                            <label class="existing-delete-button">
+
+                                                <input
+                                                    type="checkbox"
+                                                    name="delete_images"
+                                                    value="{{ image.pk }}"
+                                                    class="delete-image-checkbox">
+
+                                                ×
+
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
 
                 <div class="text-center">
                     <button type="submit" class="btn btn-warning px-4">
@@ -95,42 +317,50 @@
 
     </div>
 
-    {% if images %}
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
 
-    <div class="card form-card mt-4">
+        const fileInput = document.querySelector('input[name="images"]');
 
-        <div class="card-body">
+        const existingDeleteButtons = document.querySelectorAll(
+            '.existing-delete-button'
+        );
 
-            <h5 class="section-title">現在の写真</h5>
+        existingDeleteButtons.forEach(function (button) {
 
-            <div class="row">
-                {% for image in images %}
-                    <div class="col-6 mb-4 text-center">
+            button.addEventListener('click', function (event) {
 
-                        <img src="{{ image.image.url }}"
-                             class="img-fluid rounded mb-2">
+                event.preventDefault();
 
-                        <form method="post"
-                              action="{% url 'spots:nearby_image_delete' image.pk %}">
-                            {% csrf_token %}
+                const checkbox = button.querySelector(
+                    '.delete-image-checkbox'
+                );
 
-                            <button
-                                type="submit"
-                                class="btn btn-outline-danger btn-sm">
-                                写真を削除
-                            </button>
+                checkbox.checked = true;
+                
+                fileInput.dataset.deletedCount =
+                    Number(fileInput.dataset.deletedCount || 0) + 1;             
 
-                        </form>
+                const mainForm = document.querySelector(
+                    'form[method="post"][enctype="multipart/form-data"]'
+                );
 
-                    </div>
-                {% endfor %}
-            </div>
+                const hiddenInput = document.createElement('input');
 
-        </div>
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'delete_images';
+                hiddenInput.value = checkbox.value;
 
-    </div>
+                mainForm.appendChild(hiddenInput);
 
-    {% endif %}
+                button.closest('.existing-picture').remove();
+
+            });
+
+        });
+
+    });
+    </script>
 
 </div>
 

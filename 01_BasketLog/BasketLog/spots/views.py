@@ -158,21 +158,34 @@ def facility_post_update(request, pk):
                  
         files = request.FILES.getlist("images")
 
+        delete_ids = request.POST.getlist("delete_images")
+
         current_count = post.images.count()
 
-        if current_count + len(files) > 5:
+        # 削除対象を除いた現在の枚数を計算
+        remaining_count = current_count - len(delete_ids)
+
+        if remaining_count + len(files) > 5:
             form.add_error(None, "画像は５枚まで投稿できます")
-        
+
         elif form.is_valid():
             post = form.save()
 
+            # 削除対象の写真を削除
+            ArenaFacilityImage.objects.filter(
+                pk__in=delete_ids,
+                arena_facility=post
+            ).delete()
+
+            # 新しい写真を追加
             for file in files:
                 ArenaFacilityImage.objects.create(
                     arena_facility=post,
                     image=file
                 )
-            return redirect("spots:facility_detail", pk=post.pk)
-            
+
+            return redirect("spots:facility_detail", pk=post.pk)        
+        
     else:
         form = ArenaFacilityForm(instance=post)
 
@@ -325,21 +338,33 @@ def nearby_update(request, pk):
 
     if request.method == "POST":
         form = ArenaNearbySpotForm(
-            request.POST, 
+            request.POST,
             request.FILES,
             instance=post
         )
 
         images = request.FILES.getlist("images")
 
+        delete_ids = request.POST.getlist("delete_images")
+
         existing_count = post.images.count()
 
-        if existing_count + len(images) >5:
+        # 削除対象を除いた現在の枚数を計算
+        remaining_count = existing_count - len(delete_ids)
+
+        if remaining_count + len(images) > 5:
             form.add_error(None, "画像は５枚まで投稿できます")
 
         elif form.is_valid():
-            form.save()
+            post = form.save()
 
+            # 削除対象の写真を削除
+            ArenaNearbyImage.objects.filter(
+                pk__in=delete_ids,
+                arena_nearby=post
+            ).delete()
+
+            # 新しい写真を追加
             for image in images:
                 ArenaNearbyImage.objects.create(
                     arena_nearby=post,

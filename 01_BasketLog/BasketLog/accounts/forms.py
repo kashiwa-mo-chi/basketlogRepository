@@ -22,18 +22,39 @@ class RegistForm(forms.ModelForm):
             'email': 'メールアドレス',
             'password': 'パスワード',
         }
+        help_texts = {
+            'password': '英数字を含む８文字以上',
+        }
 
     def clean_password(self):
         password = self.cleaned_data.get('password')
+
+        if password:
+            if len(password) < 8:
+                raise forms.ValidationError(
+                    'パスワードは英数字を含む8文字以上で設定してください。'
+                )
+
+            if not any(c.isalpha() for c in password):
+                raise forms.ValidationError(
+                    'パスワードには英字を1文字以上含めてください。'
+                )
+
+            if not any(c.isdigit() for c in password):
+                raise forms.ValidationError(
+                    'パスワードには数字を1文字以上含めてください。'
+                )
+
         user = User(
             **{k: v for k, v in self.cleaned_data.items()
             if k not in ['password', 'password_confirm']
             })
-        
+
         try:
             validate_password(password, user)
         except ValidationError as e:
             raise forms.ValidationError(e.messages)
+
         return password
 
     def clean(self):
