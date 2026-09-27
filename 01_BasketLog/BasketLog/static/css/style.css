@@ -190,7 +190,7 @@ img {
     color: #f59700 !important;
     font-size: 1.5rem;
     font-weight: bold;
-    text-decoration: none;
+    text-decoration: underline;
     margin-bottom: 20px;
 }
 
