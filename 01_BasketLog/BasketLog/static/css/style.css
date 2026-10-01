@@ -19,6 +19,12 @@ h2 {
     margin-bottom: 20px;
 }
 
+input::placeholder,
+textarea::placeholder {
+    color: #999;
+    opacity: 1;
+}
+
 
 /* ==========================
    ヘッダー
@@ -92,7 +98,7 @@ h2 {
 }
 
 .logout-confirm-btn {
-    background: #f59700;
+    background: #dc3545;
     color: #fff;
     border-radius: 15px;
     padding: 8px 20px;
@@ -511,6 +517,13 @@ img {
     padding: 10px 20px;
 }
 
+.btn-group .back-btn{
+    min-width: 80px;
+    min-width: 0;
+    padding: 8px 15px;
+}
+
+
 
 /* ==========================
    詳細画面ボタン共通
@@ -528,7 +541,10 @@ img {
 }
 
 .back-btn {
-    color: #696969;
+    background: #696969;
+    color: white;
+    min-width: 80px;
+    padding: 8px 15px;
 }
 
 .edit-btn {
@@ -1282,15 +1298,15 @@ img {
 .history-back a {
     display: inline-block;
     padding: 10px 30px;
-    border: 1px solid #ffe4b5;
+    border: 1px solid #696969;
     border-radius: 15px;
-    color: #696969;
+    color: white;
     text-decoration: none;
-    background: #ffe4b5;
+    background: #696969;
 }
 
 .history-back a:hover {
-    background: #fff7ec;
+    background: #808080;
 }
 
 
@@ -1357,9 +1373,9 @@ img {
 }
 
 .account-back-btn {
-    background: #ffe4b5;
-    color: #696969;
-    border: 1px solid #ccc;
+    background: #696969;
+    color: white;
+    border: 1px solid #696969;
     border-radius: 15px;
     padding: 10px 25px;
     text-decoration: none;
