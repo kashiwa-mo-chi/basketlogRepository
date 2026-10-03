@@ -26,6 +26,12 @@ class RegistForm(forms.ModelForm):
             'password': '英数字を含む８文字以上',
         }
 
+        error_messages = {
+            'email': {
+                'unique': 'このメールアドレスはすでに登録されています',
+            },
+        }
+
     def clean_password(self):
         password = self.cleaned_data.get('password')
 
@@ -60,7 +66,7 @@ class RegistForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
 
-        password = cleaned_data.get('password')
+        password = self.data.get('password')
         password_confirm = cleaned_data.get('password_confirm')
 
         if password and password_confirm:

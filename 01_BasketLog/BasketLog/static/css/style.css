@@ -544,7 +544,7 @@ img {
     background: #696969;
     color: white;
     min-width: 80px;
-    padding: 8px 15px;
+    text-decoration: none;
 }
 
 .edit-btn {
@@ -628,7 +628,6 @@ img {
     resize: vertical;
 }
 
-
 /* 写真入力 */
 
 .diary-form-page .picture-fields {
@@ -678,11 +677,12 @@ img {
     background: #f59700;
     color: #fff;
     border: none;
-    width: 160px;
+    width: 120px;
     padding: 10px 0;
-    border-radius: 20px;
+    border-radius: 8px;
     font-size: .95rem;
     font-weight: bold;
+    letter-spacing: 0.1rem;
 }
 
 .diary-submit-btn:hover {
@@ -1400,6 +1400,10 @@ img {
    ログイン画面
 ========================== */
 
+.login {
+    padding-top: 30px;
+}
+
 .login-page {
     width: 100%;
     max-width: 430px;
@@ -1511,7 +1515,7 @@ img {
 
 /* ログイン画面：フォームの間隔調整 */
 .login .form-group {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .login .form-label {
@@ -1530,10 +1534,18 @@ img {
     padding: 12px 30px;
 }
 
-.login .regist-link {
-    margin-top: 25px;
+.login .regist-link,
+.login .register-link {
+    margin-top: 30px;
 }
 
 .login .guest-login {
-    margin-top: 20px;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+
+.form-help {
+    color: #696969;
+    font-size: 0.85rem;
+    margin-top: 6px;
 }

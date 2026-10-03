@@ -11,6 +11,7 @@ from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import User
 from .forms import RegistForm, EmailChangeForm, UsernameChangeForm
+from django.contrib.auth import login
 
 
 class HomeView(TemplateView):
@@ -26,6 +27,11 @@ class RegistUserView(CreateView):
     template_name = 'accounts/regist.html'
     form_class = RegistForm
     success_url = reverse_lazy('accounts:home')
+
+    def from_valid(self, form):
+        response = super().form_valid(form)
+        login(self.request, self.object)
+        return response
 
 class UserLoginView(LoginView):
     template_name = 'accounts/login.html'
