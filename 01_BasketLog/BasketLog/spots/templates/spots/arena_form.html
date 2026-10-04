@@ -102,19 +102,17 @@
                 
                 <!-- 口コミ -->
                 
+                <label class="form-item-title">
+                    {{ form.review.label }}
+
+                    {% if form.review.field.required %}
+                        <span class="required-mark">※必須</span>
+                    {% endif %}
+                </label>
+
                 <div class="mb-4">
-
-                    <label class="form-label">
-                        口コミ
-
-                        {% if form.review.field.required %}
-                            <span class="required-mark">※必須</span>
-                        {% endif %}
-                    </label>
-
                     {{ form.review }}
                     {{ form.review.errors }}
-
                 </div>
 
                 <!-- 写真 -->                

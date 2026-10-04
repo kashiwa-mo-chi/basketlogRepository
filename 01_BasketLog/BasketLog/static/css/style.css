@@ -549,12 +549,26 @@ img {
 
 .edit-btn {
     color: #696969 !important;
+    border-radius: 10px !important;
 }
 
 .delete-btn {
-    color: red;
+    background: #dc3545;
+    color: white;
+    border-radius: 10px !important;
 }
 
+.modal-action-btn {
+    width: 100%;
+    height: 42px;
+    padding: 0;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.modal-footer form{
+    width: 100%;
+}
 
 /* ==========================
    観戦写真
@@ -709,6 +723,11 @@ img {
     padding: 7px 10px;
     font-size: .9rem;
     border-radius: 8px;
+}
+
+.diary-input-area input[type="date"] {
+    height: 35px;
+    box-sizing: border-box;
 }
 
 .diary-input-area textarea {
@@ -1141,7 +1160,9 @@ img {
 }
 
 .form-card textarea {
+    width: 100%;
     min-height: 120px;
+    box-sizing: border-box;
     border: 1px solid #ced4da;
     border-radius: 6px;
 }
