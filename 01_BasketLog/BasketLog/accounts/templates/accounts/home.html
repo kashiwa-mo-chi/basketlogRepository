@@ -6,16 +6,20 @@
 {% endblock %}
 
 {% block content %}
-    
-<a href="{% url 'games:public_diary_list' %}"
-   class="home-link">    
-    みんなの観戦記録
-</a>
+
+<div class="home-title-area">
+    <a href="{% url 'games:public_diary_list' %}"
+    class="home-link">    
+        みんなの観戦記録
+    </a>
+</div>
 
 <form action="{% url 'games:public_diary_list' %}" method="get" class="mb-4">
 
     <div class="mb-2">
-        <label for="search-date" class="form-label">観戦日で検索</label>
+        <label for="search-date" class="form-label">
+            観戦日で検索（カレンダーから選択）
+        </label>
         <input
             type="date"
             id="search-date"
@@ -24,13 +28,13 @@
     </div>
 
     <div class="mb-3">
-        <label for="search-keyword" class="form-label">チーム名・キーワードで検索</label>
+        <label for="search-keyword" class="form-label">チーム名・選手名・会場名などで検索</label>
         <input
             type="search"
             id="search-keyword"
             name="q"
             class="form-control"
-            placeholder="チーム名・キーワードを入力">
+            placeholder="例：川崎、篠山選手、とどろきアリーナ">
     </div>
 
     <div class="text-center">

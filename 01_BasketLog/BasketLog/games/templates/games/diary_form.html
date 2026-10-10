@@ -84,7 +84,7 @@
                             <label>アウェイ</label>
                             {{ diary_form.away_team_score }}
                         </div>
-
+                    </div>
                 </div>
 
             {% elif field.name != "away_team_score" %}
@@ -302,6 +302,16 @@
 
 
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.diary-select').forEach(function (select) {
+        select.addEventListener('change', function () {
+            this.classList.add('is-selected');
+        });
+    });
+});
+</script>
 
 
 {% endblock %}

@@ -2,6 +2,13 @@ from django import forms
 from .models import Diary
 
 class DiaryForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['arena_name'].widget.attrs['class'] = 'diary-select'
+        self.fields['home_team_name'].widget.attrs['class'] = 'diary-select'
+        self.fields['away_team_name'].widget.attrs['class'] = 'diary-select'
+
     class Meta:
         model = Diary
         fields = [
