@@ -23,8 +23,11 @@ class DiaryForm(forms.ModelForm):
         ]
 
         widgets = {
-            'watch_date':forms.DateInput(attrs={'type':'date'}),#観戦日をカレンダーから選択する
-            'home_team_score':forms.NumberInput(attrs={'min':0}),#０以上の数字を入力
+            'watch_date':forms.DateInput(attrs={
+                'type':'date',
+                'class':'diary-date-input',
+                }),
+            'home_team_score':forms.NumberInput(attrs={'min':0}),
             'away_team_score':forms.NumberInput(attrs={'min':0}),
             'memory':forms.Textarea(attrs={
                 'rows':5,

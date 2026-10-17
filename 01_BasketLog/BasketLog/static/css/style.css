@@ -751,7 +751,7 @@ img {
 }
 
 
-.diary-input-area input[type="date"] {
+.diary-input-area input.diary-date-input {
     display: block;
     width: 100%;
     max-width: 100%;
