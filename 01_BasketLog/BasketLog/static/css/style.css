@@ -752,8 +752,12 @@ img {
 
 .diary-input-area input[type="date"] {
     height: 35px;
+    padding: 0 10px;
+    font-size: 16px;
+    line-height: normal;
     box-sizing: border-box;
     color: #999;
+    max-width: 100%;
 }
 
 .diary-input-area textarea {
